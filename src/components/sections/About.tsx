@@ -15,7 +15,7 @@ export default function About() {
       >
         {/* Left side - Profile image */}
         <motion.div
-          initial={{ opacity: 0, x: -60 }}
+          initial={{ opacity: 0, x: -20 }}
           animate={isVisible ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="flex-shrink-0"
@@ -33,7 +33,7 @@ export default function About() {
 
         {/* Right side - Text content */}
         <motion.div
-          initial={{ opacity: 0, x: 60 }}
+          initial={{ opacity: 0, x: 20 }}
           animate={isVisible ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
         >

@@ -31,21 +31,37 @@ export default function Header({ onOpenForm }: HeaderProps) {
   return (
     <>
       <div className="fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6">
-        <div className="mx-auto max-w-6xl bg-white rounded-2xl shadow-lg mt-8 mb-4">
-          <div className="flex h-20 items-center justify-between px-8">
-            {/* Logo */}
-            <a href="#inicio" className="flex-shrink-0">
-              <Image
-                src="/images/logos/logo_full.png"
-                alt="Logo"
-                height={40}
-                width={160}
-                className="object-contain"
-              />
-            </a>
+        <div className="mx-auto max-w-6xl bg-white rounded-2xl shadow-lg mt-6 mb-4">
+            <div className="flex h-16 sm:h-20 items-center px-4 sm:px-8 gap-3">
 
-            {/* Desktop Navigation */}
-            <nav className="hidden items-center gap-12 lg:flex">
+            {/* LEFT: Hamburger (mobile only) */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-gray-700 lg:hidden flex-shrink-0"
+              aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+            >
+              {isMobileMenuOpen ? (
+                <CloseIcon className="h-6 w-6" />
+              ) : (
+                <MenuIcon className="h-6 w-6" />
+              )}
+            </button>
+
+            {/* Logo */}
+            <div className="flex justify-center lg:justify-start flex-1 lg:flex-initial">
+              <a href="#inicio" className="flex-shrink-0">
+                <Image
+                  src="/images/logos/logo_full.png"
+                  alt="Logo"
+                  height={40}
+                  width={160}
+                  className="object-contain w-[110px] sm:w-[160px]"
+                />
+              </a>
+            </div>
+
+            {/* Desktop Navigation — centered via flex-1 */}
+            <nav className="hidden items-center justify-center gap-12 lg:flex lg:flex-1">
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.href}
@@ -57,93 +73,97 @@ export default function Header({ onOpenForm }: HeaderProps) {
               ))}
             </nav>
 
-            {/* CTA Button */}
-            <div className="hidden lg:block">
-              <button
-                onClick={onOpenForm}
-                className="inline-flex items-center gap-2 rounded-xl bg-[#C89D69] px-8 py-3.5 text-base font-bold text-white transition-colors duration-200 hover:bg-[#B08A55]"
-              >
-                Agendar Cita
-                <span aria-hidden="true">→</span>
-              </button>
-            </div>
-
-            {/* Mobile Menu Toggle */}
+            {/* RIGHT: CTA — compact on mobile, full on desktop */}
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-700 lg:hidden"
-              aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+              onClick={onOpenForm}
+              className="flex-shrink-0 inline-flex items-center gap-1.5 rounded-xl bg-[#C89D69] text-white font-bold transition-colors duration-200 hover:bg-[#B08A55]
+                         px-3 py-2 text-xs lg:px-8 lg:py-3.5 lg:text-base"
             >
-              {isMobileMenuOpen ? (
-                <CloseIcon className="h-6 w-6" />
-              ) : (
-                <MenuIcon className="h-6 w-6" />
-              )}
+              <span className="lg:hidden">Agendar</span>
+              <span className="hidden lg:inline">Agendar Cita</span>
+              <span aria-hidden="true">→</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu — Left Drawer */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
-            className="fixed inset-0 z-50 flex flex-col bg-brand-black lg:hidden"
-          >
-            {/* Mobile Menu Header */}
-            <div className="flex h-20 items-center justify-between px-4 sm:px-6">
-              <a href="#inicio" onClick={closeMobileMenu} className="flex-shrink-0">
-                <Image
-                  src="/images/logos/logo_full.png"
-                  alt="Logo"
-                  height={36}
-                  width={144}
-                  className="object-contain"
-                />
-              </a>
-              <button
-                onClick={closeMobileMenu}
-                className="text-white"
-                aria-label="Cerrar menú"
-              >
-                <CloseIcon className="h-6 w-6" />
-              </button>
-            </div>
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={closeMobileMenu}
+              className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+            />
 
-            {/* Mobile Menu Links */}
-            <nav className="flex flex-1 flex-col items-center justify-center gap-8">
-              {NAV_LINKS.map((link, index) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
+            {/* Drawer */}
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
+              className="fixed top-0 left-0 bottom-0 z-50 w-72 flex flex-col bg-brand-black lg:hidden"
+            >
+              {/* Drawer Header */}
+              <div className="flex h-20 items-center justify-between px-6 border-b border-white/10">
+                <a href="#inicio" onClick={closeMobileMenu} className="flex-shrink-0">
+                  <Image
+                    src="/images/logos/logo_dorado.png"
+                    alt="Logo"
+                    height={32}
+                    width={120}
+                    className="object-contain"
+                  />
+                </a>
+                <button
                   onClick={closeMobileMenu}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + index * 0.05 }}
-                  className="font-akira text-2xl text-white transition-colors duration-200 hover:text-indigo-400"
+                  className="text-white"
+                  aria-label="Cerrar menú"
                 >
-                  {link.label}
-                </motion.a>
-              ))}
-              <motion.button
-                onClick={() => {
-                  closeMobileMenu();
-                  onOpenForm();
-                }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + NAV_LINKS.length * 0.05 }}
-                className="mt-4 inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-8 py-3 text-sm font-bold text-white hover:bg-indigo-700"
-              >
-                Agendar Cita
-                <span aria-hidden="true">→</span>
-              </motion.button>
-            </nav>
-          </motion.div>
+                  <CloseIcon className="h-6 w-6" />
+                </button>
+              </div>
+
+              {/* Drawer Links */}
+              <nav className="flex flex-col gap-1 px-4 pt-6">
+                {NAV_LINKS.map((link, index) => (
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    onClick={closeMobileMenu}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 + index * 0.05 }}
+                    className="font-barlow font-bold text-lg text-white py-3 px-2 rounded-lg hover:bg-white/10 hover:text-brand-beige transition-colors duration-200"
+                  >
+                    {link.label}
+                  </motion.a>
+                ))}
+              </nav>
+
+              {/* Drawer CTA */}
+              <div className="px-6 mt-auto pb-10">
+                <motion.button
+                  onClick={() => {
+                    closeMobileMenu();
+                    onOpenForm();
+                  }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.1 + NAV_LINKS.length * 0.05 }}
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-brand-beige px-6 py-3 text-sm font-bold text-brand-black hover:bg-brand-beige-light transition-colors duration-200"
+                >
+                  Agendar Cita
+                  <span aria-hidden="true">→</span>
+                </motion.button>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

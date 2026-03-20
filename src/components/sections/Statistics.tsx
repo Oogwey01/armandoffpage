@@ -9,7 +9,7 @@ function StatCard({ stat }: { stat: Stat }) {
 
   return (
     <div ref={ref} className="text-center">
-      <p className="text-4xl md:text-5xl font-akira font-black text-brand-beige">
+      <p className="text-3xl md:text-4xl lg:text-5xl font-akira font-black text-brand-beige">
         {count}
         {stat.suffix}
       </p>

@@ -77,7 +77,7 @@ export default function FeaturedWebinar({ onOpenForm }: FeaturedWebinarProps) {
         >
           <button
             onClick={onOpenForm}
-            className="btn-primary text-lg px-12 py-4"
+            className="btn-primary text-lg w-full sm:w-auto px-8 sm:px-12 py-4"
           >
             RESERVA TU LUGAR
           </button>

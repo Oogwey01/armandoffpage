@@ -52,7 +52,7 @@
   }
 
   .heading-xl {
-    @apply font-barlow text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase leading-tight;
+    @apply font-barlow text-xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold uppercase leading-tight break-words;
   }
 
   .heading-lg {
@@ -77,3 +77,4 @@
   from { transform: translateX(-50%); }
   to   { transform: translateX(0); }
 }
+
