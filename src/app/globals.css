@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-brand-black text-white font-barlow antialiased;
+  }
+
+  ::selection {
+    @apply bg-brand-beige/30 text-white;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-brand-black;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-brand-beige/50 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-beige;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-8 py-3.5 bg-brand-beige text-brand-black font-barlow font-bold
+           rounded-md transition-all duration-300 hover:bg-brand-beige-light hover:scale-105
+           active:scale-95 text-sm uppercase tracking-wider;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-8 py-3.5 border-2 border-brand-beige text-brand-beige font-barlow font-bold
+           rounded-md transition-all duration-300 hover:bg-brand-beige hover:text-brand-black
+           active:scale-95 text-sm uppercase tracking-wider;
+  }
+
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 py-16 md:py-24;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .heading-xl {
+    @apply font-akira text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-tight;
+  }
+
+  .heading-lg {
+    @apply font-barlow text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase tracking-wide;
+  }
+
+  .heading-md {
+    @apply font-barlow text-xl sm:text-2xl font-bold;
+  }
+
+  .body-text {
+    @apply font-montserrat text-base font-light text-gray-300 leading-relaxed;
+  }
+}
