@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
 import { StarIcon } from "@/components/common/Icons";
 
 interface HeroProps {
@@ -66,13 +66,12 @@ function MarqueeCard({ type, label }: MarqueeCardData) {
 
 // ── Brand cards data ───────────────────────────────────────────
 const BRAND_CARDS = [
-  { brand: "Her Juice Bar",     result: "$3M Por Año",      desc: "en ventas usando el Método Rush" },
-  { brand: "Grind Basketball",  result: "4x Agotado",       desc: "De rechazado en Shark Tank a agotado 4 veces" },
-  { brand: "Garden Alchemy",    result: "#1 en TikTok Shop", desc: "De marca desconocida a top vendedor en TikTok Shop" },
+  { brand: "Her Juice Bar",    result: "$3M Por Año",       desc: "en ventas usando el Método Rush",                     image: "/images/hero/placeholder.jpg" },
+  { brand: "Grind Basketball", result: "4x Agotado",        desc: "De rechazado en Shark Tank a agotado 4 veces",        image: "/images/hero/placeholder.jpg" },
+  { brand: "Garden Alchemy",   result: "#1 en TikTok Shop", desc: "De marca desconocida a top vendedor en TikTok Shop",  image: "/images/hero/placeholder.jpg" },
 ];
 
 export default function Hero({ onOpenForm }: HeroProps) {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   return (
     <section
@@ -108,7 +107,7 @@ export default function Hero({ onOpenForm }: HeroProps) {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-black to-transparent" />
 
       {/* Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center pt-40 pb-20">
+      <div className="relative z-10 w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center pt-32 md:pt-40 pb-16 md:pb-20">
         {/* Rating Badge */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -146,8 +145,8 @@ export default function Hero({ onOpenForm }: HeroProps) {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="heading-xl text-white mb-6"
         >
-          MENTOREANDO LAS MEJORES
-          <br />
+          MENTOREANDO LAS MEJORES{" "}
+          <br className="hidden sm:block" />
           MARCAS ECOM DEL MUNDO
         </motion.h1>
 
@@ -158,8 +157,8 @@ export default function Hero({ onOpenForm }: HeroProps) {
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           className="body-text max-w-2xl mx-auto text-gray-300 mb-10"
         >
-          Te brindamos la Educación, Mentoría, Herramientas y Recursos
-          <br />
+          Te brindamos la Educación, Mentoría, Herramientas y Recursos{" "}
+          <br className="hidden sm:block" />
           para Escalar Grandes Marcas con Éxito — Todo en Un Solo Lugar
         </motion.p>
 
@@ -168,14 +167,14 @@ export default function Hero({ onOpenForm }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+          className="flex flex-row items-center justify-center gap-4 mb-16"
         >
           <button onClick={onOpenForm} className="btn-primary">
             Aplicar Ahora
           </button>
-          <a href="#servicios" className="btn-outline">
+          <Link href="/metodo" className="btn-outline">
             Conocer Más
-          </a>
+          </Link>
         </motion.div>
 
         {/* Results Grid */}
@@ -185,43 +184,34 @@ export default function Hero({ onOpenForm }: HeroProps) {
           transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
           className="relative rounded-2xl overflow-hidden border border-white/10"
         >
-          {/* Stats row */}
+          {/* Stat + Image columns */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5">
             {[
-              { pct: "226%", label: "Incremento promedio en Ventas" },
-              { pct: "207%", label: "Incremento promedio en ROAS" },
-              { pct: "25%",  label: "Incremento promedio en AOV" },
-              { pct: "72%",  label: "Incremento promedio en CVR" },
-            ].map(({ pct, label }) => (
-              <div key={pct} className="flex items-center gap-2 px-6 py-4 bg-transparent">
-                {/* Green arrow */}
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0">
-                  <path d="M7 1L13 7H9V13H5V7H1L7 1Z" fill="#22c55e" />
-                </svg>
-                <span className="font-barlow font-extrabold text-5xl text-white">{pct}</span>
-                <span className="font-montserrat text-xs text-gray-400 leading-tight text-left">{label}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Image cards row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5">
-            {[
-              { label: "SHOPIFY" },
-              { label: "ROAS" },
-              { label: "AOVs" },
-              { label: "CRO" },
-            ].map(({ label }) => (
-              <div key={label} className="bg-transparent flex flex-col">
-                {/* Placeholder card */}
-                <div className="aspect-[3/4] bg-white/5 border border-white/10 m-3 rounded-lg flex items-center justify-center">
+              { pct: "226%", label: "Incremento promedio en Ventas", imgLabel: "SHOPIFY" },
+              { pct: "207%", label: "Incremento promedio en ROAS",   imgLabel: "ROAS"    },
+              { pct: "25%",  label: "Incremento promedio en AOV",    imgLabel: "AOVs"    },
+              { pct: "72%",  label: "Incremento promedio en CVR",    imgLabel: "CRO"     },
+            ].map(({ pct, label, imgLabel }) => (
+              <div key={pct} className="bg-transparent flex flex-col">
+                {/* Stat */}
+                <div className="flex flex-col gap-1 px-2 sm:px-4 pt-3 pb-2">
+                  <div className="flex items-center gap-1">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="shrink-0">
+                      <path d="M7 1L13 7H9V13H5V7H1L7 1Z" fill="#22c55e" />
+                    </svg>
+                    <span className="font-barlow font-extrabold text-2xl sm:text-3xl md:text-4xl text-white">{pct}</span>
+                  </div>
+                  <span className="font-montserrat text-[10px] sm:text-xs text-gray-400 leading-tight">{label}</span>
+                </div>
+                {/* Image */}
+                <div className="aspect-[3/4] bg-white/5 border border-white/10 mx-2 sm:mx-3 mb-2 rounded-lg flex items-center justify-center">
                   <span className="font-montserrat text-xs text-white/20 uppercase tracking-widest">
                     Imagen próximamente
                   </span>
                 </div>
                 {/* Label */}
-                <p className="font-barlow font-extrabold text-xs text-white/60 tracking-widest text-center pb-4 uppercase">
-                  {label}
+                <p className="font-barlow font-extrabold text-xs text-white/60 tracking-widest text-center pb-3 uppercase">
+                  {imgLabel}
                 </p>
               </div>
             ))}
@@ -250,52 +240,50 @@ export default function Hero({ onOpenForm }: HeroProps) {
           </h2>
 
           {/* Brand result cards */}
-          <div className="flex gap-3 h-56 mb-6">
-            {BRAND_CARDS.map(({ brand, result, desc }, i) => {
-              const isHovered = hoveredCard === i;
-              const isShrunken = hoveredCard !== null && !isHovered;
-              return (
-                <div
-                  key={brand}
-                  onMouseEnter={() => setHoveredCard(i)}
-                  onMouseLeave={() => setHoveredCard(null)}
-                  style={{ flex: isHovered ? 3 : isShrunken ? 0.6 : 1 }}
-                  className="relative rounded-xl overflow-hidden bg-white/5 border border-white/10 flex items-end transition-all duration-500 ease-in-out cursor-pointer min-w-0"
-                >
-                  {/* Brand badge */}
-                  <div className="absolute top-3 left-3 bg-white text-black text-xs font-montserrat font-semibold px-2.5 py-1 rounded whitespace-nowrap">
-                    {brand}
-                  </div>
-                  {/* Bottom overlay */}
-                  <div className="w-full p-4 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
-                    <p className="font-barlow font-black text-lg text-white leading-none tracking-tight whitespace-nowrap">
-                      {result}
-                    </p>
-                    <p
-                      className="font-montserrat text-[10px] text-gray-300 mt-0.5 overflow-hidden transition-all duration-500"
-                      style={{ maxHeight: isHovered ? "2rem" : 0, opacity: isHovered ? 1 : 0 }}
-                    >
-                      {desc}
-                    </p>
-                  </div>
+          <div className="flex flex-col gap-4 mb-6">
+            {BRAND_CARDS.map(({ brand, result, desc, image }) => (
+              <div
+                key={brand}
+                className="relative rounded-2xl overflow-hidden h-[280px] sm:h-[320px] bg-white/5"
+              >
+                {/* Background image */}
+                <Image
+                  src={image}
+                  alt={brand}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 800px"
+                />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
+                {/* Badge — top-left */}
+                <div className="absolute top-4 left-4 bg-white text-black text-xs font-montserrat font-semibold px-3 py-1.5 rounded-xl">
+                  {brand}
                 </div>
-              );
-            })}
+                {/* Text — bottom-left */}
+                <div className="absolute bottom-0 left-0 p-5">
+                  <p className="font-barlow font-black text-2xl sm:text-3xl text-white leading-tight mb-1">
+                    {result}
+                  </p>
+                  <p className="font-montserrat text-sm text-gray-300">
+                    {desc}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Stats row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10 border border-white/10 rounded-xl overflow-hidden mb-20">
+          <div className="grid grid-cols-4 gap-2 mb-20">
             {[
-              { num: "600+", label: "Marcas en Mentoría" },
-              { num: "40M+", label: "Conversiones Generadas" },
+              { num: "600+",   label: "Marcas en Mentoría" },
+              { num: "40M+",   label: "Conversiones Generadas" },
               { num: "$200M+", label: "Inversión en Ads Gestionada" },
-              { num: "$1B+", label: "GMV generado" },
+              { num: "$1B+",   label: "GMV generado" },
             ].map(({ num, label }) => (
-              <div key={num} className="flex flex-col px-5 py-4 bg-transparent">
-                <span className="font-barlow font-black text-2xl text-white tracking-tight">{num}</span>
-                <span className="font-montserrat text-[10px] text-gray-400 mt-0.5 leading-snug">
-                  {label}
-                </span>
+              <div key={num} className="flex flex-col items-center text-center bg-white/5 border border-white/10 rounded-xl px-1 sm:px-3 py-3 sm:py-4">
+                <span className="font-barlow font-black text-base sm:text-xl text-white tracking-tight">{num}</span>
+                <span className="font-montserrat text-[9px] sm:text-[10px] text-gray-400 mt-1 leading-snug">{label}</span>
               </div>
             ))}
           </div>
