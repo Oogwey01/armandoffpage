@@ -52,7 +52,7 @@
   }
 
   .heading-xl {
-    @apply font-akira text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-tight;
+    @apply font-barlow text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase leading-tight;
   }
 
   .heading-lg {

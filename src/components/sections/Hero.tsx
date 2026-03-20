@@ -43,7 +43,37 @@ export default function Hero({ onOpenForm }: HeroProps) {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-black to-transparent" />
 
       {/* Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center py-20">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center pt-40 pb-20">
+        {/* Rating Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="inline-flex items-center gap-2 bg-black/60 border border-white/20 rounded-full px-4 py-2 mb-8"
+        >
+          {/* Shopify logo */}
+          <Image
+            src="/images/logos/Shopify-badge.png"
+            alt="Shopify"
+            width={28}
+            height={28}
+            className="object-contain"
+          />
+          {/* Whop icon */}
+          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-red-500 text-white text-xs font-bold leading-none">
+            W
+          </span>
+          {/* Stars */}
+          <div className="flex items-center gap-0.5">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <StarIcon key={i} className="w-3.5 h-3.5 text-yellow-400" filled />
+            ))}
+          </div>
+          <span className="font-montserrat text-sm text-white font-medium">
+            4.9/5 – #1 en Whop
+          </span>
+        </motion.div>
+
         {/* Title */}
         <motion.h1
           initial={{ opacity: 0, y: -30 }}
@@ -51,10 +81,9 @@ export default function Hero({ onOpenForm }: HeroProps) {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="heading-xl text-white mb-6"
         >
-          5 AÑOS CONVIRTIENDO
+          MENTOREANDO LAS MEJORES
           <br />
-          <span className="text-brand-beige">ERRORES</span> EN{" "}
-          <span className="text-brand-beige">APRENDIZAJE</span>
+          MARCAS ECOM DEL MUNDO
         </motion.h1>
 
         {/* Subtitle */}
@@ -64,8 +93,9 @@ export default function Hero({ onOpenForm }: HeroProps) {
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           className="body-text max-w-2xl mx-auto text-gray-300 mb-10"
         >
-          Estrategia real de un joven empresario mexicano que ha vivido cada
-          etapa del negocio. Sin atajos, sin humo — solo resultados.
+          Te brindamos la Educación, Mentoría, Herramientas y Recursos
+          <br />
+          para Escalar Grandes Marcas con Éxito — Todo en Un Solo Lugar
         </motion.p>
 
         {/* CTA Buttons */}
@@ -73,35 +103,71 @@ export default function Hero({ onOpenForm }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
         >
           <button onClick={onOpenForm} className="btn-primary">
-            Agendar Consulta
+            Aplicar Ahora
           </button>
           <a href="#servicios" className="btn-outline">
-            Conocer Servicios
+            Conocer Más
           </a>
         </motion.div>
 
-        {/* Social proof */}
+        {/* Results Grid */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 text-sm text-gray-400"
+          className="relative rounded-2xl overflow-hidden border border-white/10"
         >
-          <div className="flex items-center gap-0.5">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <StarIcon
-                key={i}
-                className="w-4 h-4 text-brand-beige"
-                filled
-              />
+          {/* Stats row */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5">
+            {[
+              { pct: "226%", label: "Incremento promedio en Ventas" },
+              { pct: "207%", label: "Incremento promedio en ROAS" },
+              { pct: "25%",  label: "Incremento promedio en AOV" },
+              { pct: "72%",  label: "Incremento promedio en CVR" },
+            ].map(({ pct, label }) => (
+              <div key={pct} className="flex items-center gap-2 px-6 py-4 bg-transparent">
+                {/* Green arrow */}
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0">
+                  <path d="M7 1L13 7H9V13H5V7H1L7 1Z" fill="#22c55e" />
+                </svg>
+                <span className="font-barlow font-extrabold text-5xl text-white">{pct}</span>
+                <span className="font-montserrat text-xs text-gray-400 leading-tight text-left">{label}</span>
+              </div>
             ))}
           </div>
-          <span className="font-montserrat font-light">
-            4.9/5 &bull; 500+ clientes &bull; 8 cifras experiencia
-          </span>
+
+          {/* Image cards row */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5">
+            {[
+              { label: "SHOPIFY" },
+              { label: "ROAS" },
+              { label: "AOVs" },
+              { label: "CRO" },
+            ].map(({ label }) => (
+              <div key={label} className="bg-transparent flex flex-col">
+                {/* Placeholder card */}
+                <div className="aspect-[3/4] bg-white/5 border border-white/10 m-3 rounded-lg flex items-center justify-center">
+                  <span className="font-montserrat text-xs text-white/20 uppercase tracking-widest">
+                    Imagen próximamente
+                  </span>
+                </div>
+                {/* Label */}
+                <p className="font-barlow font-extrabold text-xs text-white/60 tracking-widest text-center pb-4 uppercase">
+                  {label}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Footer note */}
+          <div className="bg-transparent border-t border-white/5 py-3 px-6 text-center">
+            <p className="font-montserrat text-xs text-gray-500">
+              Mentoreando 600+ marcas en Shopify. Promedios basados en clientes de Shopify.
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
