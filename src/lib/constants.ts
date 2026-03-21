@@ -5,6 +5,7 @@ export const NAV_LINKS = [
   { label: "Acerca de Nosotros", href: "#quien-soy" },
   { label: "Reseñas", href: "#testimonios" },
   { label: "Resultados", href: "/casos-de-estudio" },
+  { label: "Webinars", href: "/webinars" },
   { label: "Iniciar Sesión", href: "#login" },
 ] as const;
 
