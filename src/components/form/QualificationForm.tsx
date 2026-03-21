@@ -1,20 +1,10 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  step1Schema,
-  step2Schema,
-  step3Schema,
-  step4Schema,
-  FullFormData,
-  Step1Data,
-  Step2Data,
-  Step3Data,
-  Step4Data,
-} from "@/lib/schemas";
-import { COUNTRIES } from "@/lib/constants";
+import Image from "next/image";
+import { formSchema, FormData, STEP_FIELDS } from "@/lib/schemas";
 import { motion, AnimatePresence } from "framer-motion";
 import { CloseIcon } from "@/components/common/Icons";
 
@@ -31,82 +21,51 @@ interface QualificationFormProps {
 // Constants
 // ---------------------------------------------------------------------------
 
-const STORAGE_KEY = "armandoff-form-data";
+const STORAGE_KEY = "armandoff-form-data-v2";
+const TOTAL_STEPS = 10;
 
-const BUSINESS_STAGES = [
-  "No tengo negocio aún",
-  "Negocio muy nuevo (<3 meses)",
-  "Etapa inicial ($0-$2k/mes)",
-  "En crecimiento ($2k-$10k/mes)",
-  "Escalado ($10k-$50k/mes)",
-  "Maduro ($50k+/mes)",
+const MARKETING_CHANNELS_WITH_LOGO = [
+  { value: "Meta Ads", label: "Meta Ads", logo: "/images/logos/meta-ads.png" },
+  { value: "TikTok Ads", label: "TikTok Ads", logo: "/images/logos/tik-tok-ads.png" },
+  { value: "TikTok Shop", label: "TikTok Shop", logo: "/images/logos/tikTOKSHOP.png" },
+  { value: "Shopify", label: "Shopify", logo: "/images/logos/Shopify-badge.png" },
+  { value: "Mercado Libre", label: "Mercado Libre", logo: "/images/logos/mercado-libre.png" },
+  { value: "Instagram orgánico", label: "Instagram orgánico", logo: "/images/logos/instagram.png" },
+  { value: "WhatsApp", label: "WhatsApp", logo: "/images/logos/whatsapp.webp" },
+  { value: "Google Ads", label: "Google Ads", logo: "/images/logos/Google_Ads_logo.png" },
 ] as const;
 
-const BUSINESS_TYPES = [
-  "E-commerce",
-  "Servicios/Consulting",
-  "Producto digital/Cursos",
-  "SaaS",
-  "Dropshipping",
-  "Afiliados",
-  "Marca personal/Coaching",
-  "Otro",
+const MARKETING_CHANNELS_TEXT_ONLY = [
+  "Marketing Contenido UGC",
+  "Boca a boca",
+  "No hago marketing",
 ] as const;
 
-const CHALLENGES = [
-  "No tengo estrategia clara",
-  "Bajo ROAS en publicidad",
-  "Bajo porcentaje de conversión",
-  "No sé cómo escalar",
-  "Contratación/Team building",
-  "Posicionamiento/Branding",
-  "No sé hacer marketing",
-  "Falta de sistemas",
+const ADS_INVESTMENT_OPTIONS = [
+  "$0",
+  "$1-$5K MXN",
+  "$5K-$15K MXN",
+  "$15K-$50K MXN",
+  "$50K-$150K MXN",
+  "$150K+ MXN",
 ] as const;
 
-const MARKETING_BUDGETS = [
-  "Menos de $500",
-  "$500-$2k",
-  "$2k-$5k",
-  "$5k-$10k",
-  "$10k-$25k",
-  "$25k-$50k",
-  "$50k+",
-  "No he invertido",
+const MONTHLY_REVENUE_OPTIONS = [
+  "$0",
+  "$1-$15K MXN",
+  "$15K-$50K MXN",
+  "$50K-$150K MXN",
+  "$150K-$500K MXN",
+  "$500K+ MXN",
 ] as const;
 
-const ROAS_OPTIONS = [
-  "Negativo",
-  "Break-even",
-  "1-2",
-  "2-4",
-  "4-8",
-  "8+",
-  "No sé",
-] as const;
-
-const AVAILABILITY_OPTIONS = [
-  "Esta semana",
-  "Próxima semana",
-  "En 2-3 semanas",
-  "Flexible",
-  "Solo quiero información",
-] as const;
-
-const COMMITTED_OPTIONS = [
-  "Sí, estoy listo",
-  "Necesito pensarlo",
-  "Depende del precio",
-] as const;
-
-const REFERRAL_SOURCES = [
-  "Google",
-  "Instagram",
-  "TikTok",
-  "YouTube",
-  "Recomendación",
-  "Ads",
-  "Otro",
+const START_WHEN_OPTIONS = [
+  "Inmediatamente",
+  "En 2 semanas",
+  "2-4 semanas",
+  "4-6 semanas",
+  "6+ semanas",
+  "Solo estoy explorando",
 ] as const;
 
 // ---------------------------------------------------------------------------
@@ -114,9 +73,10 @@ const REFERRAL_SOURCES = [
 // ---------------------------------------------------------------------------
 
 const inputClasses =
-  "w-full bg-brand-black/50 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-brand-beige focus:ring-1 focus:ring-brand-beige outline-none transition-colors font-montserrat text-sm";
+  "w-full bg-brand-black/50 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-brand-beige focus:ring-1 focus:ring-brand-beige outline-none transition-colors font-montserrat text-sm min-h-[48px]";
 
-const labelClasses = "block text-sm font-barlow font-semibold text-white mb-2";
+const labelClasses =
+  "block text-xl sm:text-2xl font-barlow font-bold text-white mb-6 leading-snug";
 
 const errorClasses = "text-red-400 text-xs mt-1";
 
@@ -124,7 +84,7 @@ const errorClasses = "text-red-400 text-xs mt-1";
 // Helpers
 // ---------------------------------------------------------------------------
 
-function getSavedData(): Partial<FullFormData> {
+function getSavedData(): Partial<FormData> {
   if (typeof window === "undefined") return {};
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -134,15 +94,12 @@ function getSavedData(): Partial<FullFormData> {
   }
 }
 
-function saveData(partial: Partial<FullFormData>) {
+function saveData(partial: Partial<FormData>) {
   try {
     const existing = getSavedData();
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ ...existing, ...partial })
-    );
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...existing, ...partial }));
   } catch {
-    // Silently fail – localStorage may be unavailable
+    // Silently fail
   }
 }
 
@@ -155,7 +112,7 @@ function clearSavedData() {
 }
 
 // ---------------------------------------------------------------------------
-// Reusable sub-components
+// Sub-components
 // ---------------------------------------------------------------------------
 
 function FieldError({ message }: { message?: string }) {
@@ -164,103 +121,6 @@ function FieldError({ message }: { message?: string }) {
     <p className={errorClasses} role="alert">
       {message}
     </p>
-  );
-}
-
-function RadioOption({
-  name,
-  value,
-  label,
-  selected,
-  register,
-}: {
-  name: string;
-  value: string;
-  label: string;
-  selected: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  register: any;
-}) {
-  return (
-    <label
-      className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
-        selected
-          ? "border-brand-beige bg-brand-beige/10"
-          : "border-white/10 hover:border-brand-beige/50"
-      }`}
-    >
-      <input
-        type="radio"
-        value={value}
-        {...register(name)}
-        className="sr-only"
-        aria-label={label}
-      />
-      <span
-        className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
-          selected ? "border-brand-beige" : "border-white/30"
-        }`}
-      >
-        {selected && (
-          <span className="h-2 w-2 rounded-full bg-brand-beige" />
-        )}
-      </span>
-      <span className="text-sm text-white font-montserrat">{label}</span>
-    </label>
-  );
-}
-
-function CheckboxOption({
-  value,
-  label,
-  checked,
-  disabled,
-  onChange,
-}: {
-  value: string;
-  label: string;
-  checked: boolean;
-  disabled: boolean;
-  onChange: (val: string, checked: boolean) => void;
-}) {
-  return (
-    <label
-      className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
-        checked
-          ? "border-brand-beige bg-brand-beige/10"
-          : disabled && !checked
-          ? "border-white/5 opacity-50 cursor-not-allowed"
-          : "border-white/10 hover:border-brand-beige/50"
-      }`}
-    >
-      <input
-        type="checkbox"
-        value={value}
-        checked={checked}
-        disabled={disabled && !checked}
-        onChange={(e) => onChange(value, e.target.checked)}
-        className="sr-only"
-        aria-label={label}
-      />
-      <span
-        className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border-2 ${
-          checked ? "border-brand-beige bg-brand-beige" : "border-white/30"
-        }`}
-      >
-        {checked && (
-          <svg
-            className="h-3 w-3 text-brand-black"
-            viewBox="0 0 12 12"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M2 6l3 3 5-5" />
-          </svg>
-        )}
-      </span>
-      <span className="text-sm text-white font-montserrat">{label}</span>
-    </label>
   );
 }
 
@@ -273,14 +133,7 @@ function LoadingSpinner() {
       viewBox="0 0 24 24"
       aria-hidden="true"
     >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
       <path
         className="opacity-75"
         fill="currentColor"
@@ -291,592 +144,97 @@ function LoadingSpinner() {
 }
 
 // ---------------------------------------------------------------------------
-// Step components
+// Main component
 // ---------------------------------------------------------------------------
 
-function Step1({
-  form,
-}: {
-  form: UseFormReturn<Step1Data>;
-}) {
-  const {
-    register,
-    formState: { errors },
-  } = form;
+export default function QualificationForm({ isOpen, onClose }: QualificationFormProps) {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [direction, setDirection] = useState<1 | -1>(1);
 
-  return (
-    <div className="space-y-5">
-      <h3 className="text-lg font-barlow font-bold text-brand-beige">
-        Información Personal
-      </h3>
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      nombre: "",
+      email: "",
+      whatsapp: "+52",
+      businessUrl: "",
+      marketingChannels: [],
+      adsInvestment: "",
+      monthlyRevenue: "",
+      goal90Days: "",
+      startWhen: "",
+      mainObstacle: "",
+    },
+  });
 
-      {/* First name */}
-      <div>
-        <label htmlFor="firstName" className={labelClasses}>
-          Nombre <span className="text-red-400">*</span>
-        </label>
-        <input
-          id="firstName"
-          type="text"
-          placeholder="Tu nombre"
-          autoComplete="given-name"
-          className={inputClasses}
-          {...register("firstName")}
-        />
-        <FieldError message={errors.firstName?.message} />
-      </div>
-
-      {/* Last name */}
-      <div>
-        <label htmlFor="lastName" className={labelClasses}>
-          Apellido <span className="text-red-400">*</span>
-        </label>
-        <input
-          id="lastName"
-          type="text"
-          placeholder="Tu apellido"
-          autoComplete="family-name"
-          className={inputClasses}
-          {...register("lastName")}
-        />
-        <FieldError message={errors.lastName?.message} />
-      </div>
-
-      {/* Email */}
-      <div>
-        <label htmlFor="email" className={labelClasses}>
-          Email <span className="text-red-400">*</span>
-        </label>
-        <input
-          id="email"
-          type="email"
-          placeholder="tu@email.com"
-          autoComplete="email"
-          className={inputClasses}
-          {...register("email")}
-        />
-        <FieldError message={errors.email?.message} />
-      </div>
-
-      {/* Phone */}
-      <div>
-        <label htmlFor="phone" className={labelClasses}>
-          Teléfono <span className="text-red-400">*</span>
-        </label>
-        <input
-          id="phone"
-          type="tel"
-          placeholder="+52 XXX XXX XXXX"
-          autoComplete="tel"
-          className={inputClasses}
-          {...register("phone")}
-        />
-        <FieldError message={errors.phone?.message} />
-      </div>
-
-      {/* Country */}
-      <div>
-        <label htmlFor="country" className={labelClasses}>
-          País <span className="text-red-400">*</span>
-        </label>
-        <select
-          id="country"
-          className={`${inputClasses} appearance-none`}
-          {...register("country")}
-          defaultValue=""
-        >
-          <option value="" disabled>
-            Selecciona tu país
-          </option>
-          {COUNTRIES.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
-        <FieldError message={errors.country?.message} />
-      </div>
-
-      {/* City */}
-      <div>
-        <label htmlFor="city" className={labelClasses}>
-          Ciudad <span className="text-red-400">*</span>
-        </label>
-        <input
-          id="city"
-          type="text"
-          placeholder="Tu ciudad"
-          autoComplete="address-level2"
-          className={inputClasses}
-          {...register("city")}
-        />
-        <FieldError message={errors.city?.message} />
-      </div>
-    </div>
-  );
-}
-
-function Step2({
-  form,
-}: {
-  form: UseFormReturn<Step2Data>;
-}) {
-  const {
-    register,
-    watch,
-    formState: { errors },
-  } = form;
-
-  const selectedStage = watch("businessStage");
-  const selectedType = watch("businessType");
-
-  return (
-    <div className="space-y-5">
-      <h3 className="text-lg font-barlow font-bold text-brand-beige">
-        Situación Actual
-      </h3>
-
-      {/* Business stage */}
-      <fieldset>
-        <legend className={labelClasses}>
-          Etapa de negocio <span className="text-red-400">*</span>
-        </legend>
-        <div className="space-y-2">
-          {BUSINESS_STAGES.map((stage) => (
-            <RadioOption
-              key={stage}
-              name="businessStage"
-              value={stage}
-              label={stage}
-              selected={selectedStage === stage}
-              register={register}
-            />
-          ))}
-        </div>
-        <FieldError message={errors.businessStage?.message} />
-      </fieldset>
-
-      {/* Industry */}
-      <div>
-        <label htmlFor="industry" className={labelClasses}>
-          Industria / Nicho <span className="text-red-400">*</span>
-        </label>
-        <input
-          id="industry"
-          type="text"
-          placeholder="Ej: Fitness, E-commerce, SaaS..."
-          className={inputClasses}
-          {...register("industry")}
-        />
-        <FieldError message={errors.industry?.message} />
-      </div>
-
-      {/* Business type */}
-      <fieldset>
-        <legend className={labelClasses}>
-          Tipo de negocio <span className="text-red-400">*</span>
-        </legend>
-        <div className="space-y-2">
-          {BUSINESS_TYPES.map((type) => (
-            <RadioOption
-              key={type}
-              name="businessType"
-              value={type}
-              label={type}
-              selected={selectedType === type}
-              register={register}
-            />
-          ))}
-        </div>
-        <FieldError message={errors.businessType?.message} />
-      </fieldset>
-    </div>
-  );
-}
-
-function Step3({
-  form,
-}: {
-  form: UseFormReturn<Step3Data>;
-}) {
   const {
     register,
     watch,
     setValue,
+    trigger,
+    getValues,
+    reset,
     formState: { errors },
   } = form;
 
-  const selectedBudget = watch("marketingBudget");
-  const selectedRoas = watch("roas");
-  const challenges = watch("challenges") || [];
-
-  const handleChallengeChange = useCallback(
-    (value: string, checked: boolean) => {
-      const current = [...challenges];
-      if (checked) {
-        if (current.length < 3) {
-          setValue("challenges", [...current, value], {
-            shouldValidate: true,
-          });
-        }
-      } else {
-        setValue(
-          "challenges",
-          current.filter((c) => c !== value),
-          { shouldValidate: true }
-        );
-      }
-    },
-    [challenges, setValue]
-  );
-
-  return (
-    <div className="space-y-5">
-      <h3 className="text-lg font-barlow font-bold text-brand-beige">
-        Desafíos & Presupuesto
-      </h3>
-
-      {/* Challenges */}
-      <fieldset>
-        <legend className={labelClasses}>
-          Principales desafíos (máx. 3){" "}
-          <span className="text-red-400">*</span>
-        </legend>
-        <p className="text-xs text-gray-400 mb-2">
-          Seleccionados: {challenges.length}/3
-        </p>
-        <div className="space-y-2">
-          {CHALLENGES.map((challenge) => (
-            <CheckboxOption
-              key={challenge}
-              value={challenge}
-              label={challenge}
-              checked={challenges.includes(challenge)}
-              disabled={challenges.length >= 3}
-              onChange={handleChallengeChange}
-            />
-          ))}
-        </div>
-        <FieldError message={errors.challenges?.message} />
-      </fieldset>
-
-      {/* Marketing budget */}
-      <fieldset>
-        <legend className={labelClasses}>
-          Presupuesto de marketing mensual{" "}
-          <span className="text-red-400">*</span>
-        </legend>
-        <div className="space-y-2">
-          {MARKETING_BUDGETS.map((budget) => (
-            <RadioOption
-              key={budget}
-              name="marketingBudget"
-              value={budget}
-              label={budget}
-              selected={selectedBudget === budget}
-              register={register}
-            />
-          ))}
-        </div>
-        <FieldError message={errors.marketingBudget?.message} />
-      </fieldset>
-
-      {/* ROAS */}
-      <fieldset>
-        <legend className={labelClasses}>
-          ROAS actual <span className="text-red-400">*</span>
-        </legend>
-        <div className="space-y-2">
-          {ROAS_OPTIONS.map((option) => (
-            <RadioOption
-              key={option}
-              name="roas"
-              value={option}
-              label={option}
-              selected={selectedRoas === option}
-              register={register}
-            />
-          ))}
-        </div>
-        <FieldError message={errors.roas?.message} />
-      </fieldset>
-
-      {/* Conversion rate */}
-      <div>
-        <label htmlFor="conversionRate" className={labelClasses}>
-          Tasa de conversión (opcional)
-        </label>
-        <input
-          id="conversionRate"
-          type="text"
-          placeholder="Ej: 2.5%"
-          className={inputClasses}
-          {...register("conversionRate")}
-        />
-        <FieldError message={errors.conversionRate?.message} />
-      </div>
-    </div>
-  );
-}
-
-function Step4({
-  form,
-}: {
-  form: UseFormReturn<Step4Data>;
-}) {
-  const {
-    register,
-    watch,
-    formState: { errors },
-  } = form;
-
-  const selectedAvailability = watch("availability");
-  const selectedHasMentor = watch("hasMentor");
-  const selectedCommitted = watch("committed");
-  const selectedReferral = watch("referralSource");
-
-  return (
-    <div className="space-y-5">
-      <h3 className="text-lg font-barlow font-bold text-brand-beige">
-        Disponibilidad & Intención
-      </h3>
-
-      {/* Availability */}
-      <fieldset>
-        <legend className={labelClasses}>
-          Disponibilidad <span className="text-red-400">*</span>
-        </legend>
-        <div className="space-y-2">
-          {AVAILABILITY_OPTIONS.map((option) => (
-            <RadioOption
-              key={option}
-              name="availability"
-              value={option}
-              label={option}
-              selected={selectedAvailability === option}
-              register={register}
-            />
-          ))}
-        </div>
-        <FieldError message={errors.availability?.message} />
-      </fieldset>
-
-      {/* Goals */}
-      <div>
-        <label htmlFor="goals" className={labelClasses}>
-          Objetivos <span className="text-red-400">*</span>
-        </label>
-        <textarea
-          id="goals"
-          rows={4}
-          placeholder="Describe qué quieres lograr con la mentoría..."
-          className={`${inputClasses} resize-none`}
-          {...register("goals")}
-        />
-        <FieldError message={errors.goals?.message} />
-      </div>
-
-      {/* Has mentor */}
-      <fieldset>
-        <legend className={labelClasses}>
-          ¿Tienes o has tenido un mentor? <span className="text-red-400">*</span>
-        </legend>
-        <div className="space-y-2">
-          {["Sí", "No"].map((option) => (
-            <RadioOption
-              key={option}
-              name="hasMentor"
-              value={option}
-              label={option}
-              selected={selectedHasMentor === option}
-              register={register}
-            />
-          ))}
-        </div>
-        <FieldError message={errors.hasMentor?.message} />
-      </fieldset>
-
-      {/* Committed */}
-      <fieldset>
-        <legend className={labelClasses}>
-          Nivel de compromiso <span className="text-red-400">*</span>
-        </legend>
-        <div className="space-y-2">
-          {COMMITTED_OPTIONS.map((option) => (
-            <RadioOption
-              key={option}
-              name="committed"
-              value={option}
-              label={option}
-              selected={selectedCommitted === option}
-              register={register}
-            />
-          ))}
-        </div>
-        <FieldError message={errors.committed?.message} />
-      </fieldset>
-
-      {/* Referral source */}
-      <fieldset>
-        <legend className={labelClasses}>
-          ¿Cómo nos encontraste? <span className="text-red-400">*</span>
-        </legend>
-        <div className="space-y-2">
-          {REFERRAL_SOURCES.map((source) => (
-            <RadioOption
-              key={source}
-              name="referralSource"
-              value={source}
-              label={source}
-              selected={selectedReferral === source}
-              register={register}
-            />
-          ))}
-        </div>
-        <FieldError message={errors.referralSource?.message} />
-      </fieldset>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Main component
-// ---------------------------------------------------------------------------
-
-export default function QualificationForm({
-  isOpen,
-  onClose,
-}: QualificationFormProps) {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // ---- Form instances (one per step, each with its own Zod resolver) ------
-
-  const form1 = useForm<Step1Data>({
-    resolver: zodResolver(step1Schema),
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      country: "",
-      city: "",
-    },
-  });
-
-  const form2 = useForm<Step2Data>({
-    resolver: zodResolver(step2Schema),
-    defaultValues: {
-      businessStage: "",
-      industry: "",
-      businessType: "",
-    },
-  });
-
-  const form3 = useForm<Step3Data>({
-    resolver: zodResolver(step3Schema),
-    defaultValues: {
-      challenges: [],
-      marketingBudget: "",
-      roas: "",
-      conversionRate: "",
-    },
-  });
-
-  const form4 = useForm<Step4Data>({
-    resolver: zodResolver(step4Schema),
-    defaultValues: {
-      availability: "",
-      goals: "",
-      hasMentor: "",
-      committed: "",
-      referralSource: "",
-    },
-  });
-
-  // ---- Restore saved data from localStorage on mount ---------------------
+  // ---- Restore saved data on mount ----------------------------------------
 
   useEffect(() => {
     const saved = getSavedData();
     if (!saved || Object.keys(saved).length === 0) return;
-
-    // Step 1 fields
-    if (saved.firstName) form1.setValue("firstName", saved.firstName);
-    if (saved.lastName) form1.setValue("lastName", saved.lastName);
-    if (saved.email) form1.setValue("email", saved.email);
-    if (saved.phone) form1.setValue("phone", saved.phone);
-    if (saved.country) form1.setValue("country", saved.country);
-    if (saved.city) form1.setValue("city", saved.city);
-
-    // Step 2 fields
-    if (saved.businessStage) form2.setValue("businessStage", saved.businessStage);
-    if (saved.industry) form2.setValue("industry", saved.industry);
-    if (saved.businessType) form2.setValue("businessType", saved.businessType);
-
-    // Step 3 fields
-    if (saved.challenges) form3.setValue("challenges", saved.challenges);
-    if (saved.marketingBudget) form3.setValue("marketingBudget", saved.marketingBudget);
-    if (saved.roas) form3.setValue("roas", saved.roas);
-    if (saved.conversionRate) form3.setValue("conversionRate", saved.conversionRate);
-
-    // Step 4 fields
-    if (saved.availability) form4.setValue("availability", saved.availability);
-    if (saved.goals) form4.setValue("goals", saved.goals);
-    if (saved.hasMentor) form4.setValue("hasMentor", saved.hasMentor);
-    if (saved.committed) form4.setValue("committed", saved.committed);
-    if (saved.referralSource) form4.setValue("referralSource", saved.referralSource);
+    if (saved.nombre) setValue("nombre", saved.nombre);
+    if (saved.email) setValue("email", saved.email);
+    if (saved.whatsapp) setValue("whatsapp", saved.whatsapp);
+    if (saved.businessUrl) setValue("businessUrl", saved.businessUrl);
+    if (saved.marketingChannels) setValue("marketingChannels", saved.marketingChannels);
+    if (saved.adsInvestment) setValue("adsInvestment", saved.adsInvestment);
+    if (saved.monthlyRevenue) setValue("monthlyRevenue", saved.monthlyRevenue);
+    if (saved.goal90Days) setValue("goal90Days", saved.goal90Days);
+    if (saved.startWhen) setValue("startWhen", saved.startWhen);
+    if (saved.mainObstacle) setValue("mainObstacle", saved.mainObstacle);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ---- Navigation helpers ------------------------------------------------
+  // ---- Navigation ---------------------------------------------------------
 
-  const handleNext = useCallback(async () => {
-    let isValid = false;
-
-    switch (currentStep) {
-      case 1:
-        isValid = await form1.trigger();
-        if (isValid) saveData(form1.getValues());
-        break;
-      case 2:
-        isValid = await form2.trigger();
-        if (isValid) saveData(form2.getValues());
-        break;
-      case 3:
-        isValid = await form3.trigger();
-        if (isValid) saveData(form3.getValues());
-        break;
-      default:
-        return;
+  const goNext = useCallback(async () => {
+    const fields = STEP_FIELDS[currentStep];
+    if (fields && fields.length > 0) {
+      const isValid = await trigger(fields);
+      if (!isValid) return;
     }
+    saveData(getValues());
+    setDirection(1);
+    setCurrentStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
+  }, [currentStep, trigger, getValues]);
 
-    if (isValid) {
-      setCurrentStep((prev) => Math.min(prev + 1, 4));
-    }
-  }, [currentStep, form1, form2, form3]);
-
-  const handleBack = useCallback(() => {
+  const goBack = useCallback(() => {
+    setDirection(-1);
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   }, []);
 
-  // ---- Submit handler ----------------------------------------------------
+  // Auto-advance for radio steps (6, 7, 9)
+  const autoAdvance = useCallback(() => {
+    saveData(getValues());
+    setTimeout(() => {
+      setDirection(1);
+      setCurrentStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
+    }, 120);
+  }, [getValues]);
+
+  // ---- Submit -------------------------------------------------------------
 
   const handleSubmit = useCallback(async () => {
-    const isValid = await form4.trigger();
+    const fields = STEP_FIELDS[10];
+    const isValid = await trigger(fields);
     if (!isValid) return;
 
-    // Persist step 4 data
-    saveData(form4.getValues());
-
     setIsSubmitting(true);
+    saveData(getValues());
 
     try {
-      const allData: FullFormData = {
-        ...form1.getValues(),
-        ...form2.getValues(),
-        ...form3.getValues(),
-        ...form4.getValues(),
-      };
+      const allData = getValues();
 
       const response = await fetch("/api/submit-form", {
         method: "POST",
@@ -886,133 +244,378 @@ export default function QualificationForm({
 
       if (!response.ok) {
         const errorBody = await response.json().catch(() => null);
-        throw new Error(
-          errorBody?.message || `Error del servidor (${response.status})`
-        );
+        throw new Error(errorBody?.message || `Error del servidor (${response.status})`);
       }
 
-      // Success – clear saved form data
       clearSavedData();
 
-      // Open Calendly with pre-filled params
-      const { firstName, lastName, email } = allData;
+      const { nombre, email } = allData;
       const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
       if (calendlyUrl) {
         window.open(
-          `${calendlyUrl}?name=${encodeURIComponent(
-            firstName + " " + lastName
-          )}&email=${encodeURIComponent(email)}`,
+          `${calendlyUrl}?name=${encodeURIComponent(nombre)}&email=${encodeURIComponent(email)}`,
           "_blank"
         );
       }
 
-      // Close the modal
       onClose();
-
-      // Reset forms and step
-      form1.reset();
-      form2.reset();
-      form3.reset();
-      form4.reset();
+      reset();
       setCurrentStep(1);
     } catch (error) {
       const message =
-        error instanceof Error
-          ? error.message
-          : "Ocurrió un error inesperado. Inténtalo de nuevo.";
+        error instanceof Error ? error.message : "Ocurrió un error inesperado. Inténtalo de nuevo.";
       alert(message);
     } finally {
       setIsSubmitting(false);
     }
-  }, [form1, form2, form3, form4, onClose]);
+  }, [trigger, getValues, onClose, reset]);
 
-  // ---- Overlay click handler ---------------------------------------------
+  // ---- Overlay click ------------------------------------------------------
 
   const handleOverlayClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (e.target === e.currentTarget) {
-        onClose();
-      }
+      if (e.target === e.currentTarget) onClose();
     },
     [onClose]
   );
 
-  // ---- Step transition animation -----------------------------------------
+  // ---- Marketing channels helpers -----------------------------------------
+
+  const marketingChannels = watch("marketingChannels") || [];
+
+  const toggleChannel = useCallback(
+    (value: string) => {
+      const noMarketing = "No hago marketing";
+      if (value === noMarketing) {
+        setValue("marketingChannels", [noMarketing], { shouldValidate: true });
+        return;
+      }
+      const current = marketingChannels.filter((c) => c !== noMarketing);
+      if (current.includes(value)) {
+        setValue("marketingChannels", current.filter((c) => c !== value), { shouldValidate: true });
+      } else {
+        setValue("marketingChannels", [...current, value], { shouldValidate: true });
+      }
+    },
+    [marketingChannels, setValue]
+  );
+
+  // ---- Watched values -----------------------------------------------------
+
+  const adsInvestment = watch("adsInvestment");
+  const monthlyRevenue = watch("monthlyRevenue");
+  const startWhen = watch("startWhen");
+  const mainObstacle = watch("mainObstacle") || "";
+
+  // ---- Step animations ----------------------------------------------------
 
   const stepVariants = {
-    initial: { opacity: 0, x: 20 },
+    initial: (dir: number) => ({ opacity: 0, x: dir * 40 }),
     animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -20 },
+    exit: (dir: number) => ({ opacity: 0, x: dir * -40 }),
   };
 
-  // ---- Render current step content ---------------------------------------
+  // ---- Render step content ------------------------------------------------
 
   function renderStep() {
     switch (currentStep) {
+      // Step 1 — Nombre
       case 1:
         return (
-          <motion.div
-            key={1}
-            variants={stepVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-          >
-            <Step1 form={form1} />
-          </motion.div>
+          <div className="space-y-4">
+            <label className={labelClasses}>¿Cuál es tu nombre?</label>
+            <input
+              type="text"
+              placeholder="Escribe tu nombre"
+              autoComplete="given-name"
+              autoFocus
+              className={inputClasses}
+              {...register("nombre")}
+            />
+            <FieldError message={errors.nombre?.message} />
+          </div>
         );
+
+      // Step 2 — Email
       case 2:
         return (
-          <motion.div
-            key={2}
-            variants={stepVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-          >
-            <Step2 form={form2} />
-          </motion.div>
+          <div className="space-y-4">
+            <label className={labelClasses}>¿Cuál es tu email?</label>
+            <input
+              type="email"
+              placeholder="tu@email.com"
+              autoComplete="email"
+              autoFocus
+              className={inputClasses}
+              {...register("email")}
+            />
+            <FieldError message={errors.email?.message} />
+          </div>
         );
+
+      // Step 3 — WhatsApp
       case 3:
         return (
-          <motion.div
-            key={3}
-            variants={stepVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-          >
-            <Step3 form={form3} />
-          </motion.div>
+          <div className="space-y-4">
+            <label className={labelClasses}>¿Cuál es tu WhatsApp?</label>
+            <input
+              type="tel"
+              placeholder="+52 XXX XXX XXXX"
+              autoComplete="tel"
+              autoFocus
+              className={inputClasses}
+              {...register("whatsapp")}
+            />
+            <FieldError message={errors.whatsapp?.message} />
+          </div>
         );
+
+      // Step 4 — URL negocio (opcional)
       case 4:
         return (
-          <motion.div
-            key={4}
-            variants={stepVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-          >
-            <Step4 form={form4} />
-          </motion.div>
+          <div className="space-y-4">
+            <label className={labelClasses}>¿Cuál es la URL de tu negocio?</label>
+            <p className="text-sm text-gray-400 -mt-4 mb-2">Opcional</p>
+            <input
+              type="text"
+              placeholder="https://tunegocio.com"
+              autoFocus
+              className={inputClasses}
+              {...register("businessUrl")}
+            />
+          </div>
         );
+
+      // Step 5 — Canales de marketing
+      case 5:
+        return (
+          <div className="space-y-4">
+            <label className={labelClasses}>¿Cómo haces marketing ahorita?</label>
+            <p className="text-sm text-gray-400 -mt-4 mb-2">Puedes seleccionar varios</p>
+
+            {/* Options with logos */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {MARKETING_CHANNELS_WITH_LOGO.map(({ value, label, logo }) => {
+                const isSelected = marketingChannels.includes(value);
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => toggleChannel(value)}
+                    className={`flex flex-col items-center gap-2 p-3 rounded-xl border transition-colors cursor-pointer ${
+                      isSelected
+                        ? "border-brand-beige bg-brand-beige/10"
+                        : "border-white/10 hover:border-brand-beige/50"
+                    }`}
+                  >
+                    <div className={`relative shrink-0 ${value === "TikTok Ads" ? "w-28 h-14" : value === "TikTok Shop" ? "w-28 h-12" : value === "WhatsApp" || value === "Instagram orgánico" || value === "Meta Ads" ? "w-12 h-12" : "w-8 h-8"}`}>
+                      <Image
+                        src={logo}
+                        alt={label}
+                        fill
+                        className="object-contain"
+                        sizes={value === "TikTok Ads" ? "112px" : value === "TikTok Shop" ? "112px" : value === "WhatsApp" || value === "Instagram orgánico" || value === "Meta Ads" ? "48px" : "32px"}
+                      />
+                    </div>
+                    <span className="text-xs text-white font-montserrat text-center leading-tight">
+                      {label}
+                    </span>
+                  </button>
+                );
+              })}
+
+              {/* Text-only options */}
+              {MARKETING_CHANNELS_TEXT_ONLY.map((value) => {
+                const isSelected = marketingChannels.includes(value);
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => toggleChannel(value)}
+                    className={`flex items-center justify-center p-3 rounded-xl border transition-colors cursor-pointer min-h-[72px] ${
+                      isSelected
+                        ? "border-brand-beige bg-brand-beige/10"
+                        : "border-white/10 hover:border-brand-beige/50"
+                    }`}
+                  >
+                    <span className="text-xs text-white font-montserrat text-center leading-tight">
+                      {value}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <FieldError message={errors.marketingChannels?.message} />
+          </div>
+        );
+
+      // Step 6 — Inversión en ads (auto-avance)
+      case 6:
+        return (
+          <div className="space-y-4">
+            <label className={labelClasses}>¿Cuánto inviertes en ads al mes?</label>
+            <div className="space-y-2">
+              {ADS_INVESTMENT_OPTIONS.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => {
+                    setValue("adsInvestment", option, { shouldValidate: true });
+                    autoAdvance();
+                  }}
+                  className={`w-full flex items-center gap-3 p-3 rounded-lg border text-left transition-colors ${
+                    adsInvestment === option
+                      ? "border-brand-beige bg-brand-beige/10"
+                      : "border-white/10 hover:border-brand-beige/50"
+                  }`}
+                >
+                  <span
+                    className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
+                      adsInvestment === option ? "border-brand-beige" : "border-white/30"
+                    }`}
+                  >
+                    {adsInvestment === option && (
+                      <span className="h-2 w-2 rounded-full bg-brand-beige" />
+                    )}
+                  </span>
+                  <span className="text-sm text-white font-montserrat">{option}</span>
+                </button>
+              ))}
+            </div>
+            <FieldError message={errors.adsInvestment?.message} />
+          </div>
+        );
+
+      // Step 7 — Facturación mensual (auto-avance)
+      case 7:
+        return (
+          <div className="space-y-4">
+            <label className={labelClasses}>¿Cuánto factura tu negocio al mes?</label>
+            <div className="space-y-2">
+              {MONTHLY_REVENUE_OPTIONS.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => {
+                    setValue("monthlyRevenue", option, { shouldValidate: true });
+                    autoAdvance();
+                  }}
+                  className={`w-full flex items-center gap-3 p-3 rounded-lg border text-left transition-colors ${
+                    monthlyRevenue === option
+                      ? "border-brand-beige bg-brand-beige/10"
+                      : "border-white/10 hover:border-brand-beige/50"
+                  }`}
+                >
+                  <span
+                    className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
+                      monthlyRevenue === option ? "border-brand-beige" : "border-white/30"
+                    }`}
+                  >
+                    {monthlyRevenue === option && (
+                      <span className="h-2 w-2 rounded-full bg-brand-beige" />
+                    )}
+                  </span>
+                  <span className="text-sm text-white font-montserrat">{option}</span>
+                </button>
+              ))}
+            </div>
+            <FieldError message={errors.monthlyRevenue?.message} />
+          </div>
+        );
+
+      // Step 8 — Meta 90 días
+      case 8:
+        return (
+          <div className="space-y-4">
+            <label className={labelClasses}>¿A cuánto quieres llegar en 90 días?</label>
+            <input
+              type="text"
+              placeholder="Ej: $150K MXN al mes, 500 clientes..."
+              autoFocus
+              className={inputClasses}
+              {...register("goal90Days")}
+            />
+            <FieldError message={errors.goal90Days?.message} />
+          </div>
+        );
+
+      // Step 9 — Cuándo empezar (auto-avance)
+      case 9:
+        return (
+          <div className="space-y-4">
+            <label className={labelClasses}>¿Cuándo quieres empezar?</label>
+            <div className="space-y-2">
+              {START_WHEN_OPTIONS.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => {
+                    setValue("startWhen", option, { shouldValidate: true });
+                    autoAdvance();
+                  }}
+                  className={`w-full flex items-center gap-3 p-3 rounded-lg border text-left transition-colors ${
+                    startWhen === option
+                      ? "border-brand-beige bg-brand-beige/10"
+                      : "border-white/10 hover:border-brand-beige/50"
+                  }`}
+                >
+                  <span
+                    className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
+                      startWhen === option ? "border-brand-beige" : "border-white/30"
+                    }`}
+                  >
+                    {startWhen === option && (
+                      <span className="h-2 w-2 rounded-full bg-brand-beige" />
+                    )}
+                  </span>
+                  <span className="text-sm text-white font-montserrat">{option}</span>
+                </button>
+              ))}
+            </div>
+            <FieldError message={errors.startWhen?.message} />
+          </div>
+        );
+
+      // Step 10 — Obstáculo #1
+      case 10:
+        return (
+          <div className="space-y-4">
+            <label className={labelClasses}>¿Cuál es el obstáculo #1 que te frena?</label>
+            <textarea
+              rows={5}
+              placeholder="Cuéntanos qué te impide crecer..."
+              autoFocus
+              className={`${inputClasses} resize-none`}
+              {...register("mainObstacle")}
+            />
+            <div className="flex items-center justify-between">
+              <FieldError message={errors.mainObstacle?.message} />
+              <span
+                className={`text-xs ml-auto font-montserrat ${
+                  mainObstacle.length >= 20 ? "text-brand-beige" : "text-gray-500"
+                }`}
+              >
+                {mainObstacle.length}/20 mín.
+              </span>
+            </div>
+          </div>
+        );
+
       default:
         return null;
     }
   }
 
-  // ---- Render buttons per step -------------------------------------------
+  // ---- Render buttons per step --------------------------------------------
 
   function renderButtons() {
-    const backButton = (
+    const isAutoStep = [6, 7, 9].includes(currentStep);
+
+    const backBtn = (
       <button
         type="button"
-        onClick={handleBack}
+        onClick={goBack}
         className="btn-outline flex-1"
         aria-label="Paso anterior"
       >
@@ -1020,11 +623,44 @@ export default function QualificationForm({
       </button>
     );
 
+    // Auto-advance steps: show back only (no next, selection triggers advance)
+    if (isAutoStep) {
+      return currentStep > 1 ? (
+        <div className="flex gap-3">{backBtn}</div>
+      ) : null;
+    }
+
+    // Step 10 — Submit
+    if (currentStep === TOTAL_STEPS) {
+      return (
+        <div className="flex gap-3">
+          {backBtn}
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+            className="btn-primary flex-1 flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+            aria-label="Agendar cita"
+          >
+            {isSubmitting ? (
+              <>
+                <LoadingSpinner />
+                Enviando...
+              </>
+            ) : (
+              "✨ AGENDAR CITA"
+            )}
+          </button>
+        </div>
+      );
+    }
+
+    // First step — only next
     if (currentStep === 1) {
       return (
         <button
           type="button"
-          onClick={handleNext}
+          onClick={goNext}
           className="btn-primary w-full"
           aria-label="Siguiente paso"
         >
@@ -1033,47 +669,23 @@ export default function QualificationForm({
       );
     }
 
-    if (currentStep < 4) {
-      return (
-        <div className="flex gap-3">
-          {backButton}
-          <button
-            type="button"
-            onClick={handleNext}
-            className="btn-primary flex-1"
-            aria-label="Siguiente paso"
-          >
-            Siguiente &rarr;
-          </button>
-        </div>
-      );
-    }
-
-    // Step 4 – final submit
+    // Steps 2–9 (non-auto)
     return (
       <div className="flex gap-3">
-        {backButton}
+        {backBtn}
         <button
           type="button"
-          onClick={handleSubmit}
-          disabled={isSubmitting}
-          className="btn-primary flex-1 flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed"
-          aria-label="Agendar cita"
+          onClick={goNext}
+          className="btn-primary flex-1"
+          aria-label="Siguiente paso"
         >
-          {isSubmitting ? (
-            <>
-              <LoadingSpinner />
-              Enviando...
-            </>
-          ) : (
-            "\u2728 AGENDAR CITA"
-          )}
+          Siguiente &rarr;
         </button>
       </div>
     );
   }
 
-  // ---- Main render -------------------------------------------------------
+  // ---- Main render --------------------------------------------------------
 
   return (
     <AnimatePresence>
@@ -1123,25 +735,35 @@ export default function QualificationForm({
                 role="progressbar"
                 aria-valuenow={currentStep}
                 aria-valuemin={1}
-                aria-valuemax={4}
-                aria-label={`Paso ${currentStep} de 4`}
+                aria-valuemax={TOTAL_STEPS}
+                aria-label={`Paso ${currentStep} de ${TOTAL_STEPS}`}
               >
                 <div
                   className="bg-brand-beige h-full transition-all duration-500 rounded-full"
-                  style={{ width: `${(currentStep / 4) * 100}%` }}
+                  style={{ width: `${(currentStep / TOTAL_STEPS) * 100}%` }}
                 />
               </div>
 
               {/* Step indicator */}
               <p className="text-sm text-gray-400 mt-2 font-montserrat">
-                Paso {currentStep} de 4
+                Paso {currentStep} de {TOTAL_STEPS}
               </p>
             </div>
 
             {/* Body */}
             <div className="p-6">
-              <AnimatePresence mode="wait">
-                {renderStep()}
+              <AnimatePresence mode="wait" custom={direction}>
+                <motion.div
+                  key={currentStep}
+                  custom={direction}
+                  variants={stepVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  transition={{ duration: 0.22, ease: "easeInOut" }}
+                >
+                  {renderStep()}
+                </motion.div>
               </AnimatePresence>
 
               {/* Buttons */}

@@ -8,6 +8,7 @@ import Services from "@/components/sections/Services";
 import About from "@/components/sections/About";
 import Pillars from "@/components/sections/Pillars";
 import FeaturedWebinar from "@/components/sections/FeaturedWebinar";
+import HowItWorks from "@/components/sections/HowItWorks";
 import ComingSoonServices from "@/components/sections/ComingSoonServices";
 import Testimonials from "@/components/sections/Testimonials";
 import QualificationForm from "@/components/form/QualificationForm";
@@ -21,6 +22,7 @@ export default function Home() {
       <Header onOpenForm={open} />
       <main>
         <Hero onOpenForm={open} />
+        <HowItWorks />
         <Statistics />
         <Services onOpenForm={open} />
         <About />

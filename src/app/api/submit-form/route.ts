@@ -5,7 +5,7 @@ export async function POST(request: Request) {
     const data = await request.json();
 
     // Validate required fields exist
-    if (!data.firstName || !data.email) {
+    if (!data.nombre || !data.email) {
       return NextResponse.json(
         { error: "Campos requeridos faltantes" },
         { status: 400 }
@@ -14,19 +14,16 @@ export async function POST(request: Request) {
 
     // Log for development
     console.log("Form submission received:", {
-      name: `${data.firstName} ${data.lastName}`,
+      nombre: data.nombre,
       email: data.email,
-      phone: data.phone,
-      country: data.country,
-      city: data.city,
-      businessStage: data.businessStage,
-      industry: data.industry,
-      businessType: data.businessType,
-      challenges: data.challenges,
-      marketingBudget: data.marketingBudget,
-      roas: data.roas,
-      availability: data.availability,
-      referralSource: data.referralSource,
+      whatsapp: data.whatsapp,
+      businessUrl: data.businessUrl,
+      marketingChannels: data.marketingChannels,
+      adsInvestment: data.adsInvestment,
+      monthlyRevenue: data.monthlyRevenue,
+      goal90Days: data.goal90Days,
+      startWhen: data.startWhen,
+      mainObstacle: data.mainObstacle,
       timestamp: new Date().toISOString(),
     });
 
