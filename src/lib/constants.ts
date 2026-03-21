@@ -1,9 +1,10 @@
-import { Testimonial, Service, Stat, Pillar } from "./types";
+import { Testimonial, Service, Stat, Pillar, StudentInterview, WrittenReview, CaseStudy } from "./types";
 
 export const NAV_LINKS = [
   { label: "Mentoría", href: "#servicios" },
   { label: "Acerca de Nosotros", href: "#quien-soy" },
   { label: "Reseñas", href: "#testimonios" },
+  { label: "Resultados", href: "/casos-de-estudio" },
   { label: "Iniciar Sesión", href: "#login" },
 ] as const;
 
@@ -143,6 +144,150 @@ export const COMING_SOON_SERVICES: Service[] = [
     description:
       "Contenido estratégico que genera engagement y convierte seguidores en clientes.",
     image: "/images/services/content.jpg",
+  },
+];
+
+export const STUDENT_INTERVIEWS: StudentInterview[] = [
+  {
+    id: 1,
+    name: "Miguel Reyes",
+    role: "Fundador, Tienda Fitness",
+    avatarInitials: "MR",
+    quote:
+      "Antes de entrar al programa hacía $800 al mes. Hoy cierro $12k mensuales de forma consistente. El sistema de Armando es el más claro que he visto.",
+    rating: 5,
+    date: "Febrero 2026",
+    platform: "Shopify",
+  },
+  {
+    id: 2,
+    name: "Camila Torres",
+    role: "Dueña, Marca de Skincare",
+    avatarInitials: "CT",
+    quote:
+      "En 60 días pasé de no saber nada de Meta Ads a tener un ROAS de 4.2x. La mentoría es intensiva pero los resultados hablan solos.",
+    rating: 5,
+    date: "Enero 2026",
+    platform: "TikTok Shop",
+  },
+  {
+    id: 3,
+    name: "Fernando Díaz",
+    role: "CEO, Agencia de Marketing",
+    avatarInitials: "FD",
+    quote:
+      "Lo que más me sorprendió fue la claridad del método. Nada de teoría vacía, todo accionable desde el día uno.",
+    rating: 5,
+    date: "Diciembre 2025",
+    platform: "Shopify",
+  },
+  {
+    id: 4,
+    name: "Lucía Vargas",
+    role: "Emprendedora, Joyería Online",
+    avatarInitials: "LV",
+    quote:
+      "Dudé en invertir, pero en el primer mes recuperé 3x lo que pagué. Nunca había tenido una mentoría tan estructurada.",
+    rating: 5,
+    date: "Noviembre 2025",
+  },
+];
+
+export const WRITTEN_REVIEWS: WrittenReview[] = [
+  {
+    id: 1,
+    name: "Andrés Morales",
+    role: "Dropshipper, 6 Cifras",
+    avatarInitials: "AM",
+    review:
+      "Llevaba 2 años estancado en $5k al mes. Con el Método Rush entendí exactamente por qué y lo corregí en 3 semanas. Hoy supero los $20k mensuales de manera estable.",
+    rating: 5,
+    date: "Marzo 2026",
+    source: "Whop",
+  },
+  {
+    id: 2,
+    name: "Valentina Cruz",
+    role: "Fundadora, Marca de Moda",
+    avatarInitials: "VC",
+    review:
+      "El nivel de detalle y personalización de la mentoría es increíble. Armando y su equipo realmente se preocupan por tus resultados, no solo por cobrar.",
+    rating: 5,
+    date: "Febrero 2026",
+    source: "Google",
+  },
+  {
+    id: 3,
+    name: "Sebastián Núñez",
+    role: "Director, E-commerce Textil",
+    avatarInitials: "SN",
+    review:
+      "Los resultados hablan solos: +180% en ventas, ROAS de 5.1x y reducción del 35% en CAC. Todo en menos de 90 días siguiendo el método.",
+    rating: 5,
+    date: "Enero 2026",
+    source: "Whop",
+  },
+  {
+    id: 4,
+    name: "Gabriela Ríos",
+    role: "CEO, Suplementos Deportivos",
+    avatarInitials: "GR",
+    review:
+      "Pensaba que ya sabía todo de ecommerce. Me equivocaba. El programa me abrió perspectivas que no tenía y que hoy representan el 40% de mis ingresos.",
+    rating: 5,
+    date: "Diciembre 2025",
+    source: "Google",
+  },
+];
+
+export const CASE_STUDIES: CaseStudy[] = [
+  {
+    id: 1,
+    name: "Carlos Mendoza",
+    brandName: "Her Juice Bar",
+    avatarInitials: "CM",
+    result: "$3M Por Año",
+    story:
+      "Carlos llegó con una marca de jugos naturales sin presencia digital. Implementamos el embudo completo del Método Rush y en 12 meses alcanzó $3M en ventas anuales.",
+    metrics: [
+      { label: "Crecimiento en Ventas", value: "426%" },
+      { label: "ROAS Promedio", value: "6.8x" },
+      { label: "Tiempo", value: "12 meses" },
+    ],
+    date: "2025",
+    category: "Bebidas & Salud",
+  },
+  {
+    id: 2,
+    name: "Grind Basketball",
+    brandName: "Grind Basketball",
+    avatarInitials: "GB",
+    result: "4x Agotado",
+    story:
+      "Rechazados en Shark Tank, llegaron al programa sin una estrategia clara de digital. Aplicamos el sistema y agotaron inventario 4 veces consecutivas.",
+    metrics: [
+      { label: "Incremento en CVR", value: "210%" },
+      { label: "AOV", value: "+65%" },
+      { label: "Inventario agotado", value: "4 veces" },
+    ],
+    date: "2025",
+    category: "Deportes",
+  },
+  {
+    id: 3,
+    name: "Sofía Ávila",
+    brandName: "Garden Alchemy",
+    avatarInitials: "SA",
+    result: "#1 en TikTok Shop",
+    story:
+      "De marca desconocida de plantas y jardín a la posición número uno en TikTok Shop en su categoría. Cero seguidores previos, todo orgánico y paid combinado.",
+    metrics: [
+      { label: "Posición en Categoría", value: "#1" },
+      { label: "ROAS", value: "5.3x" },
+      { label: "Plazo", value: "6 meses" },
+    ],
+    date: "2024",
+    category: "Hogar & Jardín",
   },
 ];
 

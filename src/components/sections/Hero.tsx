@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -72,6 +73,16 @@ const BRAND_CARDS = [
 ];
 
 export default function Hero({ onOpenForm }: HeroProps) {
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    setIsDesktop(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   return (
     <section
@@ -240,37 +251,49 @@ export default function Hero({ onOpenForm }: HeroProps) {
           </h2>
 
           {/* Brand result cards */}
-          <div className="flex flex-col gap-4 mb-6">
-            {BRAND_CARDS.map(({ brand, result, desc, image }) => (
-              <div
-                key={brand}
-                className="relative rounded-2xl overflow-hidden h-[280px] sm:h-[320px] bg-white/5"
-              >
-                {/* Background image */}
-                <Image
-                  src={image}
-                  alt={brand}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 800px"
-                />
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
-                {/* Badge — top-left */}
-                <div className="absolute top-4 left-4 bg-white text-black text-xs font-montserrat font-semibold px-3 py-1.5 rounded-xl">
-                  {brand}
-                </div>
-                {/* Text — bottom-left */}
-                <div className="absolute bottom-0 left-0 p-5">
-                  <p className="font-barlow font-black text-2xl sm:text-3xl text-white leading-tight mb-1">
-                    {result}
-                  </p>
-                  <p className="font-montserrat text-sm text-gray-300">
-                    {desc}
-                  </p>
-                </div>
-              </div>
-            ))}
+          <div className="flex flex-col lg:flex-row gap-4 mb-6">
+            {BRAND_CARDS.map(({ brand, result, desc, image }, index) => {
+              const isHovered = hoveredCard === index;
+              const anyHovered = hoveredCard !== null;
+              const desktopFlex = isHovered ? 1.8 : anyHovered ? 0.6 : 1;
+
+              return (
+                <motion.div
+                  key={brand}
+                  className="relative rounded-2xl overflow-hidden h-[280px] sm:h-[320px] lg:h-[360px] bg-white/5"
+                  style={{ flexGrow: 1 }}
+                  initial={false}
+                  animate={isDesktop ? { flexGrow: desktopFlex } : {}}
+                  transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  onMouseEnter={() => setHoveredCard(index)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                >
+                  {/* Background image */}
+                  <Image
+                    src={image}
+                    alt={brand}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 800px"
+                  />
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
+                  {/* Badge — top-left */}
+                  <div className="absolute top-4 left-4 bg-white text-black text-xs font-montserrat font-semibold px-3 py-1.5 rounded-xl">
+                    {brand}
+                  </div>
+                  {/* Text — bottom-left */}
+                  <div className="absolute bottom-0 left-0 p-5">
+                    <p className="font-barlow font-black text-2xl sm:text-3xl text-white leading-tight mb-1">
+                      {result}
+                    </p>
+                    <p className="font-montserrat text-sm text-gray-300">
+                      {desc}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Stats row */}
@@ -302,7 +325,7 @@ export default function Hero({ onOpenForm }: HeroProps) {
               No puedo hablar lo suficientemente bien del valor de este programa.&rdquo;
             </p>
             <a
-              href="#casos"
+              href="/casos-de-estudio"
               className="inline-flex items-center gap-1 font-montserrat text-sm text-white border border-white/20 rounded-full px-5 py-2 hover:bg-white/10 transition-colors mb-10"
             >
               Caso de Estudio →
