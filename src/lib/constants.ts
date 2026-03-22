@@ -2,10 +2,8 @@ import { Testimonial, Service, Stat, Pillar, StudentInterview, WrittenReview, Ca
 
 export const NAV_LINKS = [
   { label: "Mentoría", href: "#servicios" },
-  { label: "Acerca de Nosotros", href: "#quien-soy" },
+  { label: "Nosotros", href: "#quien-soy" },
   { label: "Reseñas", href: "#testimonios" },
-  { label: "Resultados", href: "/casos-de-estudio" },
-  { label: "Webinars", href: "/webinars" },
   { label: "Iniciar Sesión", href: "#login" },
 ] as const;
 

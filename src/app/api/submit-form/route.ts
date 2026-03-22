@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { createShopifyCustomer } from "@/lib/shopify";
 
 export async function POST(request: Request) {
   try {
@@ -26,6 +27,13 @@ export async function POST(request: Request) {
       mainObstacle: data.mainObstacle,
       timestamp: new Date().toISOString(),
     });
+
+    // Save customer to Shopify with revenue-based category tag
+    try {
+      await createShopifyCustomer(data);
+    } catch (shopifyError) {
+      console.error("[Shopify] Unexpected error:", shopifyError);
+    }
 
     // Forward to webhook if configured
     const webhookUrl = process.env.FORM_WEBHOOK_URL;

@@ -76,12 +76,14 @@ export default function Header({ onOpenForm }: HeaderProps) {
             {/* RIGHT: CTA — compact on mobile, full on desktop */}
             <button
               onClick={onOpenForm}
-              className="flex-shrink-0 inline-flex items-center gap-1.5 rounded-xl bg-[#C89D69] text-white font-bold transition-colors duration-200 hover:bg-[#B08A55]
-                         px-3 py-2 text-xs lg:px-8 lg:py-3.5 lg:text-base"
+              className="flex-shrink-0 flex flex-col items-center rounded-xl bg-[#C89D69] text-white font-bold transition-colors duration-200 hover:bg-[#B08A55]
+                         px-3 py-1.5 text-xs lg:px-8 lg:py-2.5 lg:text-base"
             >
-              <span className="lg:hidden">Agendar</span>
-              <span className="hidden lg:inline">Agendar Cita</span>
-              <span aria-hidden="true">→</span>
+              <span className="flex items-center">
+                <span className="lg:hidden">Agendar</span>
+                <span className="hidden lg:inline">Agendar Cita</span>
+              </span>
+              <span className="text-[9px] lg:text-[10px] font-normal opacity-75 leading-tight tracking-widest">GRATIS</span>
             </button>
           </div>
         </div>
@@ -156,10 +158,10 @@ export default function Header({ onOpenForm }: HeaderProps) {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.1 + NAV_LINKS.length * 0.05 }}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-brand-beige px-6 py-3 text-sm font-bold text-brand-black hover:bg-brand-beige-light transition-colors duration-200"
+                  className="w-full flex flex-col items-center rounded-xl bg-brand-beige px-6 py-3 text-sm font-bold text-brand-black hover:bg-brand-beige-light transition-colors duration-200"
                 >
-                  Agendar Cita
-                  <span aria-hidden="true">→</span>
+                  <span>Agendar Cita</span>
+                  <span className="text-[10px] font-normal opacity-60 leading-tight tracking-widest">GRATIS</span>
                 </motion.button>
               </div>
             </motion.div>

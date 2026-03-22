@@ -32,14 +32,14 @@ const PLATFORM_TABS: PlatformTab[] = [
     logoSrc: "/images/logos/meta-ads.png",
     logoAlt: "Meta Ads",
     badge: "Meta Ads",
-    heading: "Grow your Meta Ad ROAS",
+    heading: "Aumenta tu ROAS en Meta Ads",
     description:
-      "We will show you how to set up a profitable ad account, create winning ad creatives, test properly, and scale without killing your ROAS.",
+      "Te mostraremos cómo configurar una cuenta de anuncios rentable, crear creativos ganadores, testear correctamente y escalar sin destruir tu ROAS.",
     color: "#1877F2",
     columns: [
-      { label: "Ad Creatives" },
-      { label: "Ad Optimization" },
-      { label: "Ad Scaling" },
+      { label: "Creativos de Anuncios" },
+      { label: "Optimización de Anuncios" },
+      { label: "Escalado de Anuncios" },
     ],
   },
   {
@@ -173,12 +173,10 @@ export default function HowItWorks() {
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="heading-lg text-white">HOW IT WORKS</h2>
+          <h2 className="heading-lg text-white">COMO FUNCIONA</h2>
           <div className="w-20 h-1 bg-brand-beige mx-auto mt-4" />
           <p className="body-text max-w-2xl mx-auto mt-6">
-            We&apos;ll help you implement a full growth system built around Facebook
-            Ads, TikTok Ads, TikTok Shop, Shopify CRO, Email/SMS and so much
-            more.
+            Te ayudaremos a implementar un sistema de crecimiento completo basado en anuncios de Facebook, anuncios de TikTok, tienda de TikTok, optimización de la tasa de conversión de Shopify, correo electrónico/SMS y mucho más.
           </p>
         </motion.div>
 
