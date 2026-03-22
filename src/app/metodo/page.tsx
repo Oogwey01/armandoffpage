@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
@@ -11,7 +11,7 @@ import { StarIcon } from "@/components/common/Icons";
 export default function MetodoPage() {
   const { isOpen, open, close } = useFormModal();
 
-  const fadeUpVariants = {
+  const fadeUpVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: (delay: number) => ({
       opacity: 1,
@@ -19,7 +19,7 @@ export default function MetodoPage() {
       transition: {
         duration: 0.6,
         delay,
-        ease: "easeOut",
+        ease: "easeOut" as const,
       },
     }),
   };
