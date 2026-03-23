@@ -67,9 +67,9 @@ function MarqueeCard({ type, label }: MarqueeCardData) {
 
 // ── Brand cards data ───────────────────────────────────────────
 const BRAND_CARDS = [
-  { brand: "Her Juice Bar",    result: "$3M Por Año",       desc: "en ventas usando el Método Rush",                     image: "/images/hero/placeholder.jpg" },
-  { brand: "Grind Basketball", result: "4x Agotado",        desc: "De rechazado en Shark Tank a agotado 4 veces",        image: "/images/hero/placeholder.jpg" },
-  { brand: "Garden Alchemy",   result: "#1 en TikTok Shop", desc: "De marca desconocida a top vendedor en TikTok Shop",  image: "/images/hero/placeholder.jpg" },
+  { brand: "FRESA FIT", result: "8 años construyendo marca",       desc: "De Hermosillo para todo México. Desde los 19 años.",                          image: "/images/prove/1st image.png" },
+  { brand: "FRESA FIT", result: "Negocio real, no teoría",         desc: "Todo lo que enseño lo opero todos los días en mi propia marca.",               image: "/images/prove/2nd image.png" },
+  { brand: "FRESA FIT", result: "Equipo, producto y operación real", desc: "Así se ve por dentro una marca de 8 cifras funcionando desde Sonora.",       image: "/images/prove/3rd image.png" },
 ];
 
 export default function Hero({ onOpenForm }: HeroProps) {
@@ -193,35 +193,39 @@ export default function Hero({ onOpenForm }: HeroProps) {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
-          className="relative rounded-2xl overflow-hidden border border-white/10"
         >
           {/* Stat + Image columns */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             {[
-              { pct: "226%", label: "Incremento promedio en Ventas", imgLabel: "SHOPIFY" },
-              { pct: "207%", label: "Incremento promedio en ROAS",   imgLabel: "ROAS"    },
-              { pct: "25%",  label: "Incremento promedio en AOV",    imgLabel: "AOVs"    },
-              { pct: "72%",  label: "Incremento promedio en CVR",    imgLabel: "CRO"     },
-            ].map(({ pct, label, imgLabel }) => (
-              <div key={pct} className="bg-transparent flex flex-col">
+              { pct: "226%", label: "Incremento promedio en Ventas", imgLabel: "SHOPIFY", img: "/images/statistics/aff.png"  },
+              { pct: "207%", label: "Incremento promedio en ROAS",   imgLabel: "ROAS",    img: "/images/statistics/aff2.png" },
+              { pct: "25%",  label: "Incremento promedio en AOV",    imgLabel: "AOVs",    img: "/images/statistics/aff3.png" },
+              { pct: "72%",  label: "Incremento promedio en CVR",    imgLabel: "CRO",     img: "/images/statistics/aff4.png" },
+            ].map(({ pct, label, imgLabel, img }) => (
+              <div key={pct} className="flex flex-col">
                 {/* Stat */}
-                <div className="flex flex-col gap-1 px-2 sm:px-4 pt-3 pb-2">
+                <div className="flex items-center gap-2 pb-3">
                   <div className="flex items-center gap-1">
-                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="shrink-0">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0">
                       <path d="M7 1L13 7H9V13H5V7H1L7 1Z" fill="#22c55e" />
                     </svg>
-                    <span className="font-barlow font-extrabold text-2xl sm:text-3xl md:text-4xl text-white">{pct}</span>
+                    <span className="font-barlow font-extrabold text-5xl sm:text-6xl md:text-7xl text-white leading-none">{pct}</span>
                   </div>
-                  <span className="font-montserrat text-[10px] sm:text-xs text-gray-400 leading-tight">{label}</span>
+                  <span className="font-montserrat text-[11px] sm:text-xs text-gray-300 leading-snug text-left max-w-[72px]">{label}</span>
                 </div>
                 {/* Image */}
-                <div className="aspect-[3/4] bg-white/5 border border-white/10 mx-2 sm:mx-3 mb-2 rounded-lg flex items-center justify-center">
-                  <span className="font-montserrat text-xs text-white/20 uppercase tracking-widest">
-                    Imagen próximamente
-                  </span>
+                <div className="rounded-lg overflow-hidden border border-white/10">
+                  <Image
+                    src={img}
+                    alt={imgLabel}
+                    width={0}
+                    height={0}
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="w-full h-auto"
+                  />
                 </div>
                 {/* Label */}
-                <p className="font-barlow font-extrabold text-xs text-white/60 tracking-widest text-center pb-3 uppercase">
+                <p className="font-barlow font-extrabold text-xs text-white/60 tracking-widest text-center pt-3 uppercase">
                   {imgLabel}
                 </p>
               </div>
@@ -229,11 +233,9 @@ export default function Hero({ onOpenForm }: HeroProps) {
           </div>
 
           {/* Footer note */}
-          <div className="bg-transparent border-t border-white/5 py-3 px-6 text-center">
-            <p className="font-montserrat text-xs text-gray-500">
-              Mentoreando 600+ marcas en Shopify. Promedios basados en clientes de Shopify.
-            </p>
-          </div>
+          <p className="font-montserrat text-xs text-gray-500 text-center mt-4">
+            Mentoreando 600+ marcas en Shopify. Promedios basados en clientes de Shopify.
+          </p>
         </motion.div>
 
         {/* ── Por qué nos eligen ── */}
