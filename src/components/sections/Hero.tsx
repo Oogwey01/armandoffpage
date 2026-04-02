@@ -89,28 +89,64 @@ export default function Hero({ onOpenForm }: HeroProps) {
       id="inicio"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-gray to-brand-black" />
+      {/* Base gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] to-brand-black" />
 
-      {/* Background image */}
-      <div className="absolute inset-0">
-        <Image
-          src="/images/hero/placeholder.jpg"
-          alt="Hero background"
-          fill
-          className="object-cover opacity-20"
-          priority
-          sizes="100vw"
-        />
-      </div>
+      {/* Orb 1 — top-left, oro principal */}
+      <motion.div
+        className="absolute rounded-full pointer-events-none"
+        style={{
+          width: "700px",
+          height: "500px",
+          top: "-15%",
+          left: "-10%",
+          background: "radial-gradient(ellipse, rgba(200,157,105,0.22) 0%, transparent 70%)",
+          filter: "blur(60px)",
+        }}
+        animate={{ x: [0, 50, 0], y: [0, -30, 0] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+      />
 
-      {/* Subtle overlay pattern */}
+      {/* Orb 2 — bottom-right, cobre oscuro */}
+      <motion.div
+        className="absolute rounded-full pointer-events-none"
+        style={{
+          width: "600px",
+          height: "450px",
+          bottom: "-10%",
+          right: "-8%",
+          background: "radial-gradient(ellipse, rgba(176,138,85,0.18) 0%, transparent 70%)",
+          filter: "blur(70px)",
+        }}
+        animate={{ x: [0, -40, 0], y: [0, 25, 0] }}
+        transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      {/* Orb 3 — center, muy sutil para profundidad */}
+      <motion.div
+        className="absolute rounded-full pointer-events-none"
+        style={{
+          width: "400px",
+          height: "300px",
+          top: "30%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          background: "radial-gradient(ellipse, rgba(200,157,105,0.07) 0%, transparent 70%)",
+          filter: "blur(80px)",
+        }}
+        animate={{ scale: [1, 1.15, 1] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      {/* Dot pattern overlay */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 1px 1px, rgba(200,157,105,0.5) 1px, transparent 0)",
-          backgroundSize: "40px 40px",
+            "radial-gradient(circle at 1px 1px, rgba(200,157,105,0.08) 1px, transparent 0)",
+          backgroundSize: "36px 36px",
+          WebkitMaskImage: "radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 80%)",
+          maskImage: "radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 80%)",
         }}
       />
 
@@ -261,7 +297,7 @@ export default function Hero({ onOpenForm }: HeroProps) {
 
               return (
                 <motion.div
-                  key={brand}
+                  key={index}
                   className="relative rounded-2xl overflow-hidden h-[280px] sm:h-[320px] lg:h-[360px] bg-white/5"
                   style={{ flexGrow: 1 }}
                   initial={false}
