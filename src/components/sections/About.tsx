@@ -4,57 +4,92 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
+const PILLARS = [
+  {
+    icon: "/images/logos/meta-ads.png",
+    title: "Meta Ads",
+    desc: "$5M+ invertidos con dinero propio en campañas propias",
+  },
+  {
+    icon: "/images/logos/Shopify-badge.png",
+    title: "Página web",
+    desc: "Embudo completo desde el anuncio hasta la compra",
+  },
+  {
+    icon: "/images/logos/tiktok.webp",
+    title: "TikTok Shop",
+    desc: "+4,000 ventas operando el canal directamente",
+  },
+  {
+    icon: "/images/logos/mercado-libre.png",
+    title: "Mercado Libre",
+    desc: "$30M+ facturados · MercadoLíder Platinum",
+  },
+];
+
 export default function About() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
     <section id="quien-soy" className="section-padding bg-brand-gray">
-      <div
-        ref={ref}
-        className="container-custom flex items-center flex-col md:flex-row gap-12"
-      >
-        {/* Left side - Profile image */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={isVisible ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="flex-shrink-0"
-        >
-          <div className="w-[200px] h-[200px] border-4 border-brand-beige rounded-full overflow-hidden shadow-2xl">
+      <div ref={ref} className="container-custom">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          {/* Left — Image */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="relative w-full aspect-[4/5] max-w-md mx-auto lg:mx-0 rounded-2xl overflow-hidden"
+          >
             <Image
               src="/images/hero/placeholder.jpg"
               alt="Armando FF"
-              width={200}
-              height={200}
-              className="object-cover w-full h-full"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
-          </div>
-        </motion.div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+          </motion.div>
 
-        {/* Right side - Text content */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={isVisible ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-        >
-          <span className="text-brand-beige uppercase tracking-widest text-sm font-barlow font-bold mb-4 block">
-            QUIÉN SOY
-          </span>
-          <h2 className="heading-lg text-white mb-6">
-            Un emprendedor formado en la práctica
-          </h2>
-          <p className="body-text mb-8">
-            Con más de 5 años de experiencia en el mundo empresarial, he
-            construido, fracasado y vuelto a levantar múltiples negocios. Cada
-            error fue una lección que hoy comparto con cientos de emprendedores
-            que buscan crecer con estrategia, no con suerte. Mi enfoque es
-            simple: resultados medibles, estrategias reales y acompañamiento
-            genuino.
-          </p>
-          <a href="#" className="btn-outline">
-            Conocer mi Historia
-          </a>
-        </motion.div>
+          {/* Right — Content */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+          >
+            <h2 className="font-barlow font-black text-2xl sm:text-3xl md:text-4xl text-white leading-tight mb-4">
+              &ldquo;No gestionamos tu negocio desde una oficina teórica&rdquo;
+            </h2>
+            <p className="font-montserrat text-sm sm:text-base text-gray-400 font-light leading-relaxed mb-10">
+              Todo lo que aplicamos en tu marca lo operamos primero en la nuestra. Estos son los datos reales de FRESA FIT:
+            </p>
+
+            {/* Pillar items */}
+            <div className="flex flex-col gap-0">
+              {PILLARS.map((pillar, i) => (
+                <motion.div
+                  key={pillar.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
+                  className="flex items-start gap-4 py-5 border-b border-white/10 last:border-b-0"
+                >
+                  <div className="w-10 h-10 rounded-full bg-brand-beige/10 flex items-center justify-center shrink-0 mt-0.5">
+                    <Image src={pillar.icon} alt={pillar.title} width={22} height={22} className="object-contain" />
+                  </div>
+                  <div>
+                    <p className="font-barlow font-bold text-base text-white">
+                      {pillar.title}
+                    </p>
+                    <p className="font-montserrat text-sm text-gray-400 mt-0.5">
+                      {pillar.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

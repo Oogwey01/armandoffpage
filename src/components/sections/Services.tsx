@@ -1,32 +1,32 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 interface ServicesProps {
   onOpenForm: () => void;
 }
 
-const services = [
+const SERVICES = [
   {
-    title: "MENTORÍA PRIVADA 1A1",
-    image: "/images/services/mentoria.jpg",
-    description:
-      "Acompañamiento estratégico personalizado para llevar tu negocio al siguiente nivel. Sesiones individuales enfocadas en tus metas específicas.",
-    buttonLabel: "Ver Detalles",
-    buttonStyle: "btn-primary" as const,
-    action: "form" as const,
+    name: "Meta Ads",
+    credential: "$5M+ invertidos — dinero propio",
+    price: "$6,000",
   },
   {
-    title: "WEBINARS & MASTERCLASS",
-    image: "/images/services/webinar.jpg",
-    description:
-      "Accede a sesiones grupales intensivas donde compartimos estrategias probadas de crecimiento, marketing digital y escalabilidad.",
-    buttonLabel: "Próxima Fecha: 31/03/2026",
-    buttonStyle: "btn-outline" as const,
-    action: "link" as const,
-    href: "#webinar",
+    name: "Página web",
+    credential: "Embudo completo Meta → venta",
+    price: "$6,000",
+  },
+  {
+    name: "TikTok Shop",
+    credential: "+4,000 ventas en FRESA FIT",
+    price: "$6,000",
+  },
+  {
+    name: "Mercado Libre",
+    credential: "$30M+ · MercadoLíder Platinum",
+    price: "$6,000",
   },
 ];
 
@@ -36,57 +36,74 @@ export default function Services({ onOpenForm }: ServicesProps) {
   return (
     <section id="servicios" className="section-padding">
       <div className="container-custom">
-        {/* Section title */}
-        <div className="text-center">
-          <h2 className="heading-lg text-white">NUESTROS SERVICIOS</h2>
+        {/* Section header */}
+        <div className="text-center mb-12">
+          <h2 className="heading-lg text-white">ELIGE TU PUNTO DE ENTRADA AL ECOMMERCE</h2>
           <div className="w-20 h-1 bg-brand-beige mx-auto mt-4" />
         </div>
 
-        {/* Cards grid */}
+        {/* Service cards grid */}
         <div
           ref={ref}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6"
         >
-          {services.map((service, index) => (
+          {SERVICES.map((service, index) => (
             <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="bg-brand-gray rounded-xl overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl"
+              key={service.name}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-brand-gray border border-white/10 rounded-xl p-6 flex flex-col justify-between hover:border-white/20 transition-colors"
             >
-              {/* Image */}
-              <div className="relative w-full h-[200px]">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  width={300}
-                  height={200}
-                  className="w-full h-full object-cover rounded-t-xl"
-                />
+              <div>
+                <h3 className="font-barlow font-bold text-xl text-white">{service.name}</h3>
+                <p className="font-montserrat text-sm text-gray-400 mt-1">{service.credential}</p>
               </div>
-
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="heading-md text-white">{service.title}</h3>
-                <p className="text-gray-300 mt-3">{service.description}</p>
-
-                {service.action === "form" ? (
-                  <button
-                    onClick={onOpenForm}
-                    className="btn-primary mt-6"
-                  >
-                    {service.buttonLabel}
-                  </button>
-                ) : (
-                  <a href={service.href} className="btn-outline mt-6 inline-block">
-                    {service.buttonLabel}
-                  </a>
-                )}
+              <div className="mt-4">
+                <span className="font-barlow font-black text-2xl sm:text-3xl text-white">{service.price}</span>
+                <span className="font-montserrat text-sm text-gray-400">/mes</span>
               </div>
             </motion.div>
           ))}
         </div>
+
+        {/* Combo card */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="mt-6 bg-green-500/5 border border-green-500/30 rounded-xl p-6 sm:p-8"
+        >
+          <div className="flex flex-wrap items-center gap-3 mb-3">
+            <h3 className="font-barlow font-bold text-lg sm:text-xl text-white">
+              Combo Escala Total — los 4 servicios
+            </h3>
+            <span className="font-montserrat text-xs font-semibold bg-green-500 text-white px-3 py-1 rounded-full">
+              Recomendado
+            </span>
+          </div>
+          <p className="font-barlow font-black text-3xl sm:text-4xl text-white mb-2">
+            $19,500 <span className="font-montserrat text-base font-medium text-gray-400">MXN/mes</span>
+          </p>
+          <p className="font-montserrat text-sm text-gray-400">
+            Ahorras $4,500 vs contratar por separado · Sistema completo activo
+          </p>
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="mt-8"
+        >
+          <button
+            onClick={onOpenForm}
+            className="w-full bg-brand-beige text-brand-black font-barlow font-bold text-lg py-4 rounded-xl hover:bg-brand-beige-light hover:scale-[1.01] transition-all"
+          >
+            Aplicar ahora →
+          </button>
+        </motion.div>
       </div>
     </section>
   );

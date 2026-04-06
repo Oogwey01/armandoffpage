@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { StarIcon } from "@/components/common/Icons";
 
 interface HeroProps {
   onOpenForm: () => void;
@@ -67,9 +66,9 @@ function MarqueeCard({ type, label }: MarqueeCardData) {
 
 // ── Brand cards data ───────────────────────────────────────────
 const BRAND_CARDS = [
-  { brand: "FRESA FIT", result: "8 años construyendo marca",       desc: "De Hermosillo para todo México. Desde los 19 años.",                          image: "/images/prove/1st image.png" },
-  { brand: "FRESA FIT", result: "Negocio real, no teoría",         desc: "Todo lo que enseño lo opero todos los días en mi propia marca.",               image: "/images/prove/2nd image.png" },
-  { brand: "FRESA FIT", result: "Equipo, producto y operación real", desc: "Así se ve por dentro una marca de 8 cifras funcionando desde Sonora.",       image: "/images/prove/3rd image.png" },
+  { brand: "FRESA FIT", result: "$5M+ en Meta Ads",       desc: "Con dinero propio. El mismo sistema que aplicamos a tu negocio.",                          image: "/images/prove/1st image.png" },
+  { brand: "FRESA FIT", result: "Negocio real, no teoría",         desc: "Todo lo que ejecutamos lo operamos primero en nuestra marca.",               image: "/images/prove/2nd image.png" },
+  { brand: "FRESA FIT", result: "30M+ · MercadoLíder Platinum", desc: "8 cifras desde Hermosillo. Sin inversores. Sin agencia.",       image: "/images/prove/3rd image.png" },
 ];
 
 export default function Hero({ onOpenForm }: HeroProps) {
@@ -155,47 +154,45 @@ export default function Hero({ onOpenForm }: HeroProps) {
 
       {/* Content */}
       <div className="relative z-10 w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center pt-32 md:pt-40 pb-16 md:pb-20">
-        {/* Rating Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 bg-black/60 border border-white/20 rounded-full px-4 py-2 mb-8"
-        >
-          {/* Shopify logo */}
-          <Image
-            src="/images/logos/Shopify-badge.png"
-            alt="Shopify"
-            width={28}
-            height={28}
-            className="object-contain"
-          />
-          {/* Whop icon */}
-          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-red-500 text-white text-xs font-bold leading-none">
-            W
-          </span>
-          {/* Stars */}
-          <div className="flex items-center gap-0.5">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <StarIcon key={i} className="w-3.5 h-3.5 text-yellow-400" filled />
-            ))}
-          </div>
-          <span className="font-montserrat text-sm text-white font-medium">
-            4.9/5 – #1 en Whop
-          </span>
-        </motion.div>
-
         {/* Title */}
         <motion.h1
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="heading-xl text-white mb-6"
+          className="font-barlow font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-4"
         >
-          MENTOREANDO LAS MEJORES{" "}
+          TU PRODUCTO YA EXISTE{" "}
           <br className="hidden sm:block" />
-          MARCAS ECOM DEL MUNDO
+          EL MUNDO DEBE ENCONTRARLO
         </motion.h1>
+
+        {/* Credentials Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
+          className="inline-flex flex-wrap items-center justify-center gap-x-2 sm:gap-x-3 gap-y-1 bg-black/60 border border-white/20 rounded-full px-3 sm:px-5 py-1.5 mb-6"
+        >
+          <span className="inline-flex items-center gap-1 sm:gap-1.5">
+            <Image src="/images/logos/meta-ads.png" alt="Meta Ads" width={30} height={20} className="object-contain w-7 h-5 sm:w-[30px] sm:h-5" />
+            <span className="font-montserrat text-xs sm:text-base text-white font-medium">$5M+<span className="hidden sm:inline"> Meta Ads</span></span>
+          </span>
+          <span className="text-white/30">·</span>
+          <span className="inline-flex items-center gap-1 sm:gap-1.5">
+            <Image src="/images/logos/mercado-libre.png" alt="Mercado Libre" width={20} height={20} className="object-contain w-5 h-5 sm:w-5 sm:h-5" />
+            <span className="font-montserrat text-xs sm:text-base text-white font-medium">$30M+<span className="hidden sm:inline"> Mercado Libre</span></span>
+          </span>
+          <span className="text-white/30">·</span>
+          <span className="inline-flex items-center gap-1 sm:gap-1.5">
+            <Image src="/images/logos/tiktok.webp" alt="TikTok" width={30} height={20} className="object-contain w-9 h-7 sm:w-10 sm:h-7" />
+            <span className="font-montserrat text-xs sm:text-base text-white font-medium">+4,000<span className="hidden sm:inline"> ventas TikTok</span></span>
+          </span>
+          <span className="text-white/30">·</span>
+          <span className="inline-flex items-center gap-1 sm:gap-1.5">
+            <Image src="/images/logos/mercado-libre.png" alt="MercadoLíder" width={20} height={20} className="object-contain w-5 h-5 sm:w-5 sm:h-5" />
+            <span className="font-montserrat text-xs sm:text-base text-white font-medium">Platinum<span className="hidden sm:inline"> MercadoLíder</span></span>
+          </span>
+        </motion.div>
 
         {/* Subtitle */}
         <motion.p
@@ -204,9 +201,9 @@ export default function Hero({ onOpenForm }: HeroProps) {
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           className="body-text max-w-2xl mx-auto text-gray-300 mb-10"
         >
-          Te brindamos la Educación, Mentoría, Herramientas y Recursos{" "}
+          Hacemos que tu negocio venda en todos los canales — Meta Ads, TikTok Shop,{" "}
           <br className="hidden sm:block" />
-          para Escalar Grandes Marcas con Éxito — Todo en Un Solo Lugar
+          Mercado Libre y página web - gestionados por el equipo que construyó FRESA FIT.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -217,10 +214,10 @@ export default function Hero({ onOpenForm }: HeroProps) {
           className="flex flex-row items-center justify-center gap-4 mb-16"
         >
           <button onClick={onOpenForm} className="btn-primary">
-            Aplicar Ahora
+            Quiero vender en línea
           </button>
           <Link href="/metodo" className="btn-outline">
-            Conocer Más
+            Ver cómo funciona
           </Link>
         </motion.div>
 
@@ -230,47 +227,36 @@ export default function Hero({ onOpenForm }: HeroProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
         >
-          {/* Stat + Image columns */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          {/* Metric cards + images */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
             {[
-              { pct: "226%", label: "Incremento promedio en Ventas", imgLabel: "SHOPIFY", img: "/images/statistics/aff.png"  },
-              { pct: "207%", label: "Incremento promedio en ROAS",   imgLabel: "ROAS",    img: "/images/statistics/aff2.png" },
-              { pct: "25%",  label: "Incremento promedio en AOV",    imgLabel: "AOVs",    img: "/images/statistics/aff3.png" },
-              { pct: "72%",  label: "Incremento promedio en CVR",    imgLabel: "CRO",     img: "/images/statistics/aff4.png" },
-            ].map(({ pct, label, imgLabel, img }) => (
-              <div key={pct} className="flex flex-col">
-                {/* Stat */}
-                <div className="flex items-center gap-2 pb-3">
-                  <div className="flex items-center gap-1">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0">
-                      <path d="M7 1L13 7H9V13H5V7H1L7 1Z" fill="#22c55e" />
-                    </svg>
-                    <span className="font-barlow font-extrabold text-5xl sm:text-6xl md:text-7xl text-white leading-none">{pct}</span>
-                  </div>
-                  <span className="font-montserrat text-[11px] sm:text-xs text-gray-300 leading-snug text-left max-w-[72px]">{label}</span>
+              { num: "$5M+",     desc: "Invertidos en Meta Ads con dinero propio",  img: "/images/statistics/aff.png" },
+              { num: "$30M+",    desc: "Facturados en Mercado Libre en 2 años",     img: "/images/statistics/aff2.png" },
+              { num: "+4,000",   desc: "Ventas generadas en TikTok Shop",           img: "/images/statistics/aff3.png" },
+              { num: "Platinum", desc: "MercadoLíder — nivel más alto en ML",       img: "/images/statistics/aff4.png" },
+            ].map(({ num, desc, img }) => (
+              <div key={num} className="flex flex-col gap-2">
+                <div className="bg-white/5 border border-white/10 rounded-xl py-4 px-2 sm:py-6 sm:px-3 text-center">
+                  <span className="font-barlow font-black text-lg sm:text-3xl md:text-4xl text-white leading-none">{num}</span>
+                  <p className="font-montserrat text-[10px] sm:text-sm text-gray-300 mt-1 sm:mt-2 leading-tight">{desc}</p>
                 </div>
-                {/* Image */}
                 <div className="rounded-lg overflow-hidden border border-white/10">
                   <Image
                     src={img}
-                    alt={imgLabel}
+                    alt={num}
                     width={0}
                     height={0}
                     sizes="(max-width: 768px) 50vw, 25vw"
                     className="w-full h-auto"
                   />
                 </div>
-                {/* Label */}
-                <p className="font-barlow font-extrabold text-xs text-white/60 tracking-widest text-center pt-3 uppercase">
-                  {imgLabel}
-                </p>
               </div>
             ))}
           </div>
 
           {/* Footer note */}
-          <p className="font-montserrat text-xs text-gray-500 text-center mt-4">
-            Mentoreando 600+ marcas en Shopify. Promedios basados en clientes de Shopify.
+          <p className="font-montserrat text-sm text-gray-400 text-center mt-6">
+            Nadie más en México puede mostrar estos 4 números con dinero propio
           </p>
         </motion.div>
 
@@ -279,12 +265,11 @@ export default function Hero({ onOpenForm }: HeroProps) {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.8, ease: "easeOut" }}
-          className="mt-24"
+          className="mt-10 md:mt-24"
         >
           {/* Section title */}
-          <h2 className="font-barlow font-black text-2xl md:text-4xl text-white text-center uppercase leading-tight tracking-tight mb-10">
+          <h2 className="font-barlow font-black text-2xl sm:text-3xl md:text-5xl text-white mb-10">
             VE POR QUÉ 600+ MARCAS
-            <br />
             NOS ELIGEN
           </h2>
 
@@ -315,11 +300,8 @@ export default function Hero({ onOpenForm }: HeroProps) {
                     sizes="(max-width: 768px) 100vw, 800px"
                   />
                   {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
                   {/* Badge — top-left */}
-                  <div className="absolute top-4 left-4 bg-white text-black text-xs font-montserrat font-semibold px-3 py-1.5 rounded-xl">
-                    {brand}
-                  </div>
                   {/* Text — bottom-left */}
                   <div className="absolute bottom-0 left-0 p-5">
                     <p className="font-barlow font-black text-2xl sm:text-3xl text-white leading-tight mb-1">
@@ -349,38 +331,139 @@ export default function Hero({ onOpenForm }: HeroProps) {
             ))}
           </div>
 
-          {/* Testimonial */}
-          <div className="text-center max-w-3xl mx-auto">
-            <p className="font-montserrat text-xs tracking-widest uppercase text-gray-500 mb-6">
-              Hard Working Gentlemen
+          {/* ── Escalado 360 ── */}
+          <div className="text-left mb-24">
+            {/* Label */}
+            <p className="font-barlow font-bold text-sm tracking-widest uppercase text-brand-beige mb-3">
+              ESCALADO 360
             </p>
-            <blockquote className="font-barlow font-black text-xl md:text-3xl text-white uppercase leading-tight tracking-tight mb-5">
-              &ldquo;ARMANDO Y SU EQUIPO HAN MULTIPLICADO MI NEGOCIO 10X — DOS VECES.&rdquo;
-            </blockquote>
-            <p className="font-montserrat text-xs text-gray-400 italic mb-7">
-              &ldquo;Ambas veces, nos quedamos sin inventario, que es lo único que nos ha frenado.
-              <br />
-              No puedo hablar lo suficientemente bien del valor de este programa.&rdquo;
+
+            {/* Title */}
+            <h3 className="font-barlow font-black text-3xl md:text-5xl text-white leading-tight mb-8">
+              No dejes dinero en un solo canal
+            </h3>
+
+            {/* Subtitle */}
+            <p className="font-montserrat text-base md:text-lg text-gray-400 font-light leading-relaxed mb-2">
+              El 80% de negocios que fracasan en internet apostaron todo a un solo canal.
             </p>
-            <a
-              href="/casos-de-estudio"
-              className="inline-flex items-center gap-1 font-montserrat text-sm text-white border border-white/20 rounded-full px-5 py-2 hover:bg-white/10 transition-colors mb-10"
-            >
-              Caso de Estudio →
-            </a>
-            {/* Author */}
-            <div className="flex items-center justify-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center shrink-0">
-                <span className="font-montserrat text-xs text-gray-400">RR</span>
+            <p className="font-montserrat text-sm md:text-base text-gray-500 font-light leading-relaxed mb-12">
+              Los que escalan tienen un sistema completo. Un canal trae el tráfico. Otro convierte. Otro captura. Otro retiene.
+            </p>
+
+            {/* Flow diagram — Desktop (horizontal) */}
+            <div className="hidden md:flex items-center justify-between gap-3 mb-12">
+              {[
+                { name: "Meta Ads",      action: "Atrae",           cardBg: "bg-blue-200/10",   borderColor: "border-blue-300/30",  textColor: "text-blue-300",   logo: "/images/logos/meta-ads.png" },
+                { name: "Página web",    action: "Convierte",       cardBg: "bg-purple-200/10",  borderColor: "border-purple-300/30", textColor: "text-purple-300", logo: "/images/logos/Shopify-badge.png" },
+                { name: "TikTok Shop",   action: "Vende directo",   cardBg: "bg-rose-200/10",    borderColor: "border-rose-300/30",   textColor: "text-rose-300",   logo: "/images/logos/tiktok.webp" },
+                { name: "Mercado Libre", action: "Captura demanda", cardBg: "bg-amber-200/10",   borderColor: "border-amber-300/30",  textColor: "text-amber-300",  logo: "/images/logos/mercado-libre.png" },
+              ].map(({ name, action, cardBg, borderColor, textColor, logo }, i) => (
+                <div key={name} className="contents">
+                  <div className={`${cardBg} ${borderColor} border rounded-2xl py-6 px-5 text-center flex-1`}>
+                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-3">
+                      <Image src={logo} alt={name} width={24} height={24} className="object-contain" />
+                    </div>
+                    <p className={`font-barlow font-bold text-base ${textColor}`}>{name}</p>
+                    <p className="font-montserrat text-xs text-gray-400 mt-1">{action}</p>
+                  </div>
+                  {i < 3 && (
+                    <span className="text-white/30 text-2xl shrink-0">→</span>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Flow diagram — Mobile (vertical) */}
+            <div className="flex md:hidden flex-col gap-3 mb-12">
+              {[
+                { name: "Meta Ads",      action: "Atrae",           cardBg: "bg-blue-200/10",   borderColor: "border-blue-300/30",  textColor: "text-blue-300",   logo: "/images/logos/meta-ads.png" },
+                { name: "Página web",    action: "Convierte",       cardBg: "bg-purple-200/10",  borderColor: "border-purple-300/30", textColor: "text-purple-300", logo: "/images/logos/Shopify-badge.png" },
+                { name: "TikTok Shop",   action: "Vende directo",   cardBg: "bg-rose-200/10",    borderColor: "border-rose-300/30",   textColor: "text-rose-300",   logo: "/images/logos/tiktok.webp" },
+                { name: "Mercado Libre", action: "Captura demanda", cardBg: "bg-amber-200/10",   borderColor: "border-amber-300/30",  textColor: "text-amber-300",  logo: "/images/logos/mercado-libre.png" },
+              ].map(({ name, action, cardBg, borderColor, textColor, logo }, i) => (
+                <div key={name}>
+                  <div className={`${cardBg} ${borderColor} border rounded-xl py-4 px-4 flex items-center gap-4`}>
+                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                      <Image src={logo} alt={name} width={20} height={20} className="object-contain" />
+                    </div>
+                    <div>
+                      <p className={`font-barlow font-bold text-sm ${textColor}`}>{name}</p>
+                      <p className="font-montserrat text-xs text-gray-400">{action}</p>
+                    </div>
+                  </div>
+                  {i < 3 && (
+                    <div className="flex justify-center py-1">
+                      <span className="text-white/30 text-xl">↓</span>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Comparison — Desktop */}
+            <div className="hidden md:grid grid-cols-[1fr_auto_1fr] gap-6 items-stretch mb-12">
+              {/* Sin sistema */}
+              <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-6">
+                <p className="font-barlow font-bold text-base text-red-400 mb-4">Sin sistema completo</p>
+                <ul className="font-montserrat text-sm text-gray-300 space-y-3">
+                  <li className="flex items-center gap-3"><span className="w-5 h-5 rounded-full bg-red-500/20 flex items-center justify-center shrink-0"><svg viewBox="0 0 12 12" className="w-3 h-3 text-red-400"><path d="M9 3L3 9M3 3l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg></span>Tráfico perdido</li>
+                  <li className="flex items-center gap-3"><span className="w-5 h-5 rounded-full bg-red-500/20 flex items-center justify-center shrink-0"><svg viewBox="0 0 12 12" className="w-3 h-3 text-red-400"><path d="M9 3L3 9M3 3l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg></span>Nadie llega</li>
+                  <li className="flex items-center gap-3"><span className="w-5 h-5 rounded-full bg-red-500/20 flex items-center justify-center shrink-0"><svg viewBox="0 0 12 12" className="w-3 h-3 text-red-400"><path d="M9 3L3 9M3 3l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg></span>Sin retención</li>
+                </ul>
               </div>
-              <div className="text-left">
-                <p className="font-montserrat font-semibold text-sm text-white">Reid Ryan</p>
-                <p className="font-montserrat text-xs text-gray-500">
-                  Fundador, Hard Working Gentlemen
-                </p>
+
+              {/* VS */}
+              <div className="flex items-center justify-center self-center">
+                <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
+                  <span className="font-barlow font-bold text-sm text-white/50">vs</span>
+                </div>
+              </div>
+
+              {/* Con Escalado 360 */}
+              <div className="bg-green-500/5 border border-green-500/20 rounded-xl p-6">
+                <ul className="font-montserrat text-sm text-gray-300 space-y-3">
+                  <li className="flex items-center gap-3"><span className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><svg viewBox="0 0 12 12" className="w-3 h-3 text-green-400"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg></span>Tráfico que convierte</li>
+                  <li className="flex items-center gap-3"><span className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><svg viewBox="0 0 12 12" className="w-3 h-3 text-green-400"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg></span>Página que vende sola</li>
+                  <li className="flex items-center gap-3"><span className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><svg viewBox="0 0 12 12" className="w-3 h-3 text-green-400"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg></span>TikTok que escala</li>
+                  <li className="flex items-center gap-3"><span className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><svg viewBox="0 0 12 12" className="w-3 h-3 text-green-400"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg></span>ML que captura el resto</li>
+                </ul>
               </div>
             </div>
+
+            {/* Comparison — Mobile */}
+            <div className="flex md:hidden flex-col gap-4 mb-12">
+              {/* Sin sistema */}
+              <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-5">
+                <p className="font-barlow font-bold text-base text-red-400 mb-3">Sin sistema completo</p>
+                <ul className="font-montserrat text-sm text-gray-300 space-y-3">
+                  <li className="flex items-center gap-3"><span className="w-5 h-5 rounded-full bg-red-500/20 flex items-center justify-center shrink-0"><svg viewBox="0 0 12 12" className="w-3 h-3 text-red-400"><path d="M9 3L3 9M3 3l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg></span>Tráfico perdido</li>
+                  <li className="flex items-center gap-3"><span className="w-5 h-5 rounded-full bg-red-500/20 flex items-center justify-center shrink-0"><svg viewBox="0 0 12 12" className="w-3 h-3 text-red-400"><path d="M9 3L3 9M3 3l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg></span>Nadie llega</li>
+                  <li className="flex items-center gap-3"><span className="w-5 h-5 rounded-full bg-red-500/20 flex items-center justify-center shrink-0"><svg viewBox="0 0 12 12" className="w-3 h-3 text-red-400"><path d="M9 3L3 9M3 3l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg></span>Sin retención</li>
+                </ul>
+              </div>
+
+              {/* Con Escalado 360 */}
+              <div className="bg-green-500/5 border border-green-500/20 rounded-xl p-5">
+                <ul className="font-montserrat text-sm text-gray-300 space-y-3">
+                  <li className="flex items-center gap-3"><span className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><svg viewBox="0 0 12 12" className="w-3 h-3 text-green-400"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg></span>Tráfico que convierte</li>
+                  <li className="flex items-center gap-3"><span className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><svg viewBox="0 0 12 12" className="w-3 h-3 text-green-400"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg></span>Página que vende sola</li>
+                  <li className="flex items-center gap-3"><span className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><svg viewBox="0 0 12 12" className="w-3 h-3 text-green-400"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg></span>TikTok que escala</li>
+                  <li className="flex items-center gap-3"><span className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><svg viewBox="0 0 12 12" className="w-3 h-3 text-green-400"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg></span>ML que captura el resto</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <button
+              onClick={onOpenForm}
+              className="w-full bg-brand-beige text-brand-black font-barlow font-bold text-lg py-4 rounded-xl hover:bg-brand-beige-light hover:scale-[1.01] transition-all"
+            >
+              Quiero el sistema completo →
+            </button>
           </div>
+
+          {/* Testimonial — hidden */}
         </motion.div>
 
         {/* ── Marquee Gallery ── */}

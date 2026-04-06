@@ -3,7 +3,6 @@
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import Hero from "@/components/sections/Hero";
-import Statistics from "@/components/sections/Statistics";
 import Services from "@/components/sections/Services";
 import About from "@/components/sections/About";
 import Pillars from "@/components/sections/Pillars";
@@ -23,7 +22,6 @@ export default function Home() {
       <main>
         <Hero onOpenForm={open} />
         <HowItWorks />
-        <Statistics />
         <Services onOpenForm={open} />
         <About />
         <Pillars />
