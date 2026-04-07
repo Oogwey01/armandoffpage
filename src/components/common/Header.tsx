@@ -76,13 +76,11 @@ export default function Header({ onOpenForm }: HeaderProps) {
             {/* RIGHT: CTA — compact on mobile, full on desktop */}
             <button
               onClick={onOpenForm}
-              className="flex-shrink-0 flex flex-col items-center rounded-xl bg-[#C89D69] text-black font-bold transition-colors duration-200 hover:bg-[#B08A55]
-                         px-3 py-1.5 text-xs lg:px-8 lg:py-2.5 lg:text-base"
+              className="flex-shrink-0 flex items-center gap-1.5 rounded-xl bg-[#C89D69] text-black font-bold uppercase transition-colors duration-200 hover:bg-[#B08A55]
+                         px-3 py-2 text-xs lg:px-8 lg:py-2.5 lg:text-base"
             >
-              <span className="flex items-center">
-                <span className="hidden lg:inline">Agendar Cita</span>
-              </span>
-              <span className="text-[9px] lg:text-[10px] font-normal opacity-75 leading-tight tracking-widest">GRATIS</span>
+              <span>Agendar Cita</span>
+              <span className="text-[9px] lg:text-[10px] font-bold opacity-75 tracking-widest">GRATIS</span>
             </button>
           </div>
         </div>

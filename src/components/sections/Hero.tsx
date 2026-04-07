@@ -158,22 +158,13 @@ export default function Hero({ onOpenForm }: HeroProps) {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 lg:gap-10 items-center mb-16">
           {/* Left column */}
           <div>
-            {/* Label */}
-            <motion.p
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="font-barlow font-bold text-xs tracking-widest uppercase text-brand-beige mb-4"
-            >
-              ARMANDO FRESA FIT
-            </motion.p>
 
             {/* Title */}
             <motion.h1
               initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className="font-barlow font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight"
+              className="font-barlow font-black text-4xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight"
             >
               Tu producto{" "}
               <span className="text-brand-beige">ya existe.</span>
@@ -182,30 +173,23 @@ export default function Hero({ onOpenForm }: HeroProps) {
               <span className="text-brand-beige">encontrarlo</span>
             </motion.h1>
 
-            {/* Credentials Badge — grid 2x2 */}
+            {/* Platform logos */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-              className="grid grid-cols-2 gap-2 sm:gap-3 max-w-sm sm:max-w-lg mb-8"
+              className="inline-flex items-center gap-3 sm:gap-4 bg-white/5 border border-white/10 rounded-full px-4 py-2.5 sm:px-5 sm:py-3 mb-8"
             >
               {[
-                { logo: "/images/logos/meta-ads.png", num: "$5M+", label: "Meta Ads", labelSm: "Meta Ads", borderColor: "border-blue-400/40", w: 20, h: 20 },
-                { logo: "/images/logos/mercado-libre.png", num: "$30M+", label: "Mercado Libre", labelSm: "ML", borderColor: "border-amber-400/40", w: 18, h: 18 },
-                { logo: "/images/logos/tiktok.webp", num: "+4,000", label: "ventas TikTok", labelSm: "TikTok", borderColor: "border-rose-400/40", w: 20, h: 20 },
-                { logo: "/images/logos/mercado-libre.png", num: "Platinum", label: "MercadoLíder", labelSm: "ML", borderColor: "border-purple-400/40", w: 18, h: 18 },
-              ].map(({ logo, num, label, labelSm, borderColor, w, h }) => (
-                <div key={num} className={`flex items-center gap-2.5 sm:gap-3 bg-white/5 border ${borderColor} rounded-xl px-3 py-2.5 sm:px-4 sm:py-3`}>
-                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                    <Image src={logo} alt={label} width={w} height={h} className="object-contain w-4 h-4 sm:w-5 sm:h-5" />
-                  </div>
-                  <div>
-                    <p className="font-barlow font-bold text-sm sm:text-base text-white leading-none">{num}</p>
-                    <p className="font-montserrat text-[10px] sm:text-xs text-white/50 mt-0.5">
-                      <span className="hidden sm:inline">{label}</span>
-                      <span className="sm:hidden">{labelSm}</span>
-                    </p>
-                  </div>
+                { logo: "/images/logos/meta-ads.png", alt: "Meta Ads", w: 28, h: 20 },
+                { logo: "/images/logos/Shopify-badge.png", alt: "Shopify", w: 22, h: 22 },
+                { logo: "/images/logos/tiendanube.svg", alt: "Tiendanube", w: 24, h: 22 },
+                { logo: "/images/logos/tiktokshop.webp", alt: "TikTok Shop", w: 28, h: 20 },
+                { logo: "/images/logos/mercado-libre.png", alt: "Mercado Libre", w: 22, h: 22 },
+              ].map(({ logo, alt, w, h }, i) => (
+                <div key={alt} className="contents">
+                  <Image src={logo} alt={alt} width={w} height={h} className="object-contain h-5 sm:h-6 w-auto opacity-80 hover:opacity-100 transition-opacity" />
+                  {i < 4 && <span className="text-white/30 text-xs">→</span>}
                 </div>
               ))}
             </motion.div>
