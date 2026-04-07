@@ -15,6 +15,7 @@ interface PlatformTab {
   id: string;
   label: string;
   logoSrc?: string;
+  logoSrcs?: string[];
   logoAlt: string;
   badge: string;
   heading: string;
@@ -46,6 +47,7 @@ const PLATFORM_TABS: PlatformTab[] = [
     id: "pagina-web",
     label: "Página web",
     logoSrc: "/images/logos/Shopify-badge.png",
+    logoSrcs: ["/images/logos/Shopify-badge.png", "/images/logos/tiendanube.svg"],
     logoAlt: "Página web",
     badge: "Embudo completo",
     heading: "Una página que convierte visitas en clientes",
@@ -200,7 +202,18 @@ export default function HowItWorks() {
                     opacity: isActive ? 1 : 0.45,
                   }}
                 />
-                {tab.logoSrc ? (
+                {tab.logoSrcs ? (
+                  tab.logoSrcs.map((src) => (
+                    <Image
+                      key={src}
+                      src={src}
+                      alt={tab.logoAlt}
+                      width={16}
+                      height={16}
+                      className="object-contain shrink-0"
+                    />
+                  ))
+                ) : tab.logoSrc ? (
                   <Image
                     src={tab.logoSrc}
                     alt={tab.logoAlt}

@@ -153,99 +153,66 @@ export default function Hero({ onOpenForm }: HeroProps) {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-black to-transparent" />
 
       {/* Content */}
-      <div className="relative z-10 w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-left pt-32 md:pt-40 pb-16 md:pb-20">
-        {/* Hero top — 2 col grid on desktop */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 lg:gap-10 items-center mb-16">
-          {/* Left column */}
-          <div>
-
-            {/* Title */}
-            <motion.h1
-              initial={{ opacity: 0, y: -30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-              className="font-barlow font-black text-4xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight"
-            >
-              Tu producto{" "}
-              <span className="text-brand-beige">ya existe.</span>
-              <br />
-              El mundo debe{" "}
-              <span className="text-brand-beige">encontrarlo</span>
-            </motion.h1>
-
-            {/* Platform logos */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-              className="inline-flex items-center gap-3 sm:gap-4 bg-white/5 border border-white/10 rounded-full px-4 py-2.5 sm:px-5 sm:py-3 mb-8"
-            >
-              {[
-                { logo: "/images/logos/meta-ads.png", alt: "Meta Ads", w: 28, h: 20 },
-                { logo: "/images/logos/Shopify-badge.png", alt: "Shopify", w: 22, h: 22 },
-                { logo: "/images/logos/tiendanube.svg", alt: "Tiendanube", w: 24, h: 22 },
-                { logo: "/images/logos/tiktokshop.webp", alt: "TikTok Shop", w: 28, h: 20 },
-                { logo: "/images/logos/mercado-libre.png", alt: "Mercado Libre", w: 22, h: 22 },
-              ].map(({ logo, alt, w, h }, i) => (
-                <div key={alt} className="contents">
-                  <Image src={logo} alt={alt} width={w} height={h} className="object-contain h-5 sm:h-6 w-auto opacity-80 hover:opacity-100 transition-opacity" />
-                  {i < 4 && <span className="text-white/30 text-xs">→</span>}
-                </div>
-              ))}
-            </motion.div>
-
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-              className="font-montserrat text-sm sm:text-base font-light text-gray-300 max-w-xl mb-8"
-            >
-              Hacemos que tu negocio venda en todos los canales — Meta Ads, TikTok Shop,
-              Mercado Libre y página web - gestionados por el equipo que construyó FRESA FIT.
-            </motion.p>
-
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 max-w-sm sm:max-w-none"
-            >
-              <button onClick={onOpenForm} className="btn-primary uppercase tracking-wide text-center">
-                Quiero vender en línea
-              </button>
-              <Link href="/metodo" className="btn-outline uppercase tracking-wide text-center">
-                Ver cómo funciona
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Right column — Brand card (desktop only) */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-            className="hidden lg:block"
+      <div className="relative z-10 w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-left lg:text-center pt-32 md:pt-40 pb-16 md:pb-20">
+        {/* Hero top */}
+        <div className="mb-16 max-w-4xl mx-auto lg:mx-auto">
+          {/* Title */}
+          <motion.h1
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="font-barlow font-black text-4xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight"
           >
-            <div className="relative rounded-2xl overflow-hidden h-[480px] bg-white/5">
-              <Image
-                src="/images/prove/2nd image.png"
-                alt="FRESA FIT"
-                fill
-                className="object-cover"
-                sizes="50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-              <div className="absolute bottom-0 left-0 p-6">
-                <p className="font-barlow font-black text-2xl sm:text-3xl text-white leading-tight mb-1">
-                  {BRAND_CARDS[1].result}
-                </p>
-                <p className="font-montserrat text-sm text-gray-300">
-                  {BRAND_CARDS[1].desc}
-                </p>
+            Tu producto <span className="text-brand-beige">ya existe.</span>
+            <br className="hidden sm:block" />
+            {" "}El mundo debe <span className="text-brand-beige">encontrarlo</span>
+          </motion.h1>
+
+          {/* Platform logos */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
+            className="inline-flex items-center gap-3 sm:gap-4 bg-white/5 border border-white/10 rounded-full px-4 py-2.5 sm:px-5 sm:py-3 mb-8"
+          >
+            {[
+              { logo: "/images/logos/meta-ads.png", alt: "Meta Ads", w: 28, h: 20 },
+              { logo: "/images/logos/Shopify-badge.png", alt: "Shopify", w: 22, h: 22 },
+              { logo: "/images/logos/tiendanube.svg", alt: "Tiendanube", w: 24, h: 22 },
+              { logo: "/images/logos/tiktokshop.webp", alt: "TikTok Shop", w: 28, h: 20 },
+              { logo: "/images/logos/mercado-libre.png", alt: "Mercado Libre", w: 22, h: 22 },
+            ].map(({ logo, alt, w, h }, i) => (
+              <div key={alt} className="contents">
+                <Image src={logo} alt={alt} width={w} height={h} className="object-contain h-5 sm:h-6 w-auto opacity-80 hover:opacity-100 transition-opacity" />
+                {i < 4 && <span className="text-white/30 text-xs">→</span>}
               </div>
-            </div>
+            ))}
+          </motion.div>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+            className="font-montserrat text-sm sm:text-base font-light text-gray-300 max-w-xl mb-8 lg:mx-auto"
+          >
+            Hacemos que tu negocio venda en todos los canales — Meta Ads, TikTok Shop,
+            Mercado Libre y página web - gestionados por el equipo que construyó FRESA FIT.
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+            className="flex flex-col sm:flex-row items-stretch sm:items-center sm:justify-center gap-3 sm:gap-4 max-w-sm sm:max-w-none lg:justify-center"
+          >
+            <button onClick={onOpenForm} className="btn-primary uppercase tracking-wide text-center">
+              Quiero vender en línea
+            </button>
+            <Link href="/metodo" className="btn-outline uppercase tracking-wide text-center">
+              Ver cómo funciona
+            </Link>
           </motion.div>
         </div>
 
@@ -255,7 +222,7 @@ export default function Hero({ onOpenForm }: HeroProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
         >
-          {/* Metric cards + images */}
+          {/* Metric cards with text overlay on images */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
             {[
               { num: "$5M+",     desc: "Invertidos en Meta Ads con dinero propio",  img: "/images/statistics/aff.png" },
@@ -263,20 +230,23 @@ export default function Hero({ onOpenForm }: HeroProps) {
               { num: "+4,000",   desc: "Ventas generadas en TikTok Shop",           img: "/images/statistics/aff3.png" },
               { num: "Platinum", desc: "MercadoLíder — nivel más alto en ML",       img: "/images/statistics/aff4.png" },
             ].map(({ num, desc, img }) => (
-              <div key={num} className="flex flex-col gap-2">
-                <div className="bg-white/5 border border-white/10 rounded-xl py-4 px-2 sm:py-6 sm:px-3 text-center">
-                  <span className="font-barlow font-black text-lg sm:text-3xl md:text-4xl text-white leading-none">{num}</span>
-                  <p className="font-montserrat text-[10px] sm:text-sm text-gray-300 mt-1 sm:mt-2 leading-tight">{desc}</p>
-                </div>
-                <div className="rounded-lg overflow-hidden border border-white/10">
-                  <Image
-                    src={img}
-                    alt={num}
-                    width={0}
-                    height={0}
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    className="w-full h-auto"
-                  />
+              <div key={num} className="relative rounded-xl overflow-hidden border border-white/10">
+                <Image
+                  src={img}
+                  alt={num}
+                  width={0}
+                  height={0}
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                  className="w-full h-auto"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 text-center">
+                  <span className="font-barlow font-black text-2xl sm:text-3xl md:text-4xl text-white leading-none">
+                    <span className="bg-brand-beige/20 px-1.5 py-0.5 rounded">{num}</span>
+                  </span>
+                  <p className="font-montserrat text-[10px] sm:text-sm text-gray-200 mt-1.5 leading-tight">
+                    <span className="bg-brand-beige/20 px-1 py-0.5 rounded">{desc}</span>
+                  </p>
                 </div>
               </div>
             ))}
@@ -344,20 +314,7 @@ export default function Hero({ onOpenForm }: HeroProps) {
             })}
           </div>
 
-          {/* Stats row */}
-          <div className="grid grid-cols-4 gap-2 mb-20">
-            {[
-              { num: "600+",   label: "Marcas en Mentoría" },
-              { num: "40M+",   label: "Conversiones Generadas" },
-              { num: "$200M+", label: "Inversión en Ads Gestionada" },
-              { num: "$1B+",   label: "GMV generado" },
-            ].map(({ num, label }) => (
-              <div key={num} className="flex flex-col items-center text-center bg-white/5 border border-white/10 rounded-xl px-1 sm:px-3 py-3 sm:py-4">
-                <span className="font-barlow font-black text-base sm:text-xl text-white tracking-tight">{num}</span>
-                <span className="font-montserrat text-[9px] sm:text-[10px] text-gray-400 mt-1 leading-snug">{label}</span>
-              </div>
-            ))}
-          </div>
+          {/* Stats row — hidden */}
 
           {/* ── Escalado 360 ── */}
           <div className="text-left mb-24">
@@ -382,15 +339,19 @@ export default function Hero({ onOpenForm }: HeroProps) {
             {/* Flow diagram — Desktop (horizontal) */}
             <div className="hidden md:flex items-center justify-between gap-3 mb-12">
               {[
-                { name: "Meta Ads",      action: "Atrae",           cardBg: "bg-blue-200/10",   borderColor: "border-blue-300/30",  textColor: "text-blue-300",   logo: "/images/logos/meta-ads.png" },
-                { name: "Página web",    action: "Convierte",       cardBg: "bg-purple-200/10",  borderColor: "border-purple-300/30", textColor: "text-purple-300", logo: "/images/logos/Shopify-badge.png" },
-                { name: "TikTok Shop",   action: "Vende directo",   cardBg: "bg-rose-200/10",    borderColor: "border-rose-300/30",   textColor: "text-rose-300",   logo: "/images/logos/tiktok.webp" },
-                { name: "Mercado Libre", action: "Captura demanda", cardBg: "bg-amber-200/10",   borderColor: "border-amber-300/30",  textColor: "text-amber-300",  logo: "/images/logos/mercado-libre.png" },
-              ].map(({ name, action, cardBg, borderColor, textColor, logo }, i) => (
+                { name: "Meta Ads",      action: "Atrae",           cardBg: "bg-blue-200/10",   borderColor: "border-blue-300/30",  textColor: "text-blue-300",   logos: ["/images/logos/meta-ads.png"] },
+                { name: "Página web",    action: "Convierte",       cardBg: "bg-purple-200/10",  borderColor: "border-purple-300/30", textColor: "text-purple-300", logos: ["/images/logos/Shopify-badge.png", "/images/logos/tiendanube.svg"] },
+                { name: "TikTok Shop",   action: "Vende directo",   cardBg: "bg-rose-200/10",    borderColor: "border-rose-300/30",   textColor: "text-rose-300",   logos: ["/images/logos/tiktokshop.webp"] },
+                { name: "Mercado Libre", action: "Captura demanda", cardBg: "bg-amber-200/10",   borderColor: "border-amber-300/30",  textColor: "text-amber-300",  logos: ["/images/logos/mercado-libre.png"] },
+              ].map(({ name, action, cardBg, borderColor, textColor, logos }, i) => (
                 <div key={name} className="contents">
                   <div className={`${cardBg} ${borderColor} border rounded-2xl py-6 px-5 text-center flex-1`}>
-                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-3">
-                      <Image src={logo} alt={name} width={24} height={24} className="object-contain" />
+                    <div className="flex items-center justify-center gap-2 mx-auto mb-3">
+                      {logos.map((logo) => (
+                        <div key={logo} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                          <Image src={logo} alt={name} width={24} height={24} className="object-contain" />
+                        </div>
+                      ))}
                     </div>
                     <p className={`font-barlow font-bold text-base ${textColor}`}>{name}</p>
                     <p className="font-montserrat text-xs text-gray-400 mt-1">{action}</p>
@@ -405,15 +366,19 @@ export default function Hero({ onOpenForm }: HeroProps) {
             {/* Flow diagram — Mobile (vertical) */}
             <div className="flex md:hidden flex-col gap-3 mb-12">
               {[
-                { name: "Meta Ads",      action: "Atrae",           cardBg: "bg-blue-200/10",   borderColor: "border-blue-300/30",  textColor: "text-blue-300",   logo: "/images/logos/meta-ads.png" },
-                { name: "Página web",    action: "Convierte",       cardBg: "bg-purple-200/10",  borderColor: "border-purple-300/30", textColor: "text-purple-300", logo: "/images/logos/Shopify-badge.png" },
-                { name: "TikTok Shop",   action: "Vende directo",   cardBg: "bg-rose-200/10",    borderColor: "border-rose-300/30",   textColor: "text-rose-300",   logo: "/images/logos/tiktok.webp" },
-                { name: "Mercado Libre", action: "Captura demanda", cardBg: "bg-amber-200/10",   borderColor: "border-amber-300/30",  textColor: "text-amber-300",  logo: "/images/logos/mercado-libre.png" },
-              ].map(({ name, action, cardBg, borderColor, textColor, logo }, i) => (
+                { name: "Meta Ads",      action: "Atrae",           cardBg: "bg-blue-200/10",   borderColor: "border-blue-300/30",  textColor: "text-blue-300",   logos: ["/images/logos/meta-ads.png"] },
+                { name: "Página web",    action: "Convierte",       cardBg: "bg-purple-200/10",  borderColor: "border-purple-300/30", textColor: "text-purple-300", logos: ["/images/logos/Shopify-badge.png", "/images/logos/tiendanube.svg"] },
+                { name: "TikTok Shop",   action: "Vende directo",   cardBg: "bg-rose-200/10",    borderColor: "border-rose-300/30",   textColor: "text-rose-300",   logos: ["/images/logos/tiktokshop.webp"] },
+                { name: "Mercado Libre", action: "Captura demanda", cardBg: "bg-amber-200/10",   borderColor: "border-amber-300/30",  textColor: "text-amber-300",  logos: ["/images/logos/mercado-libre.png"] },
+              ].map(({ name, action, cardBg, borderColor, textColor, logos }, i) => (
                 <div key={name}>
                   <div className={`${cardBg} ${borderColor} border rounded-xl py-4 px-4 flex items-center gap-4`}>
-                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                      <Image src={logo} alt={name} width={20} height={20} className="object-contain" />
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      {logos.map((logo) => (
+                        <div key={logo} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                          <Image src={logo} alt={name} width={20} height={20} className="object-contain" />
+                        </div>
+                      ))}
                     </div>
                     <div>
                       <p className={`font-barlow font-bold text-sm ${textColor}`}>{name}</p>
