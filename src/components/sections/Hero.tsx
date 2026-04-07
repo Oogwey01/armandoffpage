@@ -153,73 +153,117 @@ export default function Hero({ onOpenForm }: HeroProps) {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-black to-transparent" />
 
       {/* Content */}
-      <div className="relative z-10 w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center pt-32 md:pt-40 pb-16 md:pb-20">
-        {/* Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="font-barlow font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-4"
-        >
-          TU PRODUCTO YA EXISTE{" "}
-          <br className="hidden sm:block" />
-          EL MUNDO DEBE ENCONTRARLO
-        </motion.h1>
+      <div className="relative z-10 w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-left pt-32 md:pt-40 pb-16 md:pb-20">
+        {/* Hero top — 2 col grid on desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 lg:gap-10 items-center mb-16">
+          {/* Left column */}
+          <div>
+            {/* Label */}
+            <motion.p
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="font-barlow font-bold text-xs tracking-widest uppercase text-brand-beige mb-4"
+            >
+              ARMANDO FRESA FIT
+            </motion.p>
 
-        {/* Credentials Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-          className="inline-flex flex-wrap items-center justify-center gap-x-2 sm:gap-x-3 gap-y-1 bg-black/60 border border-white/20 rounded-full px-3 sm:px-5 py-1.5 mb-6"
-        >
-          <span className="inline-flex items-center gap-1 sm:gap-1.5">
-            <Image src="/images/logos/meta-ads.png" alt="Meta Ads" width={30} height={20} className="object-contain w-7 h-5 sm:w-[30px] sm:h-5" />
-            <span className="font-montserrat text-xs sm:text-base text-white font-medium">$5M+<span className="hidden sm:inline"> Meta Ads</span></span>
-          </span>
-          <span className="text-white/30">·</span>
-          <span className="inline-flex items-center gap-1 sm:gap-1.5">
-            <Image src="/images/logos/mercado-libre.png" alt="Mercado Libre" width={20} height={20} className="object-contain w-5 h-5 sm:w-5 sm:h-5" />
-            <span className="font-montserrat text-xs sm:text-base text-white font-medium">$30M+<span className="hidden sm:inline"> Mercado Libre</span></span>
-          </span>
-          <span className="text-white/30">·</span>
-          <span className="inline-flex items-center gap-1 sm:gap-1.5">
-            <Image src="/images/logos/tiktok.webp" alt="TikTok" width={30} height={20} className="object-contain w-9 h-7 sm:w-10 sm:h-7" />
-            <span className="font-montserrat text-xs sm:text-base text-white font-medium">+4,000<span className="hidden sm:inline"> ventas TikTok</span></span>
-          </span>
-          <span className="text-white/30">·</span>
-          <span className="inline-flex items-center gap-1 sm:gap-1.5">
-            <Image src="/images/logos/mercado-libre.png" alt="MercadoLíder" width={20} height={20} className="object-contain w-5 h-5 sm:w-5 sm:h-5" />
-            <span className="font-montserrat text-xs sm:text-base text-white font-medium">Platinum<span className="hidden sm:inline"> MercadoLíder</span></span>
-          </span>
-        </motion.div>
+            {/* Title */}
+            <motion.h1
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="font-barlow font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight"
+            >
+              Tu producto{" "}
+              <span className="text-brand-beige">ya existe.</span>
+              <br />
+              El mundo debe{" "}
+              <span className="text-brand-beige">encontrarlo</span>
+            </motion.h1>
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="body-text max-w-2xl mx-auto text-gray-300 mb-10"
-        >
-          Hacemos que tu negocio venda en todos los canales — Meta Ads, TikTok Shop,{" "}
-          <br className="hidden sm:block" />
-          Mercado Libre y página web - gestionados por el equipo que construyó FRESA FIT.
-        </motion.p>
+            {/* Credentials Badge — grid 2x2 */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
+              className="grid grid-cols-2 gap-2 sm:gap-3 max-w-sm sm:max-w-lg mb-8"
+            >
+              {[
+                { logo: "/images/logos/meta-ads.png", num: "$5M+", label: "Meta Ads", labelSm: "Meta Ads", borderColor: "border-blue-400/40", w: 20, h: 20 },
+                { logo: "/images/logos/mercado-libre.png", num: "$30M+", label: "Mercado Libre", labelSm: "ML", borderColor: "border-amber-400/40", w: 18, h: 18 },
+                { logo: "/images/logos/tiktok.webp", num: "+4,000", label: "ventas TikTok", labelSm: "TikTok", borderColor: "border-rose-400/40", w: 20, h: 20 },
+                { logo: "/images/logos/mercado-libre.png", num: "Platinum", label: "MercadoLíder", labelSm: "ML", borderColor: "border-purple-400/40", w: 18, h: 18 },
+              ].map(({ logo, num, label, labelSm, borderColor, w, h }) => (
+                <div key={num} className={`flex items-center gap-2.5 sm:gap-3 bg-white/5 border ${borderColor} rounded-xl px-3 py-2.5 sm:px-4 sm:py-3`}>
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                    <Image src={logo} alt={label} width={w} height={h} className="object-contain w-4 h-4 sm:w-5 sm:h-5" />
+                  </div>
+                  <div>
+                    <p className="font-barlow font-bold text-sm sm:text-base text-white leading-none">{num}</p>
+                    <p className="font-montserrat text-[10px] sm:text-xs text-white/50 mt-0.5">
+                      <span className="hidden sm:inline">{label}</span>
+                      <span className="sm:hidden">{labelSm}</span>
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
 
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
-          className="flex flex-row items-center justify-center gap-4 mb-16"
-        >
-          <button onClick={onOpenForm} className="btn-primary">
-            Quiero vender en línea
-          </button>
-          <Link href="/metodo" className="btn-outline">
-            Ver cómo funciona
-          </Link>
-        </motion.div>
+            {/* Subtitle */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+              className="font-montserrat text-sm sm:text-base font-light text-gray-300 max-w-xl mb-8"
+            >
+              Hacemos que tu negocio venda en todos los canales — Meta Ads, TikTok Shop,
+              Mercado Libre y página web - gestionados por el equipo que construyó FRESA FIT.
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 max-w-sm sm:max-w-none"
+            >
+              <button onClick={onOpenForm} className="btn-primary uppercase tracking-wide text-center">
+                Quiero vender en línea
+              </button>
+              <Link href="/metodo" className="btn-outline uppercase tracking-wide text-center">
+                Ver cómo funciona
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Right column — Brand card (desktop only) */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+            className="hidden lg:block"
+          >
+            <div className="relative rounded-2xl overflow-hidden h-[480px] bg-white/5">
+              <Image
+                src="/images/prove/2nd image.png"
+                alt="FRESA FIT"
+                fill
+                className="object-cover"
+                sizes="50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+              <div className="absolute bottom-0 left-0 p-6">
+                <p className="font-barlow font-black text-2xl sm:text-3xl text-white leading-tight mb-1">
+                  {BRAND_CARDS[1].result}
+                </p>
+                <p className="font-montserrat text-sm text-gray-300">
+                  {BRAND_CARDS[1].desc}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
 
         {/* Results Grid */}
         <motion.div

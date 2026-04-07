@@ -31,13 +31,13 @@ export default function Header({ onOpenForm }: HeaderProps) {
   return (
     <>
       <div className="fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6">
-        <div className="mx-auto max-w-6xl bg-white rounded-2xl shadow-lg mt-6 mb-4">
+        <div className="mx-auto max-w-6xl bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-lg shadow-black/10 mt-6 mb-4">
             <div className="flex h-16 sm:h-20 items-center px-4 sm:px-8 gap-3">
 
             {/* LEFT: Hamburger (mobile only) */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-700 lg:hidden flex-shrink-0"
+              className="text-white lg:hidden flex-shrink-0"
               aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
             >
               {isMobileMenuOpen ? (
@@ -51,7 +51,7 @@ export default function Header({ onOpenForm }: HeaderProps) {
             <div className="flex justify-center lg:justify-start flex-1 lg:flex-initial">
               <a href="#inicio" className="flex-shrink-0">
                 <Image
-                  src="/images/logos/logo_full.png"
+                  src="/images/logos/logo_dorado.png"
                   alt="Logo"
                   height={40}
                   width={160}
@@ -66,7 +66,7 @@ export default function Header({ onOpenForm }: HeaderProps) {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-bold text-gray-700 transition-colors duration-200 hover:text-[#C89D69]"
+                  className="text-sm font-bold text-white/90 transition-colors duration-200 hover:text-brand-beige"
                 >
                   {link.label}
                 </a>
