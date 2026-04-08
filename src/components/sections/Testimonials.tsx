@@ -129,14 +129,10 @@ export default function Testimonials() {
 
                 {/* Author */}
                 <div className="flex items-center gap-4">
-                  <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-brand-beige flex-shrink-0">
-                    <Image
-                      src={current.avatar}
-                      alt={current.name}
-                      width={56}
-                      height={56}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-brand-beige flex-shrink-0 bg-white/10 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-white/50">
+                      <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z" fill="currentColor" />
+                    </svg>
                   </div>
                   <div>
                     <p className="font-barlow font-bold text-white">
@@ -172,14 +168,10 @@ export default function Testimonials() {
 
                 {/* Author */}
                 <div className="flex items-center gap-4">
-                  <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-brand-beige flex-shrink-0">
-                    <Image
-                      src={testimonial.avatar}
-                      alt={testimonial.name}
-                      width={56}
-                      height={56}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-brand-beige flex-shrink-0 bg-white/10 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-white/50">
+                      <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z" fill="currentColor" />
+                    </svg>
                   </div>
                   <div>
                     <p className="font-barlow font-bold text-white">

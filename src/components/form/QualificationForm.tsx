@@ -196,6 +196,29 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // ---- Checkpoint ---------------------------------------------------------
+
+  const sendCheckpoint = useCallback(
+    (step: number) => {
+      const values = getValues();
+      if (!values.nombre || !values.email || !values.whatsapp) return;
+
+      fetch("/api/form-checkpoint", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nombre: values.nombre,
+          email: values.email,
+          whatsapp: values.whatsapp,
+          step,
+        }),
+      }).catch(() => {
+        // Silent fail — don't block the form
+      });
+    },
+    [getValues]
+  );
+
   // ---- Navigation ---------------------------------------------------------
 
   const goNext = useCallback(async () => {
@@ -205,9 +228,11 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
       if (!isValid) return;
     }
     saveData(getValues());
+    const nextStep = Math.min(currentStep + 1, TOTAL_STEPS);
+    if (currentStep >= 3) sendCheckpoint(currentStep);
     setDirection(1);
-    setCurrentStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
-  }, [currentStep, trigger, getValues]);
+    setCurrentStep(nextStep);
+  }, [currentStep, trigger, getValues, sendCheckpoint]);
 
   const goBack = useCallback(() => {
     setDirection(-1);
@@ -217,11 +242,12 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
   // Auto-advance for radio steps (6, 7, 9)
   const autoAdvance = useCallback(() => {
     saveData(getValues());
+    sendCheckpoint(currentStep);
     setTimeout(() => {
       setDirection(1);
       setCurrentStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
     }, 120);
-  }, [getValues]);
+  }, [getValues, sendCheckpoint, currentStep]);
 
   // ---- Submit -------------------------------------------------------------
 

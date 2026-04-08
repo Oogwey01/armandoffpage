@@ -31,8 +31,38 @@ export default function About() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section id="quien-soy" className="section-padding bg-brand-gray">
-      <div ref={ref} className="container-custom">
+    <section
+      id="quien-soy"
+      className="section-padding relative overflow-hidden"
+      style={{
+        background: "linear-gradient(135deg, #111111 0%, #2a2a2a 30%, #3d3d3d 50%, #2a2a2a 70%, #111111 100%)",
+      }}
+    >
+      {/* Radial glow — top right (beige) */}
+      <div
+        className="absolute -top-32 -right-32 w-[800px] h-[800px] pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse, rgba(200,157,105,0.15) 0%, transparent 60%)",
+          filter: "blur(60px)",
+        }}
+      />
+      {/* Radial glow — bottom left (gray) */}
+      <div
+        className="absolute -bottom-32 -left-32 w-[700px] h-[700px] pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse, rgba(80,80,80,0.5) 0%, transparent 60%)",
+          filter: "blur(60px)",
+        }}
+      />
+      {/* Center accent */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse, rgba(200,157,105,0.08) 0%, transparent 70%)",
+          filter: "blur(100px)",
+        }}
+      />
+      <div ref={ref} className="container-custom relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left — Image */}
           <motion.div
@@ -42,7 +72,7 @@ export default function About() {
             className="relative w-full aspect-[4/5] max-w-md mx-auto lg:mx-0 rounded-2xl overflow-hidden"
           >
             <Image
-              src="/images/hero/placeholder.jpg"
+              src="/images/statistics/aff.png"
               alt="Armando FF"
               fill
               className="object-cover"

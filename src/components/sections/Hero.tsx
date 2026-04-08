@@ -11,20 +11,20 @@ interface HeroProps {
 
 // ── Marquee data ──────────────────────────────────────────────
 type CardType = "phone" | "desktop";
-interface MarqueeCardData { type: CardType; label: string; }
+interface MarqueeCardData { type: CardType; label: string; img: string; }
 
 const MARQUEE_CARDS: MarqueeCardData[] = [
-  { type: "phone",   label: "Email Campaign"  },
-  { type: "desktop", label: "Landing Page"    },
-  { type: "phone",   label: "SMS Flow"        },
-  { type: "desktop", label: "Product Page"    },
-  { type: "phone",   label: "Ad Creative"     },
-  { type: "desktop", label: "Store Design"    },
-  { type: "phone",   label: "Push Notif."     },
-  { type: "desktop", label: "Funnel"          },
+  { type: "phone",   label: "Ad Creative",    img: "/images/statistics/aff.png" },
+  { type: "desktop", label: "Store Design",   img: "/images/statistics/aff2.png" },
+  { type: "phone",   label: "TikTok Shop",    img: "/images/statistics/SCREEN.jpg" },
+  { type: "desktop", label: "Landing Page",   img: "/images/statistics/aff3.png" },
+  { type: "phone",   label: "Marca",          img: "/images/prove/1st image.png" },
+  { type: "desktop", label: "Funnel",         img: "/images/prove/2nd image.png" },
+  { type: "phone",   label: "Resultados",     img: "/images/statistics/aff4.png" },
+  { type: "desktop", label: "Operación",      img: "/images/prove/3rd image.png" },
 ];
 
-function MarqueeCard({ type, label }: MarqueeCardData) {
+function MarqueeCard({ type, label, img }: MarqueeCardData) {
   if (type === "phone") {
     return (
       <div className="relative flex-none w-28 h-52 rounded-2xl border border-white/10 bg-white/5 overflow-hidden flex flex-col">
@@ -33,10 +33,8 @@ function MarqueeCard({ type, label }: MarqueeCardData) {
           <div className="w-8 h-1 rounded-full bg-white/20" />
         </div>
         {/* Screen area */}
-        <div className="flex-1 mx-1.5 rounded-lg bg-white/[0.04] flex items-center justify-center">
-          <span className="font-montserrat text-[8px] text-white/20 text-center px-1 leading-snug">
-            {label}
-          </span>
+        <div className="flex-1 mx-1.5 rounded-lg overflow-hidden relative">
+          <Image src={img} alt={label} fill className="object-cover" sizes="112px" />
         </div>
         {/* Home button */}
         <div className="flex justify-center py-2">
@@ -55,10 +53,8 @@ function MarqueeCard({ type, label }: MarqueeCardData) {
         <div className="flex-1 mx-2 h-2.5 rounded bg-white/10" />
       </div>
       {/* Content area */}
-      <div className="flex-1 flex items-center justify-center">
-        <span className="font-montserrat text-[8px] text-white/20 text-center px-2 leading-snug">
-          {label}
-        </span>
+      <div className="flex-1 relative overflow-hidden">
+        <Image src={img} alt={label} fill className="object-cover" sizes="208px" />
       </div>
     </div>
   );
@@ -227,7 +223,7 @@ export default function Hero({ onOpenForm }: HeroProps) {
             {[
               { num: "$5M+",     desc: "Invertidos en Meta Ads con dinero propio",  img: "/images/statistics/aff.png" },
               { num: "$30M+",    desc: "Facturados en Mercado Libre en 2 años",     img: "/images/statistics/aff2.png" },
-              { num: "+4,000",   desc: "Ventas generadas en TikTok Shop",           img: "/images/statistics/aff3.png" },
+              { num: "+4,000",   desc: "Ventas generadas en TikTok Shop",           img: "/images/statistics/SCREEN.jpg" },
               { num: "Platinum", desc: "MercadoLíder — nivel más alto en ML",       img: "/images/statistics/aff4.png" },
             ].map(({ num, desc, img }) => (
               <div key={num} className="relative rounded-xl overflow-hidden border border-white/10">

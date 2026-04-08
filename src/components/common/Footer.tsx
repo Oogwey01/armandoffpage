@@ -17,9 +17,9 @@ const FOOTER_LINKS = [
 ] as const;
 
 const SOCIAL_LINKS = [
-  { label: "Instagram", href: "https://instagram.com", icon: InstagramIcon },
-  { label: "TikTok", href: "https://tiktok.com", icon: TikTokIcon },
-  { label: "YouTube", href: "https://youtube.com", icon: YouTubeIcon },
+  { label: "Instagram", href: "https://www.instagram.com/fresafitt/", icon: InstagramIcon },
+  { label: "TikTok", href: "https://www.tiktok.com/@fresafit", icon: TikTokIcon },
+  { label: "YouTube", href: "https://www.youtube.com/@fresafit", icon: YouTubeIcon },
 ] as const;
 
 export default function Footer() {
@@ -38,7 +38,7 @@ export default function Footer() {
 
         {/* Navigation links */}
         <nav className="pb-8">
-          <ul className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-8">
+          <ul className="grid grid-cols-2 gap-3 text-center sm:flex sm:flex-row sm:justify-center sm:gap-8">
             {FOOTER_LINKS.map((link) => (
               <li key={link.href}>
                 <a

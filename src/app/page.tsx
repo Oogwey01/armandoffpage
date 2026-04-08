@@ -6,9 +6,7 @@ import Hero from "@/components/sections/Hero";
 import Services from "@/components/sections/Services";
 import About from "@/components/sections/About";
 import Pillars from "@/components/sections/Pillars";
-import FeaturedWebinar from "@/components/sections/FeaturedWebinar";
 import HowItWorks from "@/components/sections/HowItWorks";
-import ComingSoonServices from "@/components/sections/ComingSoonServices";
 import Testimonials from "@/components/sections/Testimonials";
 import QualificationForm from "@/components/form/QualificationForm";
 import { useFormModal } from "@/hooks/useFormModal";
@@ -24,9 +22,7 @@ export default function Home() {
         <HowItWorks />
         <Services onOpenForm={open} />
         <About />
-        <Pillars />
-        <FeaturedWebinar onOpenForm={open} />
-        <ComingSoonServices />
+        <Pillars onOpenForm={open} />
         <Testimonials />
       </main>
       <Footer />
