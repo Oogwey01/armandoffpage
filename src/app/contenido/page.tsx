@@ -68,11 +68,25 @@ export default function ContenidoPage() {
               PRODUCCION DE CONTENIDO &middot; HERMOSILLO, SONORA
             </motion.p>
 
+            {/* Big title */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="mb-8"
+            >
+              <h1 className="font-barlow font-black text-6xl sm:text-7xl md:text-8xl lg:text-9xl uppercase leading-[0.85] tracking-tight">
+                <span className="text-white/15">CONTENIDO </span>
+                <span className="text-white/15">QUE </span>
+                <span className="text-brand-beige">VENDE.</span>
+              </h1>
+            </motion.div>
+
             {/* Video placeholder */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
               className="max-w-2xl mx-auto mb-16"
             >
               <div className="relative aspect-[4/3] rounded-2xl border border-white/10 bg-white/5 overflow-hidden flex items-center justify-center">
@@ -87,21 +101,6 @@ export default function ContenidoPage() {
                   ARMANDO FRESAFIT — VER PRESENTACI&Oacute;N
                 </p>
               </div>
-            </motion.div>
-
-            {/* Big title */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="mb-8"
-            >
-              <h1 className="font-barlow font-black text-6xl sm:text-7xl md:text-8xl lg:text-9xl uppercase leading-[0.85] tracking-tight">
-                <span className="text-white/15">CONTENIDO</span>
-                <br />
-                <span className="text-white/15">QUE </span>
-                <span className="text-brand-beige">VENDE.</span>
-              </h1>
             </motion.div>
 
             {/* Subtitle */}
@@ -152,13 +151,9 @@ export default function ContenidoPage() {
               EL PROBLEMA REAL
             </p>
             <h2 className="font-barlow font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl uppercase leading-[0.85] tracking-tight mb-8">
-              <span className="text-white/15">TU PRODUCTO ES</span>
-              <br />
-              <span className="text-white/15">BUENO.</span>
-              <br />
+              <span className="text-white/15">TU PRODUCTO ES BUENO. </span>
               <span className="text-white/15">TU CONTENIDO </span>
-              <span className="text-white font-black">NO</span>
-              <br />
+              <span className="text-white font-black">NO </span>
               <span className="text-brand-beige">LO REFLEJA.</span>
             </h2>
             <p className="font-montserrat text-base md:text-lg text-gray-400 font-light max-w-2xl mx-auto mb-14">
@@ -516,15 +511,10 @@ export default function ContenidoPage() {
 
             {/* Title */}
             <h2 className="font-barlow font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl uppercase leading-[0.85] tracking-tight mb-10">
-              <span className="text-white/10">TU MARCA NO</span>
-              <br />
-              <span className="text-white/10">TIENE CONTENIDO</span>
-              <br />
+              <span className="text-white/10">TU MARCA NO TIENE CONTENIDO </span>
               <span className="text-white/10">QUE </span>
               <span className="text-brand-beige">VENDE</span>
-              <span className="text-white/10"> — O</span>
-              <br />
-              <span className="text-white/10">NO LO TIENE.</span>
+              <span className="text-white/10"> — O NO LO TIENE.</span>
             </h2>
 
             {/* Subtitle */}
