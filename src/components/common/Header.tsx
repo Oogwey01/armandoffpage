@@ -49,7 +49,7 @@ export default function Header({ onOpenForm }: HeaderProps) {
 
             {/* Logo */}
             <div className="flex justify-center lg:justify-start flex-1 lg:flex-initial">
-              <a href="#inicio" className="flex-shrink-0">
+              <a href="/" className="flex-shrink-0">
                 <Image
                   src="/images/logos/logo_dorado.png"
                   alt="Logo"
