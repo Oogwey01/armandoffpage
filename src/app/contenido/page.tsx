@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import QualificationForm from "@/components/form/QualificationForm";
@@ -58,16 +59,6 @@ export default function ContenidoPage() {
           />
 
           <div className="relative z-10 container-custom text-center">
-            {/* Label */}
-            <motion.p
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-6"
-            >
-              PRODUCCION DE CONTENIDO &middot; HERMOSILLO, SONORA
-            </motion.p>
-
             {/* Big title */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -75,11 +66,14 @@ export default function ContenidoPage() {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="mb-8"
             >
-              <h1 className="font-barlow font-black text-6xl sm:text-7xl md:text-8xl lg:text-9xl uppercase leading-[0.85] tracking-tight">
-                <span className="text-white/15">CONTENIDO </span>
-                <span className="text-white/15">QUE </span>
-                <span className="text-brand-beige">VENDE.</span>
+              <h1 className="font-barlow font-black text-6xl sm:text-6xl md:text-8xl lg:text-9xl uppercase leading-[0.85] tracking-tight">
+                <span className="text-white/15">EL CONTENIDO QUE NECESITAS PARA</span>
+                <span className="text-white/15"> VENDER</span>
+                <span className="text-brand-beige"> MÁS.</span>
               </h1>
+              <p className="font-montserrat text-base md:text-lg text-gray-400 font-light max-w-xl mx-auto mt-6">
+                El mismo sistema creativo que usamos para construir FRESA FIT, aplicado a tu marca en Hermosillo.
+              </p>
             </motion.div>
 
             {/* Video placeholder */}
@@ -89,7 +83,7 @@ export default function ContenidoPage() {
               transition={{ duration: 0.7, delay: 0.3 }}
               className="max-w-2xl mx-auto mb-16"
             >
-              <div className="relative aspect-[4/3] rounded-2xl border border-white/10 bg-white/5 overflow-hidden flex items-center justify-center">
+              <div className="relative aspect-video rounded-2xl border border-white/10 bg-white/5 overflow-hidden flex items-center justify-center">
                 {/* Play button */}
                 <button className="w-16 h-16 rounded-full bg-brand-beige flex items-center justify-center hover:bg-brand-beige-light hover:scale-105 transition-all">
                   <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-brand-black ml-1">
@@ -151,16 +145,17 @@ export default function ContenidoPage() {
               EL PROBLEMA REAL
             </p>
             <h2 className="font-barlow font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl uppercase leading-[0.85] tracking-tight mb-8">
-              <span className="text-white/15">TU PRODUCTO ES BUENO. </span>
-              <span className="text-white/15">TU CONTENIDO </span>
-              <span className="text-white font-black">NO </span>
-              <span className="text-brand-beige">LO REFLEJA.</span>
+              <span className="text-white/15">TIENES UN PRODUCTO O SERVICIO QUE FUNCIONE,</span>
+              <span className="text-white/15">PERO QUE QUIERAS </span>
+              <span className="text-white font-black">LLEVAR AL SIGUIENTE </span>
+              <span className="text-brand-beige">NIVEL?</span>
             </h2>
             <p className="font-montserrat text-base md:text-lg text-gray-400 font-light max-w-2xl mx-auto mb-14">
-              Y eso te está costando clientes todos los días sin que te des cuenta.
+               Y eso te está costando clientes todos los días sin que te des cuenta
             </p>
             <div className="max-w-2xl mx-auto text-left">
               {[
+                "Y eso te está costando clientes todos los días sin que te des cuenta",
                 "Tu competencia se ve más profesional aunque su producto sea inferior al tuyo",
                 "Estás invirtiendo en publicidad con material que no convierte",
                 "Cada mes improvisas el contenido sin una estrategia clara detrás",
@@ -194,36 +189,49 @@ export default function ContenidoPage() {
 
             {/* Subtitle */}
             <p className="font-montserrat text-sm md:text-base text-gray-400 font-light max-w-2xl mb-14">
-              FRESA FIT genera ventas todos los días con este contenido — probado con presupuesto real en Meta Ads y TikTok.
+              Estadísticas de alcances y ROAS reales de FRESA FIT — probado con presupuesto propio en Meta Ads y TikTok.
             </p>
 
-            {/* Service cards grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-              {[
-                { icon: <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" /><circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5" /><circle cx="17" cy="7" r="1" fill="currentColor" /></svg>, title: "Fotografía de estudio", desc: "Producto o marca en entorno controlado, resultado limpio y profesional", accent: "from-blue-500/20 to-purple-500/20", iconColor: "text-blue-400" },
-                { icon: <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6L12 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" /></svg>, title: "Composición visual avanzada", desc: "Piezas digitales de alto impacto visual para ads y feed", accent: "from-amber-500/20 to-orange-500/20", iconColor: "text-amber-400" },
-                { icon: <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 6h8a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>, title: "Video UGC dirigido", desc: "Creador hablando del producto con dirección creativa real detrás", accent: "from-rose-500/20 to-pink-500/20", iconColor: "text-rose-400" },
-                { icon: <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" /><circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="1.5" /><circle cx="12" cy="12" r="2" fill="currentColor" /></svg>, title: "Video ad respuesta directa", desc: "Estructura gancho–problema–solución–CTA probada en campañas", accent: "from-red-500/20 to-orange-500/20", iconColor: "text-red-400" },
-                { icon: <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" /><path d="M3 16l5-5 4 4 4-6 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>, title: "Lifestyle editado", desc: "Producto o servicio en contexto real, aspiracional y de marca", accent: "from-green-500/20 to-emerald-500/20", iconColor: "text-green-400" },
-                { icon: <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" /><path d="M10 9l5 3-5 3V9z" fill="currentColor" /></svg>, title: "Alta producción", desc: "Video cinematográfico con dirección, edición y criterio de nivel agencia", accent: "from-purple-500/20 to-indigo-500/20", iconColor: "text-purple-400" },
-              ].map(({ icon, title, desc, accent, iconColor }) => (
-                <div key={title} className="group relative bg-brand-black/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/20 hover:scale-[1.02] transition-all duration-300 overflow-hidden">
-                  {/* Gradient glow on hover */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${accent} opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl`} />
-                  <div className="relative z-10">
-                    <div className={`w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-5 ${iconColor} group-hover:border-white/20 transition-colors`}>
-                      {icon}
+            {/* Stats + Image grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-10 items-start">
+              {/* Left: Stats */}
+              <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { label: "ROAS promedio", value: "5.2x", desc: "Retorno sobre inversión publicitaria", highlight: true },
+                  { label: "Alcance total", value: "3.8M+", desc: "Personas alcanzadas en Meta y TikTok" },
+                  { label: "Impresiones", value: "12M+", desc: "Views acumulados del contenido" },
+                  { label: "CTR promedio", value: "4.8%", desc: "Sobre el benchmark del sector" },
+                ].map(({ label, value, desc, highlight }) => (
+                  <div key={label} className="group relative bg-brand-black/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-7 hover:border-white/20 transition-all duration-300 overflow-hidden min-h-[180px] flex flex-col justify-between">
+                    {highlight && (
+                      <div className="absolute inset-0 bg-gradient-to-br from-brand-beige/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+                    )}
+                    <div className="relative z-10">
+                      <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-gray-500 font-medium mb-3">{label}</p>
+                      <p className={`font-barlow font-black text-5xl md:text-6xl leading-none ${highlight ? "text-brand-beige" : "text-white"}`}>{value}</p>
                     </div>
-                    <h3 className="font-barlow font-bold text-base text-white mb-2">{title}</h3>
-                    <p className="font-montserrat text-sm text-gray-400 font-light leading-relaxed">{desc}</p>
+                    <p className="relative z-10 font-montserrat text-xs text-gray-400 font-light leading-relaxed mt-4">{desc}</p>
                   </div>
+                ))}
+              </div>
+
+              {/* Right: Vertical image */}
+              <div className="lg:col-span-2">
+                <div className="relative w-full aspect-[3/4] bg-brand-black/60 border border-white/10 rounded-2xl overflow-hidden">
+                  <Image
+                    src="/images/statistics/SCREEN.jpg"
+                    alt="Estadísticas reales de alcances y ROAS de FRESA FIT"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                  />
                 </div>
-              ))}
+              </div>
             </div>
 
             {/* Note */}
             <p className="font-montserrat text-xs text-gray-500 italic">
-              * Aquí van ejemplos reales del contenido de FRESA FIT
+              * Métricas reales acumuladas de campañas activas de FRESA FIT
             </p>
           </AnimateOnScroll>
         </section>
