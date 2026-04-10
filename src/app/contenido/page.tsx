@@ -66,12 +66,12 @@ export default function ContenidoPage() {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="mb-8"
             >
-              <h1 className="font-barlow font-black text-6xl sm:text-6xl md:text-8xl lg:text-9xl uppercase leading-[0.85] tracking-tight">
-                <span className="text-white/15">EL CONTENIDO QUE NECESITAS PARA</span>
-                <span className="text-white/15"> VENDER</span>
-                <span className="text-brand-beige"> MÁS.</span>
+              <h1 className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight">
+                <span className="text-white">EL CONTENIDO QUE NECESITAS</span>
+                <br />
+                <span className="text-brand-beige">PARA VENDER MÁS.</span>
               </h1>
-              <p className="font-montserrat text-base md:text-lg text-gray-400 font-light max-w-xl mx-auto mt-6">
+              <p className="font-montserrat text-base md:text-lg text-gray-400 font-light max-w-xl mx-auto mt-2">
                 El mismo sistema creativo que usamos para construir FRESA FIT, aplicado a tu marca en Hermosillo.
               </p>
             </motion.div>
@@ -144,13 +144,12 @@ export default function ContenidoPage() {
             <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-8">
               EL PROBLEMA REAL
             </p>
-            <h2 className="font-barlow font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl uppercase leading-[0.85] tracking-tight mb-8">
-              <span className="text-white/15">TIENES UN PRODUCTO O SERVICIO QUE FUNCIONE,</span>
-              <span className="text-white/15">PERO QUE QUIERAS </span>
-              <span className="text-white font-black">LLEVAR AL SIGUIENTE </span>
-              <span className="text-brand-beige">NIVEL?</span>
+            <h2 className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight mb-4">
+              <span className="text-white">TIENES UN PRODUCTO O SERVICIO QUE FUNCIONE,</span>
+              <br />
+              <span className="text-brand-beige">PERO QUE QUIERAS LLEVAR AL SIGUIENTE NIVEL?</span>
             </h2>
-            <p className="font-montserrat text-base md:text-lg text-gray-400 font-light max-w-2xl mx-auto mb-14">
+            <p className="font-montserrat text-base md:text-lg text-gray-400 font-light max-w-2xl mx-auto mt-2 mb-14">
                Y eso te está costando clientes todos los días sin que te des cuenta
             </p>
             <div className="max-w-2xl mx-auto text-left">
@@ -309,7 +308,8 @@ export default function ContenidoPage() {
               {/* Tier 01 — Presencia */}
               <div className="relative bg-brand-black border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col hover:border-white/25 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]">
                 <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-2">TIER 01</p>
-                <h3 className="font-barlow font-black text-3xl md:text-4xl text-white uppercase mb-4">PRESENCIA</h3>
+                <h3 className="font-barlow font-black text-3xl md:text-4xl text-white uppercase mb-1">PRESENCIA</h3>
+                <p className="font-montserrat text-sm text-gray-400 font-light mb-4">Para dejar de ser invisible.</p>
                 <div className="flex items-baseline gap-1 mb-2">
                   <span className="font-barlow font-black text-4xl md:text-5xl text-white">$4,900</span>
                   <span className="font-montserrat text-sm text-gray-500">/mes</span>
@@ -360,7 +360,8 @@ export default function ContenidoPage() {
                 </div>
 
                 <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-2">TIER 02</p>
-                <h3 className="font-barlow font-black text-3xl md:text-4xl text-white uppercase mb-4">AUTORIDAD</h3>
+                <h3 className="font-barlow font-black text-3xl md:text-4xl text-white uppercase mb-1">AUTORIDAD</h3>
+                <p className="font-montserrat text-sm text-gray-400 font-light mb-4">Para escalar con anuncios.</p>
                 <div className="flex items-baseline gap-1 mb-2">
                   <span className="font-barlow font-black text-4xl md:text-5xl text-white">$9,900</span>
                   <span className="font-montserrat text-sm text-gray-500">/mes</span>
@@ -402,7 +403,8 @@ export default function ContenidoPage() {
               {/* Tier 03 — Dominación */}
               <div className="relative bg-brand-black border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col hover:border-white/25 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]">
                 <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-2">TIER 03</p>
-                <h3 className="font-barlow font-black text-3xl md:text-4xl text-white uppercase mb-4">DOMINACI&Oacute;N</h3>
+                <h3 className="font-barlow font-black text-3xl md:text-4xl text-white uppercase mb-1">DOMINACI&Oacute;N</h3>
+                <p className="font-montserrat text-sm text-gray-400 font-light mb-4">Para dueños que quieren ser líderes de nicho.</p>
                 <div className="flex items-baseline gap-1 mb-2">
                   <span className="font-barlow font-black text-4xl md:text-5xl text-white">$18,900</span>
                   <span className="font-montserrat text-sm text-gray-500">/mes</span>
