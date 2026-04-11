@@ -128,9 +128,9 @@ export default function ContenidoPage() {
         </section>
         <SectionDivider />
         {/* ── El problema real ── */}
-        <section className="section-padding bg-brand-black">
+        <section className="px-4 sm:px-6 lg:px-8 py-10 md:py-14 bg-brand-black">
           <AnimateOnScroll className="container-custom text-center">
-            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-8">
+            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-4">
               EL PROBLEMA REAL
             </p>
             <h2 className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight mb-4">
@@ -138,10 +138,10 @@ export default function ContenidoPage() {
               <br />
               <span className="text-brand-beige">PERO QUE QUIERAS LLEVAR AL SIGUIENTE NIVEL?</span>
             </h2>
-            <p className="font-montserrat text-base md:text-lg text-gray-400 font-light max-w-2xl mx-auto mt-2 mb-14">
+            <p className="font-montserrat text-base md:text-lg text-gray-400 font-light max-w-2xl mx-auto mt-2 mb-8">
                Y eso te está costando clientes todos los días sin que te des cuenta
             </p>
-            <div className="max-w-2xl mx-auto text-left">
+            <div className="max-w-4xl mx-auto text-left grid grid-cols-1 sm:grid-cols-2 gap-x-8">
               {[
                 "Y eso te está costando clientes todos los días sin que te des cuenta",
                 "Tu competencia se ve más profesional aunque su producto sea inferior al tuyo",
@@ -149,8 +149,8 @@ export default function ContenidoPage() {
                 "Cada mes improvisas el contenido sin una estrategia clara detrás",
                 "No tienes el equipo ni el criterio para producir contenido que realmente venda",
               ].map((point, i) => (
-                <div key={i} className="flex items-start gap-4 py-5 border-b border-white/10 last:border-b-0">
-                  <span className="text-brand-beige/60 font-montserrat text-sm mt-0.5">—</span>
+                <div key={i} className="flex items-start gap-4 py-4 border-b border-white/10">
+                  <span className="text-brand-beige/60 font-montserrat text-sm mt-0.5 shrink-0">—</span>
                   <p className="font-montserrat text-sm md:text-base text-gray-400 font-light">{point}</p>
                 </div>
               ))}
@@ -235,54 +235,55 @@ export default function ContenidoPage() {
 
         <SectionDivider />
         {/* ── Por qué tiene sentido ── */}
-        <section className="section-padding bg-brand-black">
+        <section className="px-4 sm:px-6 lg:px-8 py-10 md:py-14 bg-brand-black">
           <AnimateOnScroll className="container-custom">
-            {/* Label */}
-            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-6">
-              POR QU&Eacute; TIENE SENTIDO
-            </p>
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
 
-            {/* Title */}
-            <h2 className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight text-white/15 mb-4">
-              LO QUE TE CUESTA
-              <br />
-              RESOLVERLO SOLO
-            </h2>
-
-            {/* Subtitle */}
-            <p className="font-montserrat text-sm md:text-base text-gray-400 font-light max-w-2xl mb-12">
-              Si hoy intentaras construir esto por tu cuenta, esto es lo que pagarías por pieza:
-            </p>
-
-            {/* Price comparison rows */}
-            <div className="max-w-3xl flex flex-col gap-0 mb-10">
-              {[
-                { service: "Fotógrafo de producto por sesión", price: "$3,500 – $8,000", icon: <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" /><circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5" /></svg> },
-                { service: "Editor de video por pieza", price: "$1,500 – $4,000", icon: <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 6h8a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg> },
-                { service: "Diseñador gráfico por pieza", price: "$800 – $2,500", icon: <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6L12 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" /></svg> },
-                { service: "Director creativo con criterio de paid media", price: "No lo encuentras fácil", highlight: true, icon: <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" /><path d="M12 8v4m0 4h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg> },
-              ].map(({ service, price, highlight, icon }, i) => (
-                <div key={service} className={`group flex items-center gap-4 py-5 px-5 border-b border-white/10 ${i === 0 ? "border-t" : ""} hover:bg-white/[0.02] transition-colors`}>
-                  <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0 text-white/40 group-hover:text-brand-beige group-hover:border-brand-beige/30 transition-colors">
-                    {icon}
-                  </div>
-                  <span className="font-montserrat text-sm md:text-base text-gray-300 flex-1">{service}</span>
-                  <span className={`font-barlow font-bold text-sm md:text-base shrink-0 ${highlight ? "text-red-400/70 italic" : "text-red-400"}`}>{price}</span>
+              {/* Left: Label + Title + Subtitle + Price rows */}
+              <div className="lg:col-span-3">
+                <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-4">
+                  POR QU&Eacute; TIENE SENTIDO
+                </p>
+                <h2 className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight text-white/15 mb-3">
+                  LO QUE TE CUESTA
+                  <br />
+                  RESOLVERLO SOLO
+                </h2>
+                <p className="font-montserrat text-sm md:text-base text-gray-400 font-light mb-8">
+                  Si hoy intentaras construir esto por tu cuenta, esto es lo que pagarías por pieza:
+                </p>
+                <div className="flex flex-col">
+                  {[
+                    { service: "Fotógrafo de producto por sesión", price: "$3,500 – $8,000", icon: <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" /><circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5" /></svg> },
+                    { service: "Editor de video por pieza", price: "$1,500 – $4,000", icon: <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 6h8a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg> },
+                    { service: "Diseñador gráfico por pieza", price: "$800 – $2,500", icon: <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6L12 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" /></svg> },
+                    { service: "Director creativo con criterio de paid media", price: "No lo encuentras fácil", highlight: true, icon: <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" /><path d="M12 8v4m0 4h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg> },
+                  ].map(({ service, price, highlight, icon }, i) => (
+                    <div key={service} className={`group flex items-center gap-4 py-4 px-4 border-b border-white/10 ${i === 0 ? "border-t" : ""} hover:bg-white/[0.02] transition-colors`}>
+                      <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0 text-white/40 group-hover:text-brand-beige group-hover:border-brand-beige/30 transition-colors">
+                        {icon}
+                      </div>
+                      <span className="font-montserrat text-sm md:text-base text-gray-300 flex-1">{service}</span>
+                      <span className={`font-barlow font-bold text-sm md:text-base shrink-0 ${highlight ? "text-red-400/70 italic" : "text-red-400"}`}>{price}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
 
-            {/* Our price card */}
-            <div className="max-w-3xl border border-brand-beige/30 rounded-2xl p-8 md:p-12 text-center bg-white/[0.02]">
-              <p className="font-barlow font-black text-5xl sm:text-6xl md:text-7xl text-brand-beige leading-none mb-4">
-                -$500
-              </p>
-              <p className="font-montserrat text-sm md:text-base text-gray-400 font-light">
-                Con nosotros, menos de $500 por pieza.
-              </p>
-              <p className="font-montserrat text-sm md:text-base text-gray-400 font-light">
-                Con dirección creativa, estrategia y criterio de ads incluidos.
-              </p>
+              {/* Right: -$500 card (cuadrado) */}
+              <div className="lg:col-span-2 flex items-start justify-center">
+                <div className="w-full aspect-square border border-brand-beige/30 rounded-2xl flex flex-col items-center justify-center text-center bg-white/[0.02] p-8 max-w-sm lg:max-w-none">
+                  <p className="font-barlow font-black text-6xl sm:text-7xl md:text-8xl text-brand-beige leading-none mb-5">
+                    -$500
+                  </p>
+                  <p className="font-montserrat text-sm md:text-base text-gray-400 font-light leading-relaxed">
+                    Con nosotros, menos de $500 por pieza.
+                    <br />
+                    Con dirección creativa, estrategia y criterio de ads incluidos.
+                  </p>
+                </div>
+              </div>
+
             </div>
           </AnimateOnScroll>
         </section>
@@ -535,7 +536,7 @@ export default function ContenidoPage() {
               href="https://wa.me/526621000000"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 bg-[#25D366] text-white font-barlow font-bold text-base uppercase tracking-wide px-10 py-4 rounded-xl hover:bg-[#20bd5a] hover:scale-[1.02] transition-all animate-pulse-subtle"
+              className="inline-flex items-center gap-3 bg-[#25D366] text-white font-barlow font-bold text-base uppercase tracking-wide px-36 py-4 rounded-xl hover:bg-[#20bd5a] hover:scale-[1.02] transition-all animate-pulse-subtle"
               style={{ boxShadow: "0 0 20px rgba(37,211,102,0.3), 0 0 50px rgba(37,211,102,0.15)" }}
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">

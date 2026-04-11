@@ -151,17 +151,17 @@ export default function Hero({ onOpenForm }: HeroProps) {
       {/* Content */}
       <div className="relative z-10 w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-left lg:text-center pt-32 md:pt-40 pb-16 md:pb-20">
         {/* Hero top */}
-        <div className="mb-16 max-w-4xl mx-auto lg:mx-auto">
+        <div className="mb-16 mx-auto">
           {/* Title */}
           <motion.h1
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="font-barlow font-black text-4xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight"
+            className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mb-6 leading-tight"
           >
-            Tu producto <span className="text-brand-beige">ya existe.</span>
-            <br className="hidden sm:block" />
-            {" "}El mundo debe <span className="text-brand-beige">encontrarlo</span>
+            TU PRODUCTO<span className="text-brand-beige">YA EXISTE.</span>
+            <br className="hidden lg:block" />
+            {" "}<span className="lg:whitespace-nowrap">EL MUNDO DEBE <span className="text-brand-beige">ENCONTRARLO</span></span>
           </motion.h1>
 
           {/* Platform logos */}
