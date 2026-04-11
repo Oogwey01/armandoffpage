@@ -38,7 +38,7 @@ export default function ContenidoPage() {
       <Header onOpenForm={open} />
       <main className="bg-brand-black min-h-screen">
         {/* Hero section */}
-        <section className="relative pt-40 md:pt-48 pb-20 md:pb-32 overflow-hidden">
+        <section className="relative pt-28 md:pt-32 pb-8 md:pb-12 overflow-hidden">
           {/* Background gradient */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] to-brand-black" />
 
@@ -64,7 +64,7 @@ export default function ContenidoPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="mb-8"
+              className="mb-4"
             >
               <h1 className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight">
                 <span className="text-white">EL CONTENIDO QUE NECESITAS</span>
@@ -81,7 +81,7 @@ export default function ContenidoPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="max-w-2xl mx-auto mb-16"
+              className="max-w-2xl mx-auto mb-6"
             >
               <div className="relative aspect-video rounded-2xl border border-white/10 bg-white/5 overflow-hidden flex items-center justify-center">
                 {/* Play button */}
@@ -97,23 +97,12 @@ export default function ContenidoPage() {
               </div>
             </motion.div>
 
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
-              className="font-montserrat text-base md:text-lg text-gray-400 font-light max-w-xl mx-auto mb-10"
-            >
-              El mismo sistema creativo que usamos para construir
-              FRESA FIT, aplicado a tu marca en Hermosillo.
-            </motion.p>
-
             {/* CTA */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.6 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+              transition={{ duration: 0.7, delay: 0.5 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
             >
               <a
                 href="#paquetes"
@@ -127,8 +116,8 @@ export default function ContenidoPage() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.8 }}
-              className="flex flex-col items-center gap-2"
+              transition={{ duration: 0.7, delay: 0.7 }}
+              className="flex flex-col items-center gap-1"
             >
               <span className="text-white/30 text-lg">&darr;</span>
               <span className="font-montserrat text-[10px] tracking-[0.3em] uppercase text-white/30">
@@ -171,65 +160,74 @@ export default function ContenidoPage() {
 
         <SectionDivider />
         {/* ── Prueba real ── */}
-        <section className="section-padding bg-brand-gray">
+        <section className="px-4 sm:px-6 lg:px-8 py-10 md:py-14 bg-brand-gray">
           <AnimateOnScroll className="container-custom">
-            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-6">
-              PRUEBA REAL
-            </p>
-
-            {/* Title */}
-            <h2 className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight text-white/15 mb-6">
-              ESTO ES LO QUE
-              <br />
-              PRODUCIMOS PARA NUESTRA
-              <br />
-              PROPIA MARCA.
-            </h2>
-
-            {/* Subtitle */}
-            <p className="font-montserrat text-sm md:text-base text-gray-400 font-light max-w-2xl mb-14">
-              Estadísticas de alcances y ROAS reales de FRESA FIT — probado con presupuesto propio en Meta Ads y TikTok.
-            </p>
-
-            {/* Stats + Image grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-10 items-start">
-              {/* Left: Stats */}
-              <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  { label: "ROAS promedio", value: "5.2x", desc: "Retorno sobre inversión publicitaria", highlight: true },
-                  { label: "Alcance total", value: "3.8M+", desc: "Personas alcanzadas en Meta y TikTok" },
-                  { label: "Impresiones", value: "12M+", desc: "Views acumulados del contenido" },
-                  { label: "CTR promedio", value: "4.8%", desc: "Sobre el benchmark del sector" },
-                ].map(({ label, value, desc, highlight }) => (
-                  <div key={label} className="group relative bg-brand-black/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-7 hover:border-white/20 transition-all duration-300 overflow-hidden min-h-[180px] flex flex-col justify-between">
-                    {highlight && (
-                      <div className="absolute inset-0 bg-gradient-to-br from-brand-beige/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
-                    )}
-                    <div className="relative z-10">
-                      <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-gray-500 font-medium mb-3">{label}</p>
-                      <p className={`font-barlow font-black text-5xl md:text-6xl leading-none ${highlight ? "text-brand-beige" : "text-white"}`}>{value}</p>
+            {/* Stats + Image grid — imagen alineada al título */}
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 items-stretch">
+              {/* Left: Label + Title + Subtitle + Stats */}
+              <div className="lg:col-span-3 flex flex-col">
+                <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-3">
+                  PRUEBA REAL
+                </p>
+                <h2 className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight text-white/15 mb-3">
+                  ESTO ES LO QUE
+                  <br />
+                  PRODUCIMOS PARA NUESTRA
+                  <br />
+                  PROPIA MARCA.
+                </h2>
+                <p className="font-montserrat text-sm md:text-base text-gray-400 font-light max-w-2xl mb-6">
+                  Estadísticas de alcances y ROAS reales de FRESA FIT — probado con presupuesto propio en Meta Ads y TikTok.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
+                  {[
+                    { label: "ROAS promedio", value: "5.2x", desc: "Retorno sobre inversión publicitaria", highlight: true },
+                    { label: "Alcance total", value: "3.8M+", desc: "Personas alcanzadas en Meta y TikTok" },
+                    { label: "Impresiones", value: "12M+", desc: "Views acumulados del contenido" },
+                    { label: "CTR promedio", value: "4.8%", desc: "Sobre el benchmark del sector" },
+                  ].map(({ label, value, desc, highlight }) => (
+                    <div key={label} className="group relative bg-brand-black/60 backdrop-blur-sm border border-white/10 rounded-2xl p-5 md:p-6 hover:border-white/20 transition-all duration-300 overflow-hidden flex flex-col justify-between">
+                      {highlight && (
+                        <div className="absolute inset-0 bg-gradient-to-br from-brand-beige/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+                      )}
+                      <div className="relative z-10">
+                        <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-gray-500 font-medium mb-2">{label}</p>
+                        <p className={`font-barlow font-black text-5xl md:text-6xl leading-none ${highlight ? "text-brand-beige" : "text-white"}`}>{value}</p>
+                      </div>
+                      <p className="relative z-10 font-montserrat text-xs text-gray-400 font-light leading-relaxed mt-3">{desc}</p>
                     </div>
-                    <p className="relative z-10 font-montserrat text-xs text-gray-400 font-light leading-relaxed mt-4">{desc}</p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
 
-              {/* Right: Vertical image */}
-              <div className="lg:col-span-2">
+              {/* Right: Vertical image — alineada al tope del título */}
+              <div className="lg:col-span-2 hidden lg:block">
+                <div className="relative w-full h-full min-h-[480px] bg-brand-black/60 border border-white/10 rounded-2xl overflow-hidden">
+                  <Image
+                    src="/images/statistics/SCREEN.jpg"
+                    alt="Estadísticas reales de alcances y ROAS de FRESA FIT"
+                    fill
+                    className="object-cover"
+                    sizes="40vw"
+                  />
+                </div>
+              </div>
+              {/* Mobile: imagen debajo */}
+              <div className="lg:hidden">
                 <div className="relative w-full aspect-[3/4] bg-brand-black/60 border border-white/10 rounded-2xl overflow-hidden">
                   <Image
                     src="/images/statistics/SCREEN.jpg"
                     alt="Estadísticas reales de alcances y ROAS de FRESA FIT"
                     fill
                     className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    sizes="100vw"
                   />
                 </div>
               </div>
             </div>
 
             {/* Note */}
-            <p className="font-montserrat text-xs text-gray-500 italic">
+            <p className="font-montserrat text-xs text-gray-500 italic mt-4">
               * Métricas reales acumuladas de campañas activas de FRESA FIT
             </p>
           </AnimateOnScroll>
