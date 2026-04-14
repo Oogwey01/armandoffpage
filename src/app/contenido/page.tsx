@@ -7,6 +7,13 @@ import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import QualificationForm from "@/components/form/QualificationForm";
 import { useFormModal } from "@/hooks/useFormModal";
+import {
+  ScaleIcon,
+  MarketingIcon,
+  MindsetIcon,
+  StarIcon,
+  CloseIcon,
+} from "@/components/common/Icons";
 
 function AnimateOnScroll({ children, className }: { children: React.ReactNode; className?: string }) {
   const ref = useRef(null);
@@ -154,10 +161,10 @@ function TierCard({
           <span className="font-barlow font-black text-4xl md:text-5xl text-white">
             {tier.price}
           </span>
-          <span className="font-montserrat text-sm text-gray-400">MXN/mes</span>
+          <span className="font-montserrat text-sm text-gray-400 uppercase">MXN/mes</span>
         </div>
 
-        <p className="font-montserrat text-sm text-brand-beige font-medium mb-6 leading-snug">
+        <p className="font-montserrat text-sm text-brand-beige font-medium mb-6 leading-snug uppercase">
           {tier.totalPieces}
         </p>
 
@@ -170,7 +177,7 @@ function TierCard({
           {tier.images.map((item) => (
             <li key={item} className="flex items-start gap-2.5">
               <span className="text-brand-beige mt-0.5 shrink-0 text-sm">✓</span>
-              <span className="font-montserrat text-sm text-gray-300 leading-snug">
+              <span className="font-montserrat text-sm text-gray-300 leading-snug uppercase">
                 {item}
               </span>
             </li>
@@ -184,7 +191,7 @@ function TierCard({
           {tier.videos.map((item) => (
             <li key={item} className="flex items-start gap-2.5">
               <span className="text-brand-beige mt-0.5 shrink-0 text-sm">✓</span>
-              <span className="font-montserrat text-sm text-gray-300 leading-snug">
+              <span className="font-montserrat text-sm text-gray-300 leading-snug uppercase">
                 {item}
               </span>
             </li>
@@ -200,7 +207,7 @@ function TierCard({
           {tier.extras.map((item) => (
             <li key={item} className="flex items-start gap-2.5">
               <span className="text-brand-beige mt-0.5 shrink-0 text-sm">✓</span>
-              <span className="font-montserrat text-sm text-gray-300 leading-snug">
+              <span className="font-montserrat text-sm text-gray-300 leading-snug uppercase">
                 {item}
               </span>
             </li>
@@ -332,7 +339,6 @@ export default function ContenidoPage() {
             </p>
             <div className="max-w-4xl mx-auto text-left grid grid-cols-1 sm:grid-cols-2 gap-x-8">
               {[
-                "Y eso te está costando clientes todos los días sin que te des cuenta",
                 "Tu competencia se ve más profesional aunque su producto sea inferior al tuyo",
                 "Estás invirtiendo en publicidad con material que no convierte",
                 "Cada mes improvisas el contenido sin una estrategia clara detrás",
@@ -398,18 +404,6 @@ export default function ContenidoPage() {
                     fill
                     className="object-cover"
                     sizes="40vw"
-                  />
-                </div>
-              </div>
-              {/* Mobile: imagen debajo */}
-              <div className="lg:hidden">
-                <div className="relative w-full aspect-[3/4] bg-brand-black/60 border border-white/10 rounded-2xl overflow-hidden">
-                  <Image
-                    src="/images/statistics/SCREEN.jpg"
-                    alt="Estadísticas reales de alcances y ROAS de FRESA FIT"
-                    fill
-                    className="object-cover"
-                    sizes="100vw"
                   />
                 </div>
               </div>
@@ -571,44 +565,103 @@ export default function ContenidoPage() {
               <span className="text-brand-beige">SERIO.</span>
             </h2>
 
-            {/* Comparison cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {/* Sí es para ti */}
-              <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-6 md:p-8">
-                <p className="font-barlow font-bold text-xs tracking-[0.2em] uppercase text-brand-beige mb-6">
-                  S&Iacute; ES PARA TI
-                </p>
-                <div className="flex flex-col gap-5">
+            {/* Comparison layout — asymmetric 3:2 */}
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
+              {/* Sí es para ti — visual dominante */}
+              <div className="lg:col-span-3 flex flex-col gap-5">
+                {/* Imagen ancla */}
+                <div
+                  className="relative w-full aspect-[16/9] bg-brand-black border border-brand-beige/30 rounded-2xl overflow-hidden"
+                  style={{
+                    boxShadow:
+                      "0 0 15px rgba(200,157,105,0.15), 0 0 40px rgba(200,157,105,0.08), inset 0 0 20px rgba(200,157,105,0.03)",
+                  }}
+                >
+                  <Image
+                    src="/images/statistics/aff2.png"
+                    alt="Contenido profesional producido por ArmandoFF"
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 60vw, 100vw"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="font-barlow font-bold text-[10px] tracking-[0.3em] uppercase bg-brand-beige text-brand-black px-3 py-1.5 rounded-full">
+                      SÍ ES PARA TI
+                    </span>
+                  </div>
+                </div>
+
+                {/* Mini-cards 2×2 */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
-                    "Tienes un producto o servicio en Hermosillo y quieres vender más",
-                    "Inviertes o quieres invertir en publicidad digital",
-                    "Entiendes que el contenido es una inversión, no un gasto",
-                    "Quieres que tu marca se vea como lo que realmente es",
-                  ].map((item) => (
-                    <div key={item} className="flex items-start gap-3">
-                      <span className="text-brand-beige mt-0.5 shrink-0">✓</span>
-                      <p className="font-montserrat text-sm text-gray-400 font-light leading-relaxed">{item}</p>
+                    {
+                      Icon: ScaleIcon,
+                      label: "PRODUCTO CON TRACCIÓN",
+                      desc: "Tienes un producto o servicio en Hermosillo y quieres vender más",
+                    },
+                    {
+                      Icon: MarketingIcon,
+                      label: "INVIERTES EN ADS",
+                      desc: "Inviertes o quieres invertir en publicidad digital",
+                    },
+                    {
+                      Icon: MindsetIcon,
+                      label: "VISIÓN DE INVERSIÓN",
+                      desc: "Entiendes que el contenido es una inversión, no un gasto",
+                    },
+                    {
+                      Icon: StarIcon,
+                      label: "MARCA CON AMBICIÓN",
+                      desc: "Quieres que tu marca se vea como lo que realmente es",
+                    },
+                  ].map(({ Icon, label, desc }) => (
+                    <div
+                      key={label}
+                      className="group bg-white/[0.03] border border-brand-beige/30 rounded-2xl p-5 hover:border-brand-beige/60 transition-all duration-300"
+                      style={{
+                        boxShadow:
+                          "0 0 15px rgba(200,157,105,0.08), inset 0 0 20px rgba(200,157,105,0.02)",
+                      }}
+                    >
+                      <div className="flex items-center justify-center w-11 h-11 rounded-full bg-brand-beige/10 border border-brand-beige/30 text-brand-beige mb-4 group-hover:bg-brand-beige/20 transition-colors">
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <p className="font-barlow font-bold text-xs tracking-[0.2em] uppercase text-brand-beige mb-2">
+                        {label}
+                      </p>
+                      <p className="font-montserrat text-sm text-gray-300 font-light leading-relaxed">
+                        {desc}
+                      </p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* No es para ti */}
-              <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-6 md:p-8">
-                <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6">
-                  NO ES PARA TI
-                </p>
-                <div className="flex flex-col gap-5">
-                  {[
-                    "Buscas contenido barato sin criterio creativo",
-                    "No tienes claridad sobre lo que ofreces o a quién le vendes",
-                    "Esperas resultados sin comprometerte a un proceso mensual",
-                  ].map((item) => (
-                    <div key={item} className="flex items-start gap-3">
-                      <span className="text-gray-600 mt-0.5 shrink-0">✕</span>
-                      <p className="font-montserrat text-sm text-gray-500 font-light leading-relaxed">{item}</p>
-                    </div>
-                  ))}
+              {/* No es para ti — apagado */}
+              <div className="lg:col-span-2 flex flex-col gap-3">
+                <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 md:p-6">
+                  <p className="font-montserrat text-[10px] tracking-[0.3em] uppercase text-gray-500 mb-5">
+                    NO ES PARA TI
+                  </p>
+                  <div className="flex flex-col gap-3">
+                    {[
+                      "Buscas contenido barato sin criterio creativo",
+                      "No tienes claridad sobre lo que ofreces o a quién le vendes",
+                      "Esperas resultados sin comprometerte a un proceso mensual",
+                    ].map((item) => (
+                      <div
+                        key={item}
+                        className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5"
+                      >
+                        <span className="flex items-center justify-center w-7 h-7 rounded-full bg-white/5 border border-white/10 text-gray-500 shrink-0">
+                          <CloseIcon className="w-3.5 h-3.5" />
+                        </span>
+                        <p className="font-montserrat text-sm text-gray-500 font-light leading-relaxed line-through decoration-gray-700/60 decoration-1">
+                          {item}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

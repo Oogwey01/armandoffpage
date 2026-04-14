@@ -71,11 +71,11 @@ export default function Footer() {
         {/* Contact info */}
         <div className="flex flex-col items-center gap-4 pb-8 sm:flex-row sm:justify-center sm:gap-8">
           <a
-            href="mailto:contacto@armandofresafit.com"
+            href="mailto:armandofresafit@gmail.com"
             className="flex items-center gap-2 text-sm text-white/60 transition-colors duration-200 hover:text-brand-beige"
           >
             <EmailIcon className="h-4 w-4" />
-            <span>contacto@armandofresafit.com</span>
+            <span>armandofresafit@gmail.com</span>
           </a>
           <a
             href="tel:+52XXXXXXXX"
