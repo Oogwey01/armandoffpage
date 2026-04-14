@@ -121,7 +121,7 @@ export default function ContenidoPage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="font-montserrat text-zinc-400 text-center text-lg md:text-xl mb-8 md:mb-10 max-w-3xl mx-auto font-light"
             >
-              Y eso te está costando clientes todos los días sin que te des cuenta
+              Cada día te está costando clientes sin que te des cuenta.
             </motion.p>
 
             <div className="grid md:grid-cols-2 gap-3 md:gap-5 max-w-5xl mx-auto">
