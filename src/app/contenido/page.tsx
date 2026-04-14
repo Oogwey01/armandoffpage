@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
@@ -30,8 +30,197 @@ function SectionDivider() {
   );
 }
 
+type Tier = {
+  number: "01" | "02" | "03";
+  name: string;
+  price: string;
+  totalPieces: string;
+  images: string[];
+  videos: string[];
+  extras: string[];
+  highlight?: boolean;
+};
+
+const TIERS: Tier[] = [
+  {
+    number: "01",
+    name: "PRESENCIA",
+    price: "$9,900",
+    totalPieces: "10 piezas de contenido profesional al mes",
+    images: ["6 composiciones visuales avanzadas listas para ads o feed"],
+    videos: [
+      "3 videos UGC con dirección creativa listos para publicar",
+      "1 video de alta producción con modelo y locación",
+    ],
+    extras: [
+      "Brief creativo mensual con la estrategia detrás incluido",
+      "Contenido en crudo",
+    ],
+  },
+  {
+    number: "02",
+    name: "AUTORIDAD",
+    price: "$18,900",
+    totalPieces: "22 piezas de contenido profesional al mes",
+    images: ["14 composiciones visuales avanzadas listas para ads o feed"],
+    videos: [
+      "6 videos UGC con dirección creativa listos para publicar",
+      "2 videos de alta producción con modelo y locación",
+    ],
+    extras: [
+      "Brief creativo mensual con la estrategia detrás incluido",
+      "Contenido en crudo",
+    ],
+    highlight: true,
+  },
+  {
+    number: "03",
+    name: "DOMINACIÓN",
+    price: "$34,900",
+    totalPieces: "44 piezas de contenido profesional al mes",
+    images: ["28 composiciones visuales avanzadas listas para ads o feed"],
+    videos: [
+      "12 videos UGC con dirección creativa listos para publicar",
+      "4 videos de alta producción con modelo y locación",
+    ],
+    extras: [
+      "Brief creativo mensual con la estrategia detrás incluido",
+      "Contenido en crudo",
+    ],
+  },
+];
+
+function TierCard({
+  tier,
+  showPromoBanner,
+  showFloatingBadge,
+  flatTop = false,
+  onCta,
+}: {
+  tier: Tier;
+  showPromoBanner: boolean;
+  showFloatingBadge: boolean;
+  flatTop?: boolean;
+  onCta: () => void;
+}) {
+  const isHighlighted = !!tier.highlight;
+  const radiusClasses = flatTop ? "rounded-b-2xl" : "rounded-2xl";
+  const borderClasses = flatTop
+    ? isHighlighted
+      ? "border-x-2 border-b-2 border-brand-beige"
+      : "border-x border-b border-white/10"
+    : isHighlighted
+    ? "border-2 border-brand-beige"
+    : "border border-white/10 hover:border-white/25 transition-all duration-300";
+
+  return (
+    <div
+      className={`relative bg-brand-black ${radiusClasses} overflow-hidden flex flex-col h-full ${borderClasses}`}
+      style={
+        isHighlighted
+          ? {
+              boxShadow:
+                "0 0 15px rgba(200,157,105,0.15), 0 0 40px rgba(200,157,105,0.08), inset 0 0 20px rgba(200,157,105,0.03)",
+            }
+          : undefined
+      }
+    >
+      {isHighlighted && showPromoBanner && (
+        <div className="bg-brand-beige text-brand-black text-center py-2.5 font-montserrat text-[11px] font-bold uppercase tracking-[0.2em]">
+          EL MÁS ELEGIDO
+        </div>
+      )}
+
+      {isHighlighted && showFloatingBadge && (
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+          <span className="font-montserrat text-[10px] tracking-[0.2em] uppercase bg-brand-beige text-brand-black font-bold px-4 py-1.5 rounded-full">
+            EL MÁS ELEGIDO
+          </span>
+        </div>
+      )}
+
+      <div className="p-6 md:p-8 flex flex-col flex-1">
+        <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-2">
+          TIER {tier.number}
+        </p>
+        <h3 className="font-barlow font-black text-3xl md:text-4xl text-white uppercase mb-4">
+          {tier.name}
+        </h3>
+
+        <p className="font-montserrat text-xs uppercase tracking-wider text-gray-500 mb-1">
+          Desde
+        </p>
+        <div className="flex items-baseline gap-1.5 mb-4">
+          <span className="font-barlow font-black text-4xl md:text-5xl text-white">
+            {tier.price}
+          </span>
+          <span className="font-montserrat text-sm text-gray-400">MXN/mes</span>
+        </div>
+
+        <p className="font-montserrat text-sm text-brand-beige font-medium mb-6 leading-snug">
+          {tier.totalPieces}
+        </p>
+
+        <div className="h-px bg-white/10 mb-5" />
+
+        <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-3">
+          Imágenes
+        </p>
+        <ul className="flex flex-col gap-2 mb-5">
+          {tier.images.map((item) => (
+            <li key={item} className="flex items-start gap-2.5">
+              <span className="text-brand-beige mt-0.5 shrink-0 text-sm">✓</span>
+              <span className="font-montserrat text-sm text-gray-300 leading-snug">
+                {item}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-3">
+          Videos
+        </p>
+        <ul className="flex flex-col gap-2 mb-5">
+          {tier.videos.map((item) => (
+            <li key={item} className="flex items-start gap-2.5">
+              <span className="text-brand-beige mt-0.5 shrink-0 text-sm">✓</span>
+              <span className="font-montserrat text-sm text-gray-300 leading-snug">
+                {item}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="h-px bg-white/10 mb-5" />
+
+        <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-3">
+          Incluido
+        </p>
+        <ul className="flex flex-col gap-2 mb-8">
+          {tier.extras.map((item) => (
+            <li key={item} className="flex items-start gap-2.5">
+              <span className="text-brand-beige mt-0.5 shrink-0 text-sm">✓</span>
+              <span className="font-montserrat text-sm text-gray-300 leading-snug">
+                {item}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <button
+          onClick={onCta}
+          className="mt-auto w-full bg-brand-beige text-brand-black font-barlow font-bold text-sm uppercase tracking-wide py-3.5 rounded-full hover:bg-brand-beige-light hover:scale-[1.01] transition-all"
+        >
+          Quiero este →
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function ContenidoPage() {
   const { isOpen, open, close } = useFormModal();
+  const [activeTier, setActiveTier] = useState<number>(1);
 
   return (
     <>
@@ -133,10 +322,10 @@ export default function ContenidoPage() {
             <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-4">
               EL PROBLEMA REAL
             </p>
-            <h2 className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight mb-4">
-              <span className="text-white">TIENES UN PRODUCTO O SERVICIO QUE FUNCIONE,</span>
+            <h2 className="font-barlow font-black text-3xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight mb-4">
+              <span className="text-white">TIENES UN PRODUCTO QUE FUNCIONA,</span>
               <br />
-              <span className="text-brand-beige">PERO QUE QUIERAS LLEVAR AL SIGUIENTE NIVEL?</span>
+              <span className="text-brand-beige">&iquest;PERO QUIERES LLEVARLO AL SIGUIENTE NIVEL?</span>
             </h2>
             <p className="font-montserrat text-base md:text-lg text-gray-400 font-light max-w-2xl mx-auto mt-2 mb-8">
                Y eso te está costando clientes todos los días sin que te des cuenta
@@ -179,7 +368,7 @@ export default function ContenidoPage() {
                 <p className="font-montserrat text-sm md:text-base text-gray-400 font-light max-w-2xl mb-6">
                   Estadísticas de alcances y ROAS reales de FRESA FIT — probado con presupuesto propio en Meta Ads y TikTok.
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
+                <div className="grid grid-cols-2 gap-4 flex-1">
                   {[
                     { label: "ROAS promedio", value: "5.2x", desc: "Retorno sobre inversión publicitaria", highlight: true },
                     { label: "Alcance total", value: "3.8M+", desc: "Personas alcanzadas en Meta y TikTok" },
@@ -192,7 +381,7 @@ export default function ContenidoPage() {
                       )}
                       <div className="relative z-10">
                         <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-gray-500 font-medium mb-2">{label}</p>
-                        <p className={`font-barlow font-black text-5xl md:text-6xl leading-none ${highlight ? "text-brand-beige" : "text-white"}`}>{value}</p>
+                        <p className={`font-barlow font-black text-4xl sm:text-5xl md:text-6xl leading-none ${highlight ? "text-brand-beige" : "text-white"}`}>{value}</p>
                       </div>
                       <p className="relative z-10 font-montserrat text-xs text-gray-400 font-light leading-relaxed mt-3">{desc}</p>
                     </div>
@@ -272,8 +461,8 @@ export default function ContenidoPage() {
 
               {/* Right: -$500 card (cuadrado) */}
               <div className="lg:col-span-2 flex items-start justify-center">
-                <div className="w-full aspect-square border border-brand-beige/30 rounded-2xl flex flex-col items-center justify-center text-center bg-white/[0.02] p-8 max-w-sm lg:max-w-none">
-                  <p className="font-barlow font-black text-6xl sm:text-7xl md:text-8xl text-brand-beige leading-none mb-5">
+                <div className="w-full sm:aspect-square border border-brand-beige/30 rounded-2xl flex flex-col items-center justify-center text-center bg-white/[0.02] px-5 py-8 sm:p-8 max-w-sm lg:max-w-none">
+                  <p className="font-barlow font-black text-5xl sm:text-7xl md:text-8xl text-brand-beige leading-none mb-3 sm:mb-5">
                     -$500
                   </p>
                   <p className="font-montserrat text-sm md:text-base text-gray-400 font-light leading-relaxed">
@@ -290,160 +479,77 @@ export default function ContenidoPage() {
 
         <SectionDivider />
         {/* ── Elige tu nivel ── */}
-        <section id="paquetes" className="section-padding bg-brand-gray">
+        <section id="paquetes" className="px-4 sm:px-6 lg:px-8 pt-8 pb-16 md:py-24 bg-brand-gray">
           <AnimateOnScroll className="container-custom">
             {/* Label */}
-            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-16">
+            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4 md:mb-6">
               ELIGE TU NIVEL
             </p>
 
             {/* Subtitle */}
-            <p className="font-montserrat text-sm md:text-base text-gray-400 font-light text-center max-w-2xl mx-auto mb-14">
+            <p className="font-montserrat text-sm md:text-base text-gray-400 font-light text-center max-w-2xl mx-auto mb-8 md:mb-12">
               Todo listo para paid media y orgánico. Derechos de uso incluidos en todos los paquetes.
             </p>
 
-            {/* Pricing cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {/* Tier 01 — Presencia */}
-              <div className="relative bg-brand-black border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col hover:border-white/25 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]">
-                <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-2">TIER 01</p>
-                <h3 className="font-barlow font-black text-3xl md:text-4xl text-white uppercase mb-1">PRESENCIA</h3>
-                <p className="font-montserrat text-sm text-gray-400 font-light mb-4">Para dejar de ser invisible.</p>
-                <div className="flex items-baseline gap-1 mb-2">
-                  <span className="font-barlow font-black text-4xl md:text-5xl text-white">$4,900</span>
-                  <span className="font-montserrat text-sm text-gray-500">/mes</span>
-                </div>
-                <p className="font-montserrat text-xs text-gray-500 line-through mb-1">Valor por separado: $8,200</p>
-                <p className="font-montserrat text-xs text-brand-beige mb-6">8 piezas · $612 por pieza</p>
-
-                <div className="h-px bg-white/10 mb-6" />
-
-                {/* Imágenes */}
-                <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-4">— IM&Aacute;GENES —</p>
-                <div className="flex flex-col gap-2.5 mb-6">
-                  <div className="flex justify-between"><span className="font-montserrat text-sm text-gray-300">Fotografía profesional de marca</span><span className="font-montserrat text-sm text-white/50">×3</span></div>
-                  <div className="flex justify-between"><span className="font-montserrat text-sm text-gray-300">Composición visual avanzada</span><span className="font-montserrat text-sm text-white/50">×2</span></div>
-                  <div className="flex justify-between"><span className="font-montserrat text-sm text-gray-300">Imagen lifestyle editada</span><span className="font-montserrat text-sm text-white/50">×1</span></div>
-                </div>
-
-                {/* Videos */}
-                <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-4">— VIDEOS —</p>
-                <div className="flex flex-col gap-2.5 mb-8">
-                  <div className="flex justify-between"><span className="font-montserrat text-sm text-gray-300">Video UGC con dirección creativa</span><span className="font-montserrat text-sm text-white/50">×2</span></div>
-                  <div className="flex justify-between"><span className="font-montserrat text-sm text-gray-300">Video ad de respuesta directa</span><span className="font-montserrat text-sm text-white/50">×1</span></div>
-                </div>
-
-                {/* Extras */}
-                <div className="flex flex-col gap-2 mb-8">
-                  <p className="font-montserrat text-xs text-gray-400">✓ Brief creativo mensual</p>
-                  <p className="font-montserrat text-xs text-gray-400">✓ Derechos para ads y orgánico</p>
-                </div>
-
-                <button onClick={open} className="mt-auto w-full bg-brand-beige text-brand-black font-barlow font-bold text-sm uppercase tracking-wide py-3.5 rounded-xl hover:bg-brand-beige-light hover:scale-[1.01] transition-all">
-                  Quiero este →
-                </button>
+            {/* Mobile: tabs + single card */}
+            <div className="md:hidden max-w-md mx-auto">
+              <div role="tablist" className="flex gap-px">
+                {TIERS.map((t, i) => {
+                  const active = i === activeTier;
+                  return (
+                    <button
+                      key={t.number}
+                      role="tab"
+                      aria-selected={active}
+                      onClick={() => setActiveTier(i)}
+                      className={`flex-1 py-3 font-barlow font-bold text-[11px] uppercase tracking-wider transition-colors ${
+                        active
+                          ? "bg-brand-black text-white border-t-2 border-x border-brand-beige rounded-t-xl"
+                          : "bg-brand-gray/60 text-white/40 border-t-2 border-transparent hover:text-white/70"
+                      }`}
+                    >
+                      {t.name}
+                    </button>
+                  );
+                })}
               </div>
+              <TierCard
+                key={activeTier}
+                tier={TIERS[activeTier]}
+                showPromoBanner
+                showFloatingBadge={false}
+                flatTop
+                onCta={open}
+              />
+            </div>
 
-              {/* Tier 02 — Autoridad (highlighted) */}
-              <div
-                className="relative bg-brand-black border-2 border-brand-beige rounded-2xl p-6 md:p-8 flex flex-col"
-                style={{
-                  boxShadow: "0 0 15px rgba(200,157,105,0.15), 0 0 40px rgba(200,157,105,0.08), inset 0 0 20px rgba(200,157,105,0.03)",
-                }}
+            {/* Desktop: 3 cards side by side */}
+            <div className="hidden md:grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {TIERS.map((t) => (
+                <TierCard
+                  key={t.number}
+                  tier={t}
+                  showPromoBanner={false}
+                  showFloatingBadge
+                  onCta={open}
+                />
+              ))}
+            </div>
+
+            {/* WhatsApp CTA */}
+            <div className="flex justify-center mt-12 md:mt-16">
+              <a
+                href="https://wa.me/526621000000"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 bg-[#25D366] text-white font-barlow font-bold text-base uppercase tracking-wide px-10 sm:px-16 py-4 rounded-xl hover:bg-[#20bd5a] hover:scale-[1.02] transition-all animate-pulse-subtle"
+                style={{ boxShadow: "0 0 20px rgba(37,211,102,0.3), 0 0 50px rgba(37,211,102,0.15)" }}
               >
-                {/* Badge */}
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="font-montserrat text-[10px] tracking-[0.2em] uppercase bg-brand-beige text-brand-black font-bold px-4 py-1.5 rounded-full">
-                    EL M&Aacute;S ELEGIDO
-                  </span>
-                </div>
-
-                <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-2">TIER 02</p>
-                <h3 className="font-barlow font-black text-3xl md:text-4xl text-white uppercase mb-1">AUTORIDAD</h3>
-                <p className="font-montserrat text-sm text-gray-400 font-light mb-4">Para escalar con anuncios.</p>
-                <div className="flex items-baseline gap-1 mb-2">
-                  <span className="font-barlow font-black text-4xl md:text-5xl text-white">$9,900</span>
-                  <span className="font-montserrat text-sm text-gray-500">/mes</span>
-                </div>
-                <p className="font-montserrat text-xs text-gray-500 line-through mb-1">Valor por separado: $19,400</p>
-                <p className="font-montserrat text-xs text-brand-beige mb-6">18 piezas · $550 por pieza</p>
-
-                <div className="h-px bg-white/10 mb-6" />
-
-                {/* Imágenes */}
-                <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-4">— IM&Aacute;GENES —</p>
-                <div className="flex flex-col gap-2.5 mb-6">
-                  <div className="flex justify-between"><span className="font-montserrat text-sm text-gray-300">Fotografía profesional de marca</span><span className="font-montserrat text-sm text-white/50">×4</span></div>
-                  <div className="flex justify-between"><span className="font-montserrat text-sm text-gray-300">Fotografía lifestyle editada</span><span className="font-montserrat text-sm text-white/50">×2</span></div>
-                  <div className="flex justify-between"><span className="font-montserrat text-sm text-gray-300">Composición visual avanzada</span><span className="font-montserrat text-sm text-white/50">×4</span></div>
-                  <div className="flex justify-between"><span className="font-montserrat text-sm text-gray-300">Gráfica de marca para campañas</span><span className="font-montserrat text-sm text-white/50">×2</span></div>
-                </div>
-
-                {/* Videos */}
-                <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-4">— VIDEOS —</p>
-                <div className="flex flex-col gap-2.5 mb-8">
-                  <div className="flex justify-between"><span className="font-montserrat text-sm text-gray-300">Video UGC con dirección creativa</span><span className="font-montserrat text-sm text-white/50">×3</span></div>
-                  <div className="flex justify-between"><span className="font-montserrat text-sm text-gray-300">Video ad de respuesta directa</span><span className="font-montserrat text-sm text-white/50">×2</span></div>
-                  <div className="flex justify-between"><span className="font-montserrat text-sm text-gray-300">Video testimonial o demo producido</span><span className="font-montserrat text-sm text-white/50">×1</span></div>
-                </div>
-
-                {/* Extras */}
-                <div className="flex flex-col gap-2 mb-8">
-                  <p className="font-montserrat text-xs text-gray-400">✓ Estrategia de contenido mensual</p>
-                  <p className="font-montserrat text-xs text-gray-400">✓ Revisiones hasta aprobación</p>
-                  <p className="font-montserrat text-xs text-gray-400">✓ Derechos ilimitados</p>
-                </div>
-
-                <button onClick={open} className="mt-auto w-full bg-brand-beige text-brand-black font-barlow font-bold text-sm uppercase tracking-wide py-3.5 rounded-xl hover:bg-brand-beige-light hover:scale-[1.01] transition-all">
-                  Quiero este →
-                </button>
-              </div>
-
-              {/* Tier 03 — Dominación */}
-              <div className="relative bg-brand-black border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col hover:border-white/25 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]">
-                <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-2">TIER 03</p>
-                <h3 className="font-barlow font-black text-3xl md:text-4xl text-white uppercase mb-1">DOMINACI&Oacute;N</h3>
-                <p className="font-montserrat text-sm text-gray-400 font-light mb-4">Para dueños que quieren ser líderes de nicho.</p>
-                <div className="flex items-baseline gap-1 mb-2">
-                  <span className="font-barlow font-black text-4xl md:text-5xl text-white">$18,900</span>
-                  <span className="font-montserrat text-sm text-gray-500">/mes</span>
-                </div>
-                <p className="font-montserrat text-xs text-gray-500 line-through mb-1">Valor por separado: $38,000+</p>
-                <p className="font-montserrat text-xs text-brand-beige mb-6">30 piezas · $630 por pieza</p>
-
-                <div className="h-px bg-white/10 mb-6" />
-
-                {/* Imágenes */}
-                <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-4">— IM&Aacute;GENES —</p>
-                <div className="flex flex-col gap-2.5 mb-6">
-                  <span className="font-montserrat text-sm text-gray-300">Fotografía profesional de marca</span>
-                  <span className="font-montserrat text-sm text-gray-300">Fotografía lifestyle editada</span>
-                  <span className="font-montserrat text-sm text-gray-300">Composición visual avanzada</span>
-                  <span className="font-montserrat text-sm text-gray-300">Gráfica de marca para campañas</span>
-                </div>
-
-                {/* Videos */}
-                <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-4">— VIDEOS —</p>
-                <div className="flex flex-col gap-2.5 mb-8">
-                  <span className="font-montserrat text-sm text-gray-300">Video UGC con dirección creativa</span>
-                  <span className="font-montserrat text-sm text-gray-300">Video ad de respuesta directa</span>
-                  <span className="font-montserrat text-sm text-gray-300">Video testimonial o demo producido</span>
-                  <span className="font-montserrat text-sm text-gray-300">Video lifestyle cinematográfico</span>
-                  <span className="font-montserrat text-sm text-gray-300">Video de alta producción</span>
-                </div>
-
-                {/* Extras */}
-                <div className="flex flex-col gap-2 mb-8">
-                  <p className="font-montserrat text-xs text-gray-400">✓ Estrategia + calendario editorial</p>
-                  <p className="font-montserrat text-xs text-gray-400">✓ Sesiones de alineación mensual</p>
-                  <p className="font-montserrat text-xs text-gray-400">✓ Revisiones ilimitadas por fases</p>
-                  <p className="font-montserrat text-xs text-gray-400">✓ Derechos totales y exclusivos</p>
-                </div>
-
-                <button onClick={open} className="mt-auto w-full bg-brand-beige text-brand-black font-barlow font-bold text-sm uppercase tracking-wide py-3.5 rounded-xl hover:bg-brand-beige-light hover:scale-[1.01] transition-all">
-                  Quiero este →
-                </button>
-              </div>
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
+                ESCRIBIR POR WHATSAPP
+              </a>
             </div>
           </AnimateOnScroll>
         </section>
@@ -509,43 +615,6 @@ export default function ContenidoPage() {
           </AnimateOnScroll>
         </section>
 
-        <SectionDivider />
-        {/* ── Siguiente paso ── */}
-        <section className="section-padding bg-brand-black">
-          <AnimateOnScroll className="container-custom text-center">
-            {/* Label */}
-            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-8">
-              SIGUIENTE PASO
-            </p>
-
-            {/* Title */}
-            <h2 className="font-barlow font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl uppercase leading-[0.85] tracking-tight mb-10">
-              <span className="text-white/10">TU MARCA NO TIENE CONTENIDO </span>
-              <span className="text-white/10">QUE </span>
-              <span className="text-brand-beige">VENDE</span>
-              <span className="text-white/10"> — O NO LO TIENE.</span>
-            </h2>
-
-            {/* Subtitle */}
-            <p className="font-montserrat text-base md:text-lg text-gray-400 font-light max-w-xl mx-auto mb-10">
-              Un mensaje y arrancamos. Sin formularios, sin procesos largos.
-            </p>
-
-            {/* WhatsApp CTA */}
-            <a
-              href="https://wa.me/526621000000"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 bg-[#25D366] text-white font-barlow font-bold text-base uppercase tracking-wide px-36 py-4 rounded-xl hover:bg-[#20bd5a] hover:scale-[1.02] transition-all animate-pulse-subtle"
-              style={{ boxShadow: "0 0 20px rgba(37,211,102,0.3), 0 0 50px rgba(37,211,102,0.15)" }}
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-              </svg>
-              ESCRIBIR POR WHATSAPP
-            </a>
-          </AnimateOnScroll>
-        </section>
       </main>
       <Footer />
       <QualificationForm isOpen={isOpen} onClose={close} />
