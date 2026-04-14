@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { MenuIcon, CloseIcon } from "@/components/common/Icons";
+import { CloseIcon } from "@/components/common/Icons";
 import { NAV_LINKS } from "@/lib/constants";
 
 interface HeaderProps {
@@ -12,6 +12,7 @@ interface HeaderProps {
 
 export default function Header({ onOpenForm }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const closeMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(false);
@@ -28,23 +29,57 @@ export default function Header({ onOpenForm }: HeaderProps) {
     };
   }, [isMobileMenuOpen]);
 
+  // Detecta scroll para reducir altura del header y elevar shadow
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 24);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
       <div className="fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6">
-        <div className="mx-auto max-w-6xl bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-lg shadow-black/10 mt-6 mb-4">
-            <div className="flex h-16 sm:h-20 items-center px-4 sm:px-8 gap-3">
+        <div
+          className={`mx-auto max-w-6xl backdrop-blur-xl border rounded-2xl transition-all duration-300 ${
+            isScrolled
+              ? "bg-brand-black/70 border-white/15 shadow-2xl shadow-black/40 mt-3 mb-2"
+              : "bg-white/10 border-white/20 shadow-lg shadow-black/10 mt-6 mb-4"
+          }`}
+        >
+            <div
+              className={`flex items-center px-4 sm:px-8 gap-3 transition-[height] duration-300 ${
+                isScrolled ? "h-14 sm:h-16" : "h-16 sm:h-20"
+              }`}
+            >
 
-            {/* LEFT: Hamburger (mobile only) */}
+            {/* LEFT: Hamburger animado (mobile only) */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-white lg:hidden flex-shrink-0"
+              className="text-white lg:hidden flex-shrink-0 relative w-6 h-6"
               aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={isMobileMenuOpen}
             >
-              {isMobileMenuOpen ? (
-                <CloseIcon className="h-6 w-6" />
-              ) : (
-                <MenuIcon className="h-6 w-6" />
-              )}
+              <span
+                aria-hidden="true"
+                className={`absolute left-0 top-[7px] w-6 h-0.5 bg-current rounded-full transition-all duration-300 ${
+                  isMobileMenuOpen ? "rotate-45 top-[11px]" : ""
+                }`}
+              />
+              <span
+                aria-hidden="true"
+                className={`absolute left-0 top-[11px] w-6 h-0.5 bg-current rounded-full transition-opacity duration-200 ${
+                  isMobileMenuOpen ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <span
+                aria-hidden="true"
+                className={`absolute left-0 top-[15px] w-6 h-0.5 bg-current rounded-full transition-all duration-300 ${
+                  isMobileMenuOpen ? "-rotate-45 top-[11px]" : ""
+                }`}
+              />
             </button>
 
             {/* Logo */}
@@ -55,7 +90,9 @@ export default function Header({ onOpenForm }: HeaderProps) {
                   alt="Logo"
                   height={40}
                   width={160}
-                  className="object-contain w-[110px] sm:w-[160px]"
+                  className={`object-contain transition-all duration-300 ${
+                    isScrolled ? "w-[95px] sm:w-[140px] opacity-90" : "w-[110px] sm:w-[160px] opacity-100"
+                  }`}
                 />
               </a>
             </div>
@@ -97,7 +134,7 @@ export default function Header({ onOpenForm }: HeaderProps) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               onClick={closeMobileMenu}
-              className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
             />
 
             {/* Drawer */}

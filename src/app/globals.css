@@ -27,6 +27,11 @@
     @apply bg-brand-beige/30 text-white;
   }
 
+  /* Focus visible accesible — solo con teclado */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-beige ring-offset-2 ring-offset-brand-black rounded-[inherit];
+  }
+
   /* Scrollbar */
   ::-webkit-scrollbar {
     width: 8px;

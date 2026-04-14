@@ -31,6 +31,7 @@ const config: Config = {
         "scale-in": "scaleIn 0.4s ease-out forwards",
         "marquee-left": "marquee-left 35s linear infinite",
         "marquee-right": "marquee-right 35s linear infinite",
+        "logo-pulse": "logo-pulse 4s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
@@ -56,6 +57,11 @@ const config: Config = {
         "marquee-right": {
           "0%":   { transform: "translateX(-50%)" },
           "100%": { transform: "translateX(0)" },
+        },
+        "logo-pulse": {
+          "0%, 45%":   { filter: "grayscale(1) brightness(0) invert(1)", opacity: "0.4" },
+          "50%, 95%":  { filter: "grayscale(0) brightness(1) invert(0)", opacity: "1" },
+          "100%":      { filter: "grayscale(1) brightness(0) invert(1)", opacity: "0.4" },
         },
       },
     },
