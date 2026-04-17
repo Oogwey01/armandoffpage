@@ -20,7 +20,7 @@ const MARQUEE_CARDS: MarqueeCardData[] = [
   { type: "desktop", label: "Landing Page",   img: "/images/statistics/aff3.png" },
   { type: "phone",   label: "Marca",          img: "/images/prove/1st image.png" },
   { type: "desktop", label: "Funnel",         img: "/images/prove/2nd image.png" },
-  { type: "phone",   label: "Resultados",     img: "/images/statistics/aff4.png" },
+  { type: "phone",   label: "Resultados",     img: "/images/statistics/MLstats.jpg" },
   { type: "desktop", label: "Operación",      img: "/images/prove/3rd image.png" },
 ];
 
@@ -221,27 +221,27 @@ export default function Hero({ onOpenForm }: HeroProps) {
           {/* Metric cards with text overlay on images */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
             {[
-              { num: "$5M+",     desc: "Invertidos en Meta Ads con dinero propio",  img: "/images/statistics/aff.png" },
-              { num: "$30M+",    desc: "Facturados en Mercado Libre en 2 años",     img: "/images/statistics/aff2.png" },
+              { num: "$5M+",     desc: "Invertidos en Meta Ads con dinero propio",  img: "/images/statistics/Meta_stats.jpg" },
+              { num: "$30M+",    desc: "Facturados en Mercado Libre en 2 años",     img: "/images/statistics/MLstats.jpg" },
               { num: "+4,000",   desc: "Ventas generadas en TikTok Shop",           img: "/images/statistics/SCREEN.jpg" },
-              { num: "Platinum", desc: "MercadoLíder — nivel más alto en ML",       img: "/images/statistics/aff4.png" },
+              { num: "Platinum", desc: "MercadoLíder — nivel más alto en ML",       img: "/images/statistics/stats ML.jpeg" },
             ].map(({ num, desc, img }) => (
-              <div key={num} className="relative rounded-xl overflow-hidden border border-white/10">
-                <Image
-                  src={img}
-                  alt={num}
-                  width={0}
-                  height={0}
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                  className="w-full h-auto"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 text-center">
+              <div key={num} className="rounded-xl overflow-hidden border border-white/10 flex flex-col">
+                <div className="relative aspect-[3/4]">
+                  <Image
+                    src={img}
+                    alt={num}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="bg-brand-gray px-2 py-2 sm:px-3 sm:py-3 text-center">
                   <span className="font-barlow font-black text-2xl sm:text-3xl md:text-4xl text-white leading-none">
-                    <span className="bg-brand-beige/20 px-1.5 py-0.5 rounded">{num}</span>
+                    {num}
                   </span>
-                  <p className="font-montserrat text-[10px] sm:text-sm text-gray-200 mt-1.5 leading-tight">
-                    <span className="bg-brand-beige/20 px-1 py-0.5 rounded">{desc}</span>
+                  <p className="font-montserrat text-[10px] sm:text-sm text-gray-300 mt-1 leading-tight">
+                    {desc}
                   </p>
                 </div>
               </div>

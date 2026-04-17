@@ -290,10 +290,10 @@ export function StatsSection() {
               className="relative w-full h-full min-h-[480px] bg-brand-black/60 border border-white/10 rounded-2xl overflow-hidden [will-change:transform]"
             >
               <Image
-                src="/images/statistics/SCREEN.jpg"
+                src="/images/statistics/MLstats.jpg"
                 alt="Estadísticas reales de alcances y ROAS de FRESA FIT"
                 fill
-                className="object-cover"
+                className="object-contain"
                 sizes="40vw"
               />
             </motion.div>
