@@ -27,19 +27,19 @@ const UGC_ITEMS = [
 ] as const;
 
 const STATIC_ITEMS = [
-  { src: "/videos/ESTATICOS/static-01-h1a.png", badge: "ESTÁTICO", label: "Diseño H1" },
-  { src: "/videos/ESTATICOS/static-02-h1b.png", badge: "ESTÁTICO", label: "Diseño H1" },
-  { src: "/videos/ESTATICOS/static-03-h1.png",  badge: "ESTÁTICO", label: "Diseño H1" },
-  { src: "/videos/ESTATICOS/static-04-h2.png",  badge: "ESTÁTICO", label: "Diseño H2" },
-  { src: "/videos/ESTATICOS/static-05-h3a.png", badge: "ESTÁTICO", label: "Diseño H3" },
-  { src: "/videos/ESTATICOS/static-06-h3.png",  badge: "ESTÁTICO", label: "Diseño H3" },
-  { src: "/videos/ESTATICOS/static-07-h4a.png", badge: "ESTÁTICO", label: "Diseño H4" },
-  { src: "/videos/ESTATICOS/static-08-h4.png",  badge: "ESTÁTICO", label: "Diseño H4" },
-  { src: "/videos/ESTATICOS/static-09-meses.png",  badge: "PROMO",    label: "Meses" },
-  { src: "/videos/ESTATICOS/static-10-promo.png",  badge: "PROMO",    label: "Promoción" },
-  { src: "/videos/ESTATICOS/static-11-review.png", badge: "RESEÑA",   label: "Review" },
-  { src: "/videos/ESTATICOS/static-12-t1.png",     badge: "ESTÁTICO", label: "Tipografía" },
-  { src: "/videos/ESTATICOS/static-13-t2.png",     badge: "ESTÁTICO", label: "Tipografía" },
+  { src: "/videos/ESTATICOS/static-01-h1a.webp", badge: "ESTÁTICO", label: "Diseño H1" },
+  { src: "/videos/ESTATICOS/static-02-h1b.webp", badge: "ESTÁTICO", label: "Diseño H1" },
+  { src: "/videos/ESTATICOS/static-03-h1.webp",  badge: "ESTÁTICO", label: "Diseño H1" },
+  { src: "/videos/ESTATICOS/static-04-h2.webp",  badge: "ESTÁTICO", label: "Diseño H2" },
+  { src: "/videos/ESTATICOS/static-05-h3a.webp", badge: "ESTÁTICO", label: "Diseño H3" },
+  { src: "/videos/ESTATICOS/static-06-h3.webp",  badge: "ESTÁTICO", label: "Diseño H3" },
+  { src: "/videos/ESTATICOS/static-07-h4a.webp", badge: "ESTÁTICO", label: "Diseño H4" },
+  { src: "/videos/ESTATICOS/static-08-h4.webp",  badge: "ESTÁTICO", label: "Diseño H4" },
+  { src: "/videos/ESTATICOS/static-09-meses.webp",  badge: "PROMO",    label: "Meses" },
+  { src: "/videos/ESTATICOS/static-10-promo.webp",  badge: "PROMO",    label: "Promoción" },
+  { src: "/videos/ESTATICOS/static-11-review.webp", badge: "RESEÑA",   label: "Review" },
+  { src: "/videos/ESTATICOS/static-12-t1.webp",     badge: "ESTÁTICO", label: "Tipografía" },
+  { src: "/videos/ESTATICOS/static-13-t2.webp",     badge: "ESTÁTICO", label: "Tipografía" },
 ] as const;
 
 const PROD_ITEMS = [
@@ -64,6 +64,8 @@ type ExitDir  = "left" | "right" | "down";
 const N = UGC_ITEMS.length;   // 13
 const EXITS = N - 1;          // 12
 const MAX_DEPTH = 4;
+const PRELOAD_INITIAL = 4;    // cards que cargan de inmediato
+const PRELOAD_AHEAD = 2;      // posiciones anticipadas para disparar el lazy load
 const PROGRESS_H = 3;
 const FOOTER_H = 44;
 const SECTION_HEIGHT = `${EXITS * 65 + 100}vh`;
@@ -87,11 +89,11 @@ function StickyDeckCard({
   mediaType: "video" | "image";
 }) {
   const mediaRef = useRef<HTMLVideoElement & HTMLImageElement>(null);
-  const [loaded, setLoaded] = useState(index < 2);
+  const [loaded, setLoaded] = useState(index < PRELOAD_INITIAL);
 
   useEffect(() => {
     if (loaded) return;
-    const trigger = Math.max(0, (index - 1) / EXITS);
+    const trigger = Math.max(0, (index - PRELOAD_AHEAD) / EXITS);
     return scrollYProgress.on("change", (v) => {
       if (v >= trigger) setLoaded(true);
     });
@@ -144,6 +146,7 @@ function StickyDeckCard({
           <video
             ref={mediaRef}
             autoPlay muted loop playsInline
+            preload={loaded ? "auto" : "metadata"}
             className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (
@@ -152,6 +155,8 @@ function StickyDeckCard({
             ref={mediaRef as React.RefObject<HTMLImageElement>}
             src={loaded ? item.src : undefined}
             alt={item.label}
+            loading="lazy"
+            decoding="async"
             className="absolute inset-0 w-full h-full object-cover"
           />
         )}
@@ -206,6 +211,7 @@ function MobileCard({ item, mediaType }: { item: DeckItem; mediaType: "video" | 
           <video
             ref={videoRef}
             autoPlay muted loop playsInline
+            preload={loaded ? "auto" : "metadata"}
             className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (
@@ -213,6 +219,8 @@ function MobileCard({ item, mediaType }: { item: DeckItem; mediaType: "video" | 
           <img
             src={loaded ? item.src : undefined}
             alt={item.label}
+            loading="lazy"
+            decoding="async"
             className="absolute inset-0 w-full h-full object-cover"
           />
         )}
