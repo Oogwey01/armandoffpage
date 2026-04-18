@@ -30,18 +30,18 @@ export function StatsSkeleton() {
   );
 }
 
-export function CaseStudiesSkeleton() {
+export function ContentIntroSkeleton() {
   return (
     <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-20 bg-brand-black">
       <div className="container-custom">
-        <div className="text-center mb-10 space-y-3">
-          <Shimmer className="h-4 w-32 mx-auto" />
-          <Shimmer className="h-12 w-2/3 mx-auto" />
+        <div className="text-center mb-12 space-y-3">
+          <Shimmer className="h-4 w-40 mx-auto" />
+          <Shimmer className="h-12 w-80 mx-auto" />
+          <Shimmer className="h-5 w-96 mx-auto" />
         </div>
-        <Shimmer className="h-80 w-full rounded-2xl" />
-        <div className="grid grid-cols-2 gap-3 md:gap-5 mt-16">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <Shimmer key={i} className="aspect-video w-full rounded-xl" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 max-w-5xl mx-auto">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <Shimmer key={i} className="h-48 w-full rounded-2xl" />
           ))}
         </div>
       </div>

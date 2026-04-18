@@ -11,7 +11,7 @@ import { FloatingActions } from "@/components/ui/FloatingActions";
 import {
   StatsSkeleton,
   BrandLogosSkeleton,
-  CaseStudiesSkeleton,
+  ContentIntroSkeleton,
   PricingSkeleton,
 } from "@/components/ui/Skeletons";
 import { useFormModal } from "@/hooks/useFormModal";
@@ -31,12 +31,12 @@ const BrandLogos = dynamic(
     })),
   { loading: () => <BrandLogosSkeleton />, ssr: false }
 );
-const CaseStudies = dynamic(
+const ContentIntro = dynamic(
   () =>
-    import("@/components/sections/CaseStudies").then((m) => ({
-      default: m.CaseStudies,
+    import("@/components/sections/ContentIntro").then((m) => ({
+      default: m.ContentIntro,
     })),
-  { loading: () => <CaseStudiesSkeleton />, ssr: false }
+  { loading: () => <ContentIntroSkeleton />, ssr: false }
 );
 const PricingComparison = dynamic(
   () =>
@@ -44,6 +44,13 @@ const PricingComparison = dynamic(
       default: m.PricingComparison,
     })),
   { loading: () => <PricingSkeleton />, ssr: false }
+);
+const VideoShowcase = dynamic(
+  () =>
+    import("@/components/sections/VideoShowcase").then((m) => ({
+      default: m.VideoShowcase,
+    })),
+  { ssr: false }
 );
 const FooterContent = dynamic(
   () =>
@@ -88,43 +95,76 @@ export default function ContenidoPage() {
         <HeroContent ctaHref="#paquetes" />
         <SectionDivider />
         {/* ── El problema real ── */}
-        <section className="py-10 md:py-16 bg-black">
-          <div className="container-custom px-6">
-            <motion.p
+        <section className="relative py-16 md:py-24 bg-brand-black overflow-hidden">
+          {/* Background: orb + dot pattern */}
+          <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+            <motion.div
+              className="absolute rounded-full"
+              style={{
+                width: "600px",
+                height: "500px",
+                top: "-10%",
+                left: "-15%",
+                background: "radial-gradient(ellipse, rgba(200,157,105,0.14) 0%, transparent 70%)",
+                filter: "blur(60px)",
+              }}
+              animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
+              transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: "radial-gradient(circle at 1px 1px, rgba(200,157,105,0.07) 1px, transparent 0)",
+                backgroundSize: "36px 36px",
+                WebkitMaskImage: "radial-gradient(ellipse 90% 70% at 50% 65%, black 20%, transparent 70%)",
+                maskImage: "radial-gradient(ellipse 90% 70% at 50% 65%, black 20%, transparent 70%)",
+              }}
+            />
+          </div>
+
+          <div className="relative z-10 container-custom px-4 sm:px-6 lg:px-8">
+            {/* Eyebrow */}
+            <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.5 }}
-              className="font-montserrat text-brand-beige text-xs md:text-sm uppercase tracking-[0.3em] mb-3 text-center"
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center justify-center gap-3 mb-6"
             >
-              El problema real
-            </motion.p>
+              <span className="h-px w-8 bg-brand-beige/60 flex-none" />
+              <p className="font-montserrat text-brand-beige text-xs uppercase tracking-[0.3em]">
+                El problema real
+              </p>
+              <span className="h-px w-8 bg-brand-beige/60 flex-none" />
+            </motion.div>
 
+            {/* Heading */}
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="font-akira text-3xl md:text-5xl lg:text-6xl text-center mb-3 leading-tight max-w-5xl mx-auto"
+              className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight text-white text-center max-w-4xl mx-auto mb-4"
             >
-              <span className="text-white">&iquest;PRODUCTO EXITOSO?</span>
+              ¿PRODUCTO EXITOSO?
               <br />
-              <span className="text-brand-beige">
-                ESC&Aacute;LALO AL SIGUIENTE NIVEL:
-              </span>
+              ESCÁLALO AL{" "}
+              <span className="text-brand-beige">SIGUIENTE NIVEL.</span>
             </motion.h2>
 
+            {/* Subtitle */}
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="font-montserrat text-zinc-400 text-center text-lg md:text-xl mb-8 md:mb-10 max-w-3xl mx-auto font-light"
+              className="font-montserrat text-gray-400 text-center text-base md:text-lg mb-10 md:mb-12 max-w-xl mx-auto font-light"
             >
               Cada día te está costando clientes sin que te des cuenta.
             </motion.p>
 
-            <div className="grid md:grid-cols-2 gap-3 md:gap-5 max-w-5xl mx-auto">
+            {/* Problem cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 max-w-4xl mx-auto">
               {[
                 "Tu competencia se ve más profesional aunque su producto sea inferior al tuyo",
                 "Estás invirtiendo en publicidad con material que no convierte",
@@ -133,18 +173,32 @@ export default function ContenidoPage() {
               ].map((problem, index) => (
                 <motion.div
                   key={problem}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  className="group relative"
+                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-5 sm:p-6 hover:border-brand-beige/25 hover:bg-white/[0.06] transition-colors duration-300"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-8 h-0.5 bg-zinc-800 mt-3 group-hover:bg-brand-beige/50 transition-colors duration-300" />
-                    <p className="font-montserrat text-zinc-400 text-base md:text-lg leading-relaxed group-hover:text-zinc-300 transition-colors duration-300">
-                      {problem}
-                    </p>
+                  {/* Label row */}
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="font-montserrat text-[10px] tracking-[0.3em] uppercase text-brand-beige/70">
+                      Problema {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-brand-beige/25 text-xs tracking-widest">· · ·</span>
                   </div>
+
+                  {/* Problem text */}
+                  <p className="font-montserrat text-gray-300 text-base leading-relaxed relative z-10">
+                    {problem}
+                  </p>
+
+                  {/* Background number */}
+                  <span
+                    aria-hidden="true"
+                    className="font-akira absolute bottom-2 right-3 text-[72px] sm:text-[88px] text-brand-beige/[0.06] leading-none select-none pointer-events-none"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                 </motion.div>
               ))}
             </div>
@@ -156,7 +210,10 @@ export default function ContenidoPage() {
         <SectionDivider />
         <BrandLogos />
         <SectionDivider />
-        <CaseStudies />
+        <ContentIntro />
+
+        <SectionDivider />
+        <VideoShowcase />
 
         <SectionDivider />
         {/* ── Por qué tiene sentido ── */}
