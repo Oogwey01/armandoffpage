@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { ScaleProgress } from "@/components/animations";
 
 interface ServicesProps {
   onOpenForm: () => void;
@@ -37,10 +38,16 @@ export default function Services({ onOpenForm }: ServicesProps) {
     <section id="servicios" className="section-padding">
       <div className="container-custom">
         {/* Section header */}
-        <div className="text-center mb-12">
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <h2 className="heading-lg text-white">ELIGE TU PUNTO DE ENTRADA AL ECOMMERCE</h2>
           <div className="w-20 h-1 bg-brand-beige mx-auto mt-4" />
-        </div>
+        </motion.div>
 
         {/* Service cards grid */}
         <div
@@ -48,22 +55,23 @@ export default function Services({ onOpenForm }: ServicesProps) {
           className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6"
         >
           {SERVICES.map((service, index) => (
-            <motion.div
-              key={service.name}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-brand-gray border border-white/10 rounded-xl p-6 flex flex-col justify-between hover:border-white/20 transition-colors"
-            >
-              <div>
-                <h3 className="font-barlow font-bold text-xl text-white">{service.name}</h3>
-                <p className="font-montserrat text-sm text-gray-400 mt-1">{service.credential}</p>
-              </div>
-              <div className="mt-4">
-                <span className="font-barlow font-black text-2xl sm:text-3xl text-white">{service.price}</span>
-                <span className="font-montserrat text-sm text-gray-400">/mes</span>
-              </div>
-            </motion.div>
+            <ScaleProgress key={service.name} scaleRange={[0.94, 1.03, 0.94]}>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-brand-gray border border-white/10 rounded-xl p-6 flex flex-col justify-between hover:border-white/20 transition-colors"
+              >
+                <div>
+                  <h3 className="font-barlow font-bold text-xl text-white">{service.name}</h3>
+                  <p className="font-montserrat text-sm text-gray-400 mt-1">{service.credential}</p>
+                </div>
+                <div className="mt-4">
+                  <span className="font-barlow font-black text-2xl sm:text-3xl text-white">{service.price}</span>
+                  <span className="font-montserrat text-sm text-gray-400">/mes</span>
+                </div>
+              </motion.div>
+            </ScaleProgress>
           ))}
         </div>
 

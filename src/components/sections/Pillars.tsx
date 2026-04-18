@@ -9,6 +9,10 @@ import {
   MindsetIcon,
 } from "@/components/common/Icons";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { ParallaxText } from "@/components/animations";
+
+// Velocidades de parallax escalonadas: los extremos se mueven más, el centro menos
+const PILLAR_SPEEDS = [-0.12, -0.04, 0.04, 0.12];
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   strategy: StrategyIcon,
@@ -28,12 +32,18 @@ export default function Pillars({ onOpenForm }: PillarsProps) {
     <section id="pilares" className="section-padding bg-brand-black">
       <div className="container-custom">
         {/* Section title */}
-        <div className="text-center">
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <h2 className="heading-lg text-center text-white">
             NUESTROS PILARES
           </h2>
           <div className="w-20 h-1 bg-brand-beige mx-auto mt-4 mb-12" />
-        </div>
+        </motion.div>
 
         {/* Pillars grid */}
         <div
@@ -44,23 +54,24 @@ export default function Pillars({ onOpenForm }: PillarsProps) {
             const Icon = iconMap[pillar.icon];
 
             return (
-              <motion.div
-                key={pillar.title}
-                initial={{ opacity: 0, y: 40 }}
-                animate={
-                  isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }
-                }
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-                className="p-6 rounded-xl text-center transition-all duration-300 hover:bg-brand-beige/10"
-              >
-                {Icon && (
-                  <Icon className="text-brand-beige w-12 h-12 mx-auto" />
-                )}
-                <h3 className="heading-md text-white mt-4 mb-3">
-                  {pillar.title}
-                </h3>
-                <p className="body-text text-sm">{pillar.description}</p>
-              </motion.div>
+              <ParallaxText key={pillar.title} speed={PILLAR_SPEEDS[index] ?? 0}>
+                <motion.div
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={
+                    isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }
+                  }
+                  transition={{ duration: 0.6, delay: index * 0.15 }}
+                  className="p-6 rounded-xl text-center transition-all duration-300 hover:bg-brand-beige/10"
+                >
+                  {Icon && (
+                    <Icon className="text-brand-beige w-12 h-12 mx-auto" />
+                  )}
+                  <h3 className="heading-md text-white mt-4 mb-3">
+                    {pillar.title}
+                  </h3>
+                  <p className="body-text text-sm">{pillar.description}</p>
+                </motion.div>
+              </ParallaxText>
             );
           })}
         </div>

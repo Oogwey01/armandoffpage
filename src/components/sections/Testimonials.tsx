@@ -75,12 +75,18 @@ export default function Testimonials() {
     <section id="testimonios" className="section-padding bg-brand-gray">
       <div className="container-custom">
         {/* Section title */}
-        <div className="text-center">
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <h2 className="heading-lg text-center text-white">
             LO QUE DICEN NUESTROS CLIENTES
           </h2>
           <div className="w-20 h-1 bg-brand-beige mx-auto mt-4 mb-12" />
-        </div>
+        </motion.div>
 
         {/* Desktop view */}
         <div className="hidden md:flex flex-col items-center relative">

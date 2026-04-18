@@ -2,6 +2,7 @@
 
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import { ScrollProgress } from "@/components/common/ScrollProgress";
 import Hero from "@/components/sections/Hero";
 import Services from "@/components/sections/Services";
 import About from "@/components/sections/About";
@@ -16,6 +17,7 @@ export default function Home() {
 
   return (
     <>
+      <ScrollProgress />
       <Header onOpenForm={open} />
       <main>
         <Hero onOpenForm={open} />

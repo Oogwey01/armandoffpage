@@ -216,12 +216,13 @@ export function StatsSection() {
             <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-3">
               Prueba real
             </p>
-            <h2 className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight text-white/15 mb-3">
+            <h2 className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight text-white mb-3">
               ESTO ES LO QUE
               <br />
-              PRODUCIMOS PARA NUESTRA
+              PRODUCIMOS PARA{" "}
+              <span className="text-brand-beige">NUESTRA
               <br />
-              PROPIA MARCA.
+              PROPIA MARCA.</span>
             </h2>
             <p className="font-montserrat text-sm md:text-base text-gray-400 font-light max-w-2xl mb-6">
               Estadísticas de alcances y ROAS reales de FRESA FIT — probado con
@@ -290,7 +291,7 @@ export function StatsSection() {
               className="relative w-full h-full min-h-[480px] bg-brand-black/60 border border-white/10 rounded-2xl overflow-hidden [will-change:transform]"
             >
               <Image
-                src="/images/statistics/MLstats.jpg"
+                src="/images/statistics/Meta_stats.jpg"
                 alt="Estadísticas reales de alcances y ROAS de FRESA FIT"
                 fill
                 className="object-contain"
