@@ -67,6 +67,51 @@ export function PricingSkeleton() {
   );
 }
 
+export function VideoShowcaseSkeleton() {
+  return (
+    <>
+      {/* Mobile: 3 carruseles horizontales */}
+      <section className="relative md:hidden py-12 overflow-hidden space-y-12">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i}>
+            <div className="mb-6 px-5 space-y-2">
+              <Shimmer className="h-3 w-32 mx-auto" />
+              <Shimmer className="h-6 w-64 mx-auto" />
+            </div>
+            <div className="flex gap-4 overflow-hidden pb-4 px-5">
+              {Array.from({ length: 3 }).map((_, j) => (
+                <Shimmer key={j} className="shrink-0 w-[72vw] max-w-[260px] aspect-[9/16] rounded-2xl" />
+              ))}
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* Desktop: triple deck sticky */}
+      <div className="hidden md:block h-screen">
+        <div className="relative h-full overflow-hidden flex flex-col">
+          <div className="h-[3px] bg-white/10" />
+          <div className="flex-none pt-24 pb-2 px-6 flex">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="w-1/3 text-center space-y-2">
+                <Shimmer className="h-3 w-24 mx-auto" />
+                <Shimmer className="h-8 w-56 mx-auto" />
+              </div>
+            ))}
+          </div>
+          <div className="flex-1 flex px-6 pb-6 gap-4 items-center">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="w-1/3 flex items-center justify-center">
+                <Shimmer className="aspect-[9/16] h-[88%] max-h-full rounded-2xl" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
 export function BrandLogosSkeleton() {
   return (
     <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16 bg-brand-gray border-y border-white/5">

@@ -12,41 +12,25 @@ import {
 // ── Data ─────────────────────────────────────────────────────────────────────
 const UGC_ITEMS = [
   { src: "/videos/UGC/ugc-01-berserk-munequeras.mp4", badge: "UGC", label: "Berserk muñequeras" },
-  { src: "/videos/UGC/ugc-02-fresafit.mp4",           badge: "UGC", label: "Fresafit" },
   { src: "/videos/UGC/ugc-03.mp4",                    badge: "UGC", label: "Contenido UGC" },
-  { src: "/videos/UGC/ugc-04.mp4",                    badge: "UGC", label: "Contenido UGC" },
   { src: "/videos/UGC/ugc-05-mochila-gara.mp4",       badge: "UGC", label: "Mochila Gara" },
   { src: "/videos/UGC/ugc-06-whatsapp.mp4",           badge: "UGC", label: "Contenido UGC" },
   { src: "/videos/UGC/ugc-07-akatsuki-mochila.mp4",   badge: "UGC", label: "Akatsuki mochila" },
-  { src: "/videos/UGC/ugc-08-berserk-mochila.mp4",    badge: "UGC", label: "Berserk mochila" },
-  { src: "/videos/UGC/ugc-10-goku-mochila.mp4",       badge: "UGC", label: "Goku mochila" },
 ] as const;
 
 const STATIC_ITEMS = [
-  { src: "/videos/ESTATICOS/static-01-h1a.webp", badge: "ESTÁTICO", label: "Diseño H1" },
-  { src: "/videos/ESTATICOS/static-02-h1b.webp", badge: "ESTÁTICO", label: "Diseño H1" },
-  { src: "/videos/ESTATICOS/static-03-h1.webp",  badge: "ESTÁTICO", label: "Diseño H1" },
-  { src: "/videos/ESTATICOS/static-04-h2.webp",  badge: "ESTÁTICO", label: "Diseño H2" },
-  { src: "/videos/ESTATICOS/static-05-h3a.webp", badge: "ESTÁTICO", label: "Diseño H3" },
-  { src: "/videos/ESTATICOS/static-06-h3.webp",  badge: "ESTÁTICO", label: "Diseño H3" },
-  { src: "/videos/ESTATICOS/static-07-h4a.webp", badge: "ESTÁTICO", label: "Diseño H4" },
-  { src: "/videos/ESTATICOS/static-08-h4.webp",  badge: "ESTÁTICO", label: "Diseño H4" },
-  { src: "/videos/ESTATICOS/static-09-meses.webp",  badge: "PROMO",    label: "Meses" },
+  { src: "/videos/ESTATICOS/static-01-h1a.webp",    badge: "ESTÁTICO", label: "Diseño H1" },
+  { src: "/videos/ESTATICOS/static-04-h2.webp",     badge: "ESTÁTICO", label: "Diseño H2" },
+  { src: "/videos/ESTATICOS/static-07-h4a.webp",    badge: "ESTÁTICO", label: "Diseño H4" },
   { src: "/videos/ESTATICOS/static-10-promo.webp",  badge: "PROMO",    label: "Promoción" },
   { src: "/videos/ESTATICOS/static-11-review.webp", badge: "RESEÑA",   label: "Review" },
-  { src: "/videos/ESTATICOS/static-12-t1.webp",     badge: "ESTÁTICO", label: "Tipografía" },
-  { src: "/videos/ESTATICOS/static-13-t2.webp",     badge: "ESTÁTICO", label: "Tipografía" },
 ] as const;
 
 const PROD_ITEMS = [
   { src: "/videos/PRODUCCIONES/prod-02-cinto-gamuza.mp4",      badge: "PRODUCTO",   label: "Cinto de gamuza" },
   { src: "/videos/PRODUCCIONES/prod-04.mp4",                   badge: "PRODUCCIÓN", label: "Producción" },
   { src: "/videos/PRODUCCIONES/prod-05-powerlifts.mp4",        badge: "FITNESS",    label: "Powerlifts" },
-  { src: "/videos/PRODUCCIONES/prod-06-cintos.mp4",            badge: "PRODUCTO",   label: "Cintos" },
-  { src: "/videos/PRODUCCIONES/prod-07-fresa-haze.mp4",        badge: "PRODUCTO",   label: "Fresa Haze" },
   { src: "/videos/PRODUCCIONES/prod-08-santa.mp4",             badge: "EDICIÓN",    label: "Edición especial" },
-  { src: "/videos/PRODUCCIONES/prod-09-cinturon-hebilla.mp4",  badge: "PRODUCTO",   label: "Cinturón de hebilla" },
-  { src: "/videos/PRODUCCIONES/prod-11-cinturon-hierro.mp4",   badge: "FITNESS",    label: "Cinturón de hierro" },
   { src: "/videos/PRODUCCIONES/prod-13-mochila-fresafit.mp4",  badge: "PRODUCTO",   label: "Mochila Fresafit" },
 ] as const;
 
@@ -56,7 +40,7 @@ type ExitDir  = "left" | "right" | "down";
 const N = Math.max(UGC_ITEMS.length, STATIC_ITEMS.length, PROD_ITEMS.length);
 const EXITS = N - 1;
 const MAX_DEPTH = 4;
-const PRELOAD_INITIAL = 4;    // cards que cargan de inmediato
+const PRELOAD_INITIAL = 1;    // cards que cargan de inmediato
 const PRELOAD_AHEAD = 2;      // posiciones anticipadas para disparar el lazy load
 const PROGRESS_H = 3;
 const FOOTER_H = 44;
@@ -141,7 +125,7 @@ function StickyDeckCard({
           <video
             ref={mediaRef}
             autoPlay muted loop playsInline
-            preload={loaded ? "auto" : "metadata"}
+            preload={loaded ? "auto" : "none"}
             className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (
@@ -206,7 +190,7 @@ function MobileCard({ item, mediaType }: { item: DeckItem; mediaType: "video" | 
           <video
             ref={videoRef}
             autoPlay muted loop playsInline
-            preload={loaded ? "auto" : "metadata"}
+            preload={loaded ? "auto" : "none"}
             className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (
