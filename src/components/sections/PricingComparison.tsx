@@ -361,7 +361,7 @@ export function PricingComparison({ onCta }: PricingComparisonProps) {
               <span className="text-brand-beige shrink-0">{f.icon}</span>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <p className="font-dafoe text-2xl text-white leading-[1.05]">
+                  <p className="font-barlow font-bold text-sm text-white uppercase tracking-wide">
                     {f.title}
                   </p>
                   <InfoTooltip text={f.tooltip} />

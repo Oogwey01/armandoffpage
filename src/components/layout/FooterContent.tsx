@@ -156,7 +156,7 @@ export function FooterContent() {
               <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-3">
                 Lead magnet gratuito
               </p>
-              <h3 className="font-dafoe text-4xl md:text-5xl text-white leading-[1.05] mb-2">
+              <h3 className="font-barlow font-black text-2xl md:text-3xl uppercase text-white leading-tight mb-2">
                 Guía: 10 hooks que venden
               </h3>
               <p className="font-bebas text-sm text-gray-300 font-light leading-relaxed tracking-wide">

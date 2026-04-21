@@ -228,7 +228,7 @@ export function StatsSection() {
             <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-3">
               Prueba real
             </p>
-            <h2 className="font-dafoe text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] text-white mb-3">
+            <h2 className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight text-white mb-3">
               ESTO ES LO QUE
               <br />
               PRODUCIMOS PARA{" "}

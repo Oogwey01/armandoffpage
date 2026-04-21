@@ -229,7 +229,7 @@ export function TierCard({
           <p className="font-bebas text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-2">
             Tier {tier.number}
           </p>
-          <h3 className="font-dafoe text-5xl md:text-6xl text-white mb-4 leading-[1.05]">
+          <h3 className="font-barlow font-black text-3xl md:text-4xl text-white uppercase mb-4">
             {tier.name}
           </h3>
 

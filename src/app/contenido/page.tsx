@@ -154,7 +154,7 @@ export default function ContenidoPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="font-dafoe text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] text-white text-center max-w-4xl mx-auto mb-4"
+              className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight text-white text-center max-w-4xl mx-auto mb-4"
             >
               ¿PRODUCTO EXITOSO?
               <br />
@@ -245,7 +245,7 @@ export default function ContenidoPage() {
               POR QU&Eacute; TIENE SENTIDO
             </p>
 
-            <h2 className="font-dafoe text-4xl sm:text-5xl md:text-6xl leading-[1.05] text-white text-center mb-3">
+            <h2 className="font-barlow font-black text-3xl sm:text-4xl md:text-5xl uppercase leading-[0.95] tracking-tight text-white text-center mb-3">
               LO QUE TE CUESTA{" "}
               <span className="text-brand-beige">RESOLVERLO SOLO</span>
             </h2>
@@ -349,7 +349,7 @@ export default function ContenidoPage() {
               &iquest;ES PARA TI?
             </p>
 
-            <h2 className="font-dafoe text-4xl sm:text-5xl md:text-6xl leading-[1.05] text-white text-center mb-10 md:mb-12">
+            <h2 className="font-barlow font-black text-3xl sm:text-4xl md:text-5xl uppercase leading-[0.95] tracking-tight text-white text-center mb-10 md:mb-12">
               TRABAJAMOS CON MARCAS QUE VAN EN{" "}
               <span className="text-brand-beige">SERIO.</span>
             </h2>

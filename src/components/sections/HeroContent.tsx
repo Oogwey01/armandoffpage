@@ -131,7 +131,7 @@ export function HeroContent({
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="font-dafoe leading-[1.05] mb-8"
+          className="font-dafoe leading-[0.9] mb-8"
         >
           <motion.span
             variants={staggerItem}

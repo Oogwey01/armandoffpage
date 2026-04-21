@@ -244,7 +244,7 @@ function DeckTitle({ eyebrow, heading, accent }: { eyebrow: string; heading: str
         </p>
         <span className="h-px w-6 bg-[#8f0000] flex-none" />
       </div>
-      <h3 className="font-dafoe text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-[1.05] text-white">
+      <h3 className="font-barlow font-black text-xl md:text-2xl lg:text-3xl xl:text-4xl uppercase leading-[0.95] tracking-tight text-white">
         {heading}{" "}
         <span className="text-brand-beige">{accent}</span>
       </h3>

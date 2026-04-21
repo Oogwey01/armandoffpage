@@ -83,7 +83,7 @@ export function ContentIntro() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-          className="font-dafoe text-4xl sm:text-5xl md:text-6xl leading-[1.05] text-white text-center mb-4"
+          className="font-barlow font-black text-3xl sm:text-4xl md:text-5xl uppercase leading-[0.95] tracking-tight text-white text-center mb-4"
         >
           3 FORMATOS.{" "}
           <span className="text-brand-beige">UN SISTEMA.</span>
@@ -119,7 +119,7 @@ export function ContentIntro() {
                 </div>
 
                 {/* Title */}
-                <h3 className="font-dafoe text-3xl text-white mb-2 leading-[1.05]">
+                <h3 className="font-barlow font-bold text-lg text-white mb-2">
                   {type.title}
                 </h3>
 
