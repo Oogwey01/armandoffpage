@@ -137,7 +137,7 @@ function Timeline() {
 
   return (
     <div ref={ref} className="mt-10">
-      <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige/70 mb-4">
+      <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige/70 mb-4">
         Crecimiento mensual
       </p>
       <div className="relative px-2">
@@ -170,7 +170,7 @@ function Timeline() {
               className="group relative flex flex-col items-center gap-2"
               aria-label={`${item.month}: ${item.detail}`}
             >
-              <span className="font-montserrat text-[10px] uppercase tracking-widest text-white/40 group-hover:text-brand-beige transition-colors">
+              <span className="font-bebas text-[10px] uppercase tracking-widest text-white/40 group-hover:text-brand-beige transition-colors">
                 {item.month}
               </span>
               <span className="relative block w-3 h-3 rounded-full bg-brand-beige ring-4 ring-brand-beige/20 group-hover:ring-brand-beige/40 group-hover:scale-125 transition-all">
@@ -178,7 +178,7 @@ function Timeline() {
                   <motion.span
                     initial={{ opacity: 0, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="absolute left-1/2 -translate-x-1/2 top-6 whitespace-nowrap rounded-md bg-brand-black border border-brand-beige/30 px-3 py-1.5 font-montserrat text-[10px] text-white/90 z-10"
+                    className="absolute left-1/2 -translate-x-1/2 top-6 whitespace-nowrap rounded-md bg-brand-black border border-brand-beige/30 px-3 py-1.5 font-bebas text-[10px] text-white/90 z-10 tracking-wide"
                   >
                     {item.detail}
                   </motion.span>
@@ -225,10 +225,10 @@ export function StatsSection() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 items-stretch">
           {/* Columna izquierda — título + stats */}
           <div className="lg:col-span-3 flex flex-col">
-            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-3">
+            <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-3">
               Prueba real
             </p>
-            <h2 className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight text-white mb-3">
+            <h2 className="font-dafoe text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] text-white mb-3">
               ESTO ES LO QUE
               <br />
               PRODUCIMOS PARA{" "}
@@ -236,7 +236,7 @@ export function StatsSection() {
               <br />
               PROPIA MARCA.</span>
             </h2>
-            <p className="font-montserrat text-sm md:text-base text-gray-400 font-light max-w-2xl mb-6">
+            <p className="font-bebas text-sm md:text-base text-gray-400 font-light max-w-2xl mb-6 tracking-wide">
               Estadísticas de alcances y ROAS reales de FRESA FIT — probado con
               presupuesto propio en Meta Ads y TikTok.
             </p>
@@ -263,7 +263,7 @@ export function StatsSection() {
                   <MicroChart data={stat.chart} />
 
                   <div className="relative z-10">
-                    <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-gray-500 font-medium mb-2">
+                    <p className="font-bebas text-[10px] tracking-[0.2em] uppercase text-gray-500 font-medium mb-2">
                       {stat.label}
                     </p>
                     <CountUp
@@ -272,16 +272,16 @@ export function StatsSection() {
                       prefix={stat.prefix ?? ""}
                       suffix={stat.suffix ?? ""}
                       duration={2000}
-                      className={`font-barlow font-black text-4xl sm:text-5xl md:text-6xl leading-none block ${
+                      className={`font-bebas font-black text-4xl sm:text-5xl md:text-6xl leading-none block ${
                         stat.highlight ? "text-brand-beige" : "text-white"
                       }`}
                     />
                     {/* Badge comparativo */}
-                    <p className="mt-2 font-montserrat text-[11px] font-medium text-green-400/80">
+                    <p className="mt-2 font-bebas text-[11px] font-medium text-green-400/80 tracking-wide">
                       ↑ {stat.comparison}
                     </p>
                   </div>
-                  <p className="relative z-10 font-montserrat text-xs text-gray-400 font-light leading-relaxed mt-3">
+                  <p className="relative z-10 font-bebas text-xs text-gray-400 font-light leading-relaxed mt-3 tracking-wide">
                     {stat.desc}
                   </p>
                 </motion.div>
@@ -291,8 +291,8 @@ export function StatsSection() {
             <Timeline />
           </div>
 
-          {/* Columna derecha — imagen con parallax y glow en hover */}
-          <div className="lg:col-span-2 hidden lg:block">
+          {/* Columna derecha — imágenes con parallax y glow en hover */}
+          <div className="lg:col-span-2 hidden lg:flex flex-col gap-4">
             <motion.div
               style={{ y: imageY }}
               whileHover={{
@@ -300,11 +300,28 @@ export function StatsSection() {
                 borderColor: "rgba(200,157,105,0.5)",
               }}
               transition={{ duration: 0.4, ease: ANIMATION_EASE }}
-              className="relative w-full h-full min-h-[480px] bg-brand-black/60 border border-white/10 rounded-2xl overflow-hidden [will-change:transform]"
+              className="relative w-full min-h-[480px] flex-1 bg-brand-black/60 border border-white/10 rounded-2xl overflow-hidden [will-change:transform]"
             >
               <Image
                 src="/images/statistics/Meta_stats.jpg"
-                alt="Estadísticas reales de alcances y ROAS de FRESA FIT"
+                alt="Estadísticas reales de alcances y ROAS de FRESA FIT en Meta Ads"
+                fill
+                className="object-contain"
+                sizes="40vw"
+              />
+            </motion.div>
+            <motion.div
+              style={{ y: imageY }}
+              whileHover={{
+                boxShadow: "0 0 48px 0 rgba(200,157,105,0.35)",
+                borderColor: "rgba(200,157,105,0.5)",
+              }}
+              transition={{ duration: 0.4, ease: ANIMATION_EASE }}
+              className="relative w-full min-h-[480px] flex-1 bg-brand-black/60 border border-white/10 rounded-2xl overflow-hidden [will-change:transform]"
+            >
+              <Image
+                src="/images/statistics/MLstats.jpg"
+                alt="Estadísticas reales de alcances y ROAS de FRESA FIT en Mercado Libre"
                 fill
                 className="object-contain"
                 sizes="40vw"
@@ -313,7 +330,7 @@ export function StatsSection() {
           </div>
         </div>
 
-        <p className="font-montserrat text-xs text-gray-500 italic mt-4">
+        <p className="font-bebas text-xs text-gray-500 italic mt-4 tracking-wide">
           * Métricas reales acumuladas de campañas activas de FRESA FIT
         </p>
       </div>

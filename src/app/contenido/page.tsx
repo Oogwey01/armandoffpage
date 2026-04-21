@@ -142,7 +142,7 @@ export default function ContenidoPage() {
               className="flex items-center justify-center gap-3 mb-6"
             >
               <span className="h-px w-8 bg-[#8f0000] flex-none" />
-              <p className="font-montserrat text-white text-xs uppercase tracking-[0.3em]">
+              <p className="font-bebas text-white text-xs uppercase tracking-[0.3em]">
                 El problema real
               </p>
               <span className="h-px w-8 bg-[#8f0000] flex-none" />
@@ -154,7 +154,7 @@ export default function ContenidoPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="font-barlow font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.9] tracking-tight text-white text-center max-w-4xl mx-auto mb-4"
+              className="font-dafoe text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] text-white text-center max-w-4xl mx-auto mb-4"
             >
               ¿PRODUCTO EXITOSO?
               <br />
@@ -168,7 +168,7 @@ export default function ContenidoPage() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="font-montserrat text-gray-400 text-center text-base md:text-lg mb-10 md:mb-12 max-w-xl mx-auto font-light"
+              className="font-bebas text-gray-400 text-center text-base md:text-lg mb-10 md:mb-12 max-w-xl mx-auto font-light tracking-wide"
             >
               Cada día te está costando clientes sin que te des cuenta.
             </motion.p>
@@ -191,21 +191,21 @@ export default function ContenidoPage() {
                 >
                   {/* Label row */}
                   <div className="flex items-center justify-between mb-4">
-                    <span className="font-montserrat text-[10px] tracking-[0.3em] uppercase text-[#8f0000]">
+                    <span className="font-bebas text-xs sm:text-sm tracking-[0.3em] uppercase text-brand-beige/70">
                       Problema {String(index + 1).padStart(2, "0")}
                     </span>
                     <span className="text-brand-beige/25 text-xs tracking-widest">· · ·</span>
                   </div>
 
                   {/* Problem text */}
-                  <p className="font-montserrat text-gray-300 text-base leading-relaxed relative z-10">
+                  <p className="font-bebas text-gray-300 text-base leading-relaxed relative z-10 tracking-wide">
                     {problem}
                   </p>
 
                   {/* Background number */}
                   <span
                     aria-hidden="true"
-                    className="font-akira absolute bottom-2 right-3 text-[72px] sm:text-[88px] text-brand-beige/[0.06] leading-none select-none pointer-events-none"
+                    className="font-bebas absolute bottom-2 right-3 text-[72px] sm:text-[88px] text-brand-beige/[0.06] leading-none select-none pointer-events-none"
                   >
                     {String(index + 1).padStart(2, "0")}
                   </span>
@@ -241,16 +241,16 @@ export default function ContenidoPage() {
             <div className="absolute inset-0 bg-brand-black/25" />
           </div>
           <AnimateOnScroll className="relative z-10 container-custom">
-            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-[#8f0000] text-center mb-4">
+            <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4">
               POR QU&Eacute; TIENE SENTIDO
             </p>
 
-            <h2 className="font-barlow font-black text-3xl sm:text-4xl md:text-5xl uppercase leading-[0.95] tracking-tight text-white text-center mb-3">
+            <h2 className="font-dafoe text-4xl sm:text-5xl md:text-6xl leading-[1.05] text-white text-center mb-3">
               LO QUE TE CUESTA{" "}
               <span className="text-brand-beige">RESOLVERLO SOLO</span>
             </h2>
 
-            <p className="font-montserrat text-sm md:text-base text-gray-400 font-light text-center mb-10 md:mb-12 max-w-2xl mx-auto">
+            <p className="font-bebas text-sm md:text-base text-gray-400 font-light text-center mb-10 md:mb-12 max-w-2xl mx-auto tracking-wide">
               Si hoy intentaras construir esto por tu cuenta, esto es lo que pagarías por pieza.
             </p>
 
@@ -259,10 +259,10 @@ export default function ContenidoPage() {
               {/* Por separado */}
               <div className="bg-white/[0.02] border border-white/10 rounded-2xl overflow-hidden">
                 <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10 bg-white/[0.02]">
-                  <span className="font-barlow font-bold text-[10px] tracking-[0.3em] uppercase bg-red-500/15 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full">
+                  <span className="font-bebas font-bold text-[10px] tracking-[0.3em] uppercase bg-red-500/15 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full">
                     POR SEPARADO
                   </span>
-                  <p className="font-barlow font-bold text-sm tracking-[0.2em] uppercase text-gray-400">
+                  <p className="font-bebas font-bold text-sm tracking-[0.2em] uppercase text-gray-400">
                     FREELANCERS
                   </p>
                 </div>
@@ -277,8 +277,8 @@ export default function ContenidoPage() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 shrink-0">
                         <CloseIcon className="w-3 h-3" />
                       </span>
-                      <p className="font-barlow font-bold text-sm text-gray-300 flex-1">{service}</p>
-                      <span className={`font-barlow font-bold text-sm shrink-0 ${highlight ? "text-red-400/70 italic" : "text-red-400"}`}>
+                      <p className="font-bebas font-bold text-sm text-gray-300 flex-1 tracking-wide">{service}</p>
+                      <span className={`font-bebas font-bold text-sm shrink-0 ${highlight ? "text-red-400/70 italic" : "text-red-400"}`}>
                         {price}
                       </span>
                     </li>
@@ -289,18 +289,18 @@ export default function ContenidoPage() {
               {/* Con nosotros */}
               <div className="bg-white/[0.02] border border-brand-beige/30 rounded-2xl overflow-hidden">
                 <div className="flex items-center gap-3 px-5 py-4 border-b border-brand-beige/20 bg-brand-beige/[0.04]">
-                  <span className="font-barlow font-bold text-[10px] tracking-[0.3em] uppercase bg-brand-beige text-brand-black px-2.5 py-1 rounded-full">
+                  <span className="font-bebas font-bold text-[10px] tracking-[0.3em] uppercase bg-brand-beige text-brand-black px-2.5 py-1 rounded-full">
                     CON NOSOTROS
                   </span>
-                  <p className="font-barlow font-bold text-sm tracking-[0.2em] uppercase text-brand-beige">
+                  <p className="font-bebas font-bold text-sm tracking-[0.2em] uppercase text-brand-beige">
                     TODO INCLUIDO
                   </p>
                 </div>
                 <div className="px-5 py-5 border-b border-white/5 flex items-baseline gap-3">
-                  <p className="font-barlow font-black text-4xl sm:text-5xl text-brand-beige leading-none">
+                  <p className="font-bebas font-black text-4xl sm:text-5xl text-brand-beige leading-none">
                     -$500
                   </p>
-                  <p className="font-montserrat text-sm text-gray-400 font-light">
+                  <p className="font-bebas text-sm text-gray-400 font-light tracking-wide">
                     por pieza
                   </p>
                 </div>
@@ -317,7 +317,7 @@ export default function ContenidoPage() {
                           <path d="M5 12l5 5L20 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </span>
-                      <p className="font-barlow font-bold text-sm text-white flex-1">{feature}</p>
+                      <p className="font-bebas font-bold text-sm text-white flex-1 tracking-wide">{feature}</p>
                     </li>
                   ))}
                 </ul>
@@ -345,11 +345,11 @@ export default function ContenidoPage() {
             <div className="absolute inset-0 bg-brand-black/25" />
           </div>
           <AnimateOnScroll className="relative z-10 container-custom">
-            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-[#8f0000] text-center mb-4">
+            <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4">
               &iquest;ES PARA TI?
             </p>
 
-            <h2 className="font-barlow font-black text-3xl sm:text-4xl md:text-5xl uppercase leading-[0.95] tracking-tight text-white text-center mb-10 md:mb-12">
+            <h2 className="font-dafoe text-4xl sm:text-5xl md:text-6xl leading-[1.05] text-white text-center mb-10 md:mb-12">
               TRABAJAMOS CON MARCAS QUE VAN EN{" "}
               <span className="text-brand-beige">SERIO.</span>
             </h2>
@@ -359,10 +359,10 @@ export default function ContenidoPage() {
               {/* Sí es para ti */}
               <div className="bg-white/[0.02] border border-brand-beige/30 rounded-2xl overflow-hidden">
                 <div className="flex items-center gap-3 px-5 py-4 border-b border-brand-beige/20 bg-brand-beige/[0.04]">
-                  <span className="font-barlow font-bold text-[10px] tracking-[0.3em] uppercase bg-brand-beige text-brand-black px-2.5 py-1 rounded-full">
+                  <span className="font-bebas font-bold text-[10px] tracking-[0.3em] uppercase bg-brand-beige text-brand-black px-2.5 py-1 rounded-full">
                     SÍ
                   </span>
-                  <p className="font-barlow font-bold text-sm tracking-[0.2em] uppercase text-brand-beige">
+                  <p className="font-bebas font-bold text-sm tracking-[0.2em] uppercase text-brand-beige">
                     ES PARA TI
                   </p>
                 </div>
@@ -380,8 +380,8 @@ export default function ContenidoPage() {
                         </svg>
                       </span>
                       <div className="flex-1">
-                        <p className="font-barlow font-bold text-sm text-white mb-0.5">{label}</p>
-                        <p className="font-montserrat text-sm text-gray-400 font-light leading-snug">{desc}</p>
+                        <p className="font-bebas font-bold text-sm text-white mb-0.5 tracking-wide">{label}</p>
+                        <p className="font-bebas text-sm text-gray-400 font-light leading-snug tracking-wide">{desc}</p>
                       </div>
                     </li>
                   ))}
@@ -391,10 +391,10 @@ export default function ContenidoPage() {
               {/* No es para ti */}
               <div className="bg-white/[0.02] border border-white/10 rounded-2xl overflow-hidden">
                 <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10 bg-white/[0.02]">
-                  <span className="font-barlow font-bold text-[10px] tracking-[0.3em] uppercase bg-white/10 text-gray-400 px-2.5 py-1 rounded-full">
+                  <span className="font-bebas font-bold text-[10px] tracking-[0.3em] uppercase bg-white/10 text-gray-400 px-2.5 py-1 rounded-full">
                     NO
                   </span>
-                  <p className="font-barlow font-bold text-sm tracking-[0.2em] uppercase text-gray-400">
+                  <p className="font-bebas font-bold text-sm tracking-[0.2em] uppercase text-gray-400">
                     ES PARA TI
                   </p>
                 </div>
@@ -409,8 +409,8 @@ export default function ContenidoPage() {
                         <CloseIcon className="w-3 h-3" />
                       </span>
                       <div className="flex-1">
-                        <p className="font-barlow font-bold text-sm text-gray-300 mb-0.5">{label}</p>
-                        <p className="font-montserrat text-sm text-gray-500 font-light leading-snug">{desc}</p>
+                        <p className="font-bebas font-bold text-sm text-gray-300 mb-0.5 tracking-wide">{label}</p>
+                        <p className="font-bebas text-sm text-gray-500 font-light leading-snug tracking-wide">{desc}</p>
                       </div>
                     </li>
                   ))}

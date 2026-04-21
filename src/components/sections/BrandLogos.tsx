@@ -30,7 +30,7 @@ export function BrandLogos() {
       className="px-4 sm:px-6 lg:px-8 py-6 md:py-16 bg-brand-gray border-y border-white/5"
     >
       <AnimatedSection className="container-custom text-center mb-4 md:mb-8">
-        <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige/70">
+        <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige/70">
           Plataformas en las que producimos
         </p>
       </AnimatedSection>

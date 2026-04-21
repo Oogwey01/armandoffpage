@@ -23,6 +23,12 @@ const bebasNeue = localFont({
   display: "swap",
 });
 
+const mrDafoe = localFont({
+  src: "../../public/fonts/MrDafoe-Regular.ttf",
+  variable: "--font-dafoe",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Armando FresaFit | Mentoría Empresarial & Estrategia de Negocios",
   description:
@@ -63,7 +69,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={`${barlow.variable} ${montserrat.variable} ${bebasNeue.variable}`}>
+    <html lang="es" className={`${barlow.variable} ${montserrat.variable} ${bebasNeue.variable} ${mrDafoe.variable}`}>
       <body>{children}</body>
     </html>
   );

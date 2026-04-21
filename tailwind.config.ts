@@ -24,6 +24,7 @@ const config: Config = {
         barlow: ["Barlow", "sans-serif"],
         montserrat: ["Montserrat", "sans-serif"],
         bebas: ["var(--font-bebas)", "sans-serif"],
+        dafoe: ["var(--font-dafoe)", "cursive"],
       },
       animation: {
         "fade-in": "fadeIn 0.6s ease-out forwards",

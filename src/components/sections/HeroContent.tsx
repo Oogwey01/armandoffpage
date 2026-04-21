@@ -22,7 +22,7 @@ interface Ripple {
 
 const STAT_PILLS = [
   { num: "500+", label: "Piezas entregadas" },
-  { num: "3×",   label: "ROAS promedio" },
+  { num: "4.5×",   label: "ROAS promedio" },
   { num: "12+",  label: "Formatos" },
 ] as const;
 
@@ -131,25 +131,19 @@ export function HeroContent({
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="font-bebas uppercase leading-[0.85] tracking-tight mb-8"
+          className="font-dafoe leading-[1.05] mb-8"
         >
           <motion.span
             variants={staggerItem}
             className="block text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl"
           >
-            EL CONTENIDO
-          </motion.span>
-          <motion.span
-            variants={staggerItem}
-            className="block text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl"
-          >
-            QUE
+            El contenido que
           </motion.span>
           <motion.span
             variants={staggerItem}
             className="block text-6xl sm:text-7xl md:text-8xl lg:text-9xl bg-gradient-to-r from-brand-beige via-brand-beige-light to-brand-beige bg-clip-text text-transparent"
           >
-            VENDE MÁS.
+            vende más.
           </motion.span>
         </motion.h1>
 
@@ -165,7 +159,7 @@ export function HeroContent({
               key={label}
               className="flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-full px-5 py-2.5"
             >
-              <span className="font-bebas text-xl sm:text-2xl text-[#8f0000] leading-none">
+              <span className="font-bebas text-xl sm:text-2xl text-brand-beige leading-none">
                 {num}
               </span>
               <span className="h-3 w-px bg-white/15" />
@@ -201,7 +195,7 @@ export function HeroContent({
             whileHover={{ scale: 1.04, boxShadow: "0 0 36px 6px rgba(200,157,105,0.45)" }}
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.25, ease: ANIMATION_EASE }}
-            className="relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-brand-beige px-10 py-4 font-barlow text-sm font-bold uppercase tracking-widest text-brand-black [will-change:transform]"
+            className="relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-brand-beige px-10 py-4 font-bebas text-sm font-bold uppercase tracking-widest text-brand-black [will-change:transform]"
           >
             {ripples.map((ripple) => (
               <span
@@ -235,7 +229,7 @@ export function HeroContent({
             >
               ↓
             </motion.span>
-            <span className="font-montserrat text-[9px] tracking-[0.3em] uppercase text-white/25">
+            <span className="font-bebas text-[9px] tracking-[0.3em] uppercase text-white/25">
               Seguir leyendo
             </span>
           </motion.div>

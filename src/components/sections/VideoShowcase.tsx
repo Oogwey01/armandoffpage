@@ -12,18 +12,14 @@ import {
 // ── Data ─────────────────────────────────────────────────────────────────────
 const UGC_ITEMS = [
   { src: "/videos/UGC/ugc-01-berserk-munequeras.mp4", badge: "UGC", label: "Berserk muñequeras" },
-  { src: "/videos/UGC/ugc-02-fresafit.mov",           badge: "UGC", label: "Fresafit" },
-  { src: "/videos/UGC/ugc-03.mov",                    badge: "UGC", label: "Contenido UGC" },
-  { src: "/videos/UGC/ugc-04.mov",                    badge: "UGC", label: "Contenido UGC" },
+  { src: "/videos/UGC/ugc-02-fresafit.mp4",           badge: "UGC", label: "Fresafit" },
+  { src: "/videos/UGC/ugc-03.mp4",                    badge: "UGC", label: "Contenido UGC" },
+  { src: "/videos/UGC/ugc-04.mp4",                    badge: "UGC", label: "Contenido UGC" },
   { src: "/videos/UGC/ugc-05-mochila-gara.mp4",       badge: "UGC", label: "Mochila Gara" },
   { src: "/videos/UGC/ugc-06-whatsapp.mp4",           badge: "UGC", label: "Contenido UGC" },
   { src: "/videos/UGC/ugc-07-akatsuki-mochila.mp4",   badge: "UGC", label: "Akatsuki mochila" },
   { src: "/videos/UGC/ugc-08-berserk-mochila.mp4",    badge: "UGC", label: "Berserk mochila" },
-  { src: "/videos/UGC/ugc-09.mp4",                    badge: "UGC", label: "Contenido UGC" },
   { src: "/videos/UGC/ugc-10-goku-mochila.mp4",       badge: "UGC", label: "Goku mochila" },
-  { src: "/videos/UGC/ugc-11-eli-a.mp4",              badge: "UGC", label: "Contenido UGC" },
-  { src: "/videos/UGC/ugc-12-eli-b.mp4",              badge: "UGC", label: "Contenido UGC" },
-  { src: "/videos/UGC/ugc-13-eli-c.mp4",              badge: "UGC", label: "Contenido UGC" },
 ] as const;
 
 const STATIC_ITEMS = [
@@ -43,26 +39,22 @@ const STATIC_ITEMS = [
 ] as const;
 
 const PROD_ITEMS = [
-  { src: "/videos/PRODUCCIONES/prod-01-disciplina.mp4",        badge: "FITNESS",    label: "Disciplina" },
   { src: "/videos/PRODUCCIONES/prod-02-cinto-gamuza.mp4",      badge: "PRODUCTO",   label: "Cinto de gamuza" },
-  { src: "/videos/PRODUCCIONES/prod-03.mp4",                   badge: "PRODUCCIÓN", label: "Producción" },
   { src: "/videos/PRODUCCIONES/prod-04.mp4",                   badge: "PRODUCCIÓN", label: "Producción" },
   { src: "/videos/PRODUCCIONES/prod-05-powerlifts.mp4",        badge: "FITNESS",    label: "Powerlifts" },
   { src: "/videos/PRODUCCIONES/prod-06-cintos.mp4",            badge: "PRODUCTO",   label: "Cintos" },
   { src: "/videos/PRODUCCIONES/prod-07-fresa-haze.mp4",        badge: "PRODUCTO",   label: "Fresa Haze" },
   { src: "/videos/PRODUCCIONES/prod-08-santa.mp4",             badge: "EDICIÓN",    label: "Edición especial" },
   { src: "/videos/PRODUCCIONES/prod-09-cinturon-hebilla.mp4",  badge: "PRODUCTO",   label: "Cinturón de hebilla" },
-  { src: "/videos/PRODUCCIONES/prod-10-berserk-gym.mp4",       badge: "FITNESS",    label: "Berserk Gym" },
   { src: "/videos/PRODUCCIONES/prod-11-cinturon-hierro.mp4",   badge: "FITNESS",    label: "Cinturón de hierro" },
-  { src: "/videos/PRODUCCIONES/prod-12-mochila-gym.mp4",       badge: "PRODUCTO",   label: "Mochila gym" },
   { src: "/videos/PRODUCCIONES/prod-13-mochila-fresafit.mp4",  badge: "PRODUCTO",   label: "Mochila Fresafit" },
 ] as const;
 
 type DeckItem = { src: string; badge: string; label: string };
 type ExitDir  = "left" | "right" | "down";
 
-const N = UGC_ITEMS.length;   // 13
-const EXITS = N - 1;          // 12
+const N = Math.max(UGC_ITEMS.length, STATIC_ITEMS.length, PROD_ITEMS.length);
+const EXITS = N - 1;
 const MAX_DEPTH = 4;
 const PRELOAD_INITIAL = 4;    // cards que cargan de inmediato
 const PRELOAD_AHEAD = 2;      // posiciones anticipadas para disparar el lazy load
@@ -74,6 +66,7 @@ const SECTION_HEIGHT = `${EXITS * 65 + 100}vh`;
 function StickyDeckCard({
   item,
   index,
+  total,
   scrollYProgress,
   slideDistanceX,
   slideDistanceY,
@@ -82,6 +75,7 @@ function StickyDeckCard({
 }: {
   item: DeckItem;
   index: number;
+  total: number;
   scrollYProgress: MotionValue<number>;
   slideDistanceX: number;
   slideDistanceY: number;
@@ -90,14 +84,15 @@ function StickyDeckCard({
 }) {
   const mediaRef = useRef<HTMLVideoElement & HTMLImageElement>(null);
   const [loaded, setLoaded] = useState(index < PRELOAD_INITIAL);
+  const exits = Math.max(1, total - 1);
 
   useEffect(() => {
     if (loaded) return;
-    const trigger = Math.max(0, (index - PRELOAD_AHEAD) / EXITS);
+    const trigger = Math.max(0, (index - PRELOAD_AHEAD) / exits);
     return scrollYProgress.on("change", (v) => {
       if (v >= trigger) setLoaded(true);
     });
-  }, [scrollYProgress, index, loaded]);
+  }, [scrollYProgress, index, exits, loaded]);
 
   useEffect(() => {
     const el = mediaRef.current;
@@ -114,7 +109,7 @@ function StickyDeckCard({
 
   const norm = useTransform(
     scrollYProgress,
-    [(index - 1) / EXITS, (index + 1) / EXITS],
+    [(index - 1) / exits, (index + 1) / exits],
     [-1, 1],
     { clamp: true }
   );
@@ -164,13 +159,13 @@ function StickyDeckCard({
         <div className="absolute inset-0 bg-gradient-to-t from-brand-black/80 via-transparent to-transparent pointer-events-none" />
 
         <div className="absolute top-3 left-3 z-10">
-          <span className="font-barlow font-bold text-[9px] tracking-[0.2em] uppercase bg-brand-beige text-brand-black px-2 py-0.5 rounded-full">
+          <span className="font-bebas font-bold text-[9px] tracking-[0.2em] uppercase bg-brand-beige text-brand-black px-2 py-0.5 rounded-full">
             {item.badge}
           </span>
         </div>
 
         <div className="absolute bottom-4 left-3 right-3 z-10">
-          <p className="font-barlow font-bold text-xs text-white drop-shadow-lg">
+          <p className="font-bebas font-bold text-xs text-white drop-shadow-lg tracking-wide">
             {item.label}
           </p>
         </div>
@@ -226,12 +221,12 @@ function MobileCard({ item, mediaType }: { item: DeckItem; mediaType: "video" | 
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-brand-black/80 via-transparent to-transparent pointer-events-none" />
         <div className="absolute top-3 left-3 z-10">
-          <span className="font-barlow font-bold text-[10px] tracking-[0.25em] uppercase bg-brand-beige text-brand-black px-2.5 py-1 rounded-full">
+          <span className="font-bebas font-bold text-[10px] tracking-[0.25em] uppercase bg-brand-beige text-brand-black px-2.5 py-1 rounded-full">
             {item.badge}
           </span>
         </div>
         <div className="absolute bottom-4 left-3 right-3 z-10">
-          <p className="font-barlow font-bold text-sm text-white drop-shadow-md">{item.label}</p>
+          <p className="font-bebas font-bold text-sm text-white drop-shadow-md tracking-wide">{item.label}</p>
         </div>
       </div>
     </div>
@@ -244,12 +239,12 @@ function DeckTitle({ eyebrow, heading, accent }: { eyebrow: string; heading: str
     <div className="text-center">
       <div className="flex items-center justify-center gap-2 mb-2">
         <span className="h-px w-6 bg-[#8f0000] flex-none" />
-        <p className="font-montserrat text-white text-[10px] lg:text-xs uppercase tracking-[0.3em]">
+        <p className="font-bebas text-white text-[10px] lg:text-xs uppercase tracking-[0.3em]">
           {eyebrow}
         </p>
         <span className="h-px w-6 bg-[#8f0000] flex-none" />
       </div>
-      <h3 className="font-barlow font-black text-xl md:text-2xl lg:text-3xl xl:text-4xl uppercase leading-[0.95] tracking-tight text-white">
+      <h3 className="font-dafoe text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-[1.05] text-white">
         {heading}{" "}
         <span className="text-brand-beige">{accent}</span>
       </h3>
@@ -285,6 +280,7 @@ function DeckStack({
             key={item.src}
             item={item}
             index={index}
+            total={items.length}
             scrollYProgress={scrollYProgress}
             slideDistanceX={shouldReduce ? 0 : slideDistanceX}
             slideDistanceY={shouldReduce ? 0 : slideDistanceY}
@@ -324,7 +320,7 @@ function MobileDeck({
           <MobileCard key={item.src} item={item} mediaType={mediaType} />
         ))}
       </div>
-      <p className="text-center font-montserrat text-xs text-gray-500 mt-2">
+      <p className="text-center font-bebas text-xs text-gray-500 mt-2 tracking-wide">
         Desliza para ver más →
       </p>
     </div>
@@ -467,20 +463,20 @@ export function VideoShowcase() {
           {/* Footer — contadores */}
           <div className="relative z-10 flex-none flex px-6" style={{ height: FOOTER_H }}>
             <div className="w-1/3 flex items-center justify-between px-2">
-              <span className="font-montserrat text-[9px] uppercase tracking-[0.25em] text-brand-beige/60">UGC</span>
-              <span className="font-barlow font-bold text-xs text-gray-500 tabular-nums tracking-widest">
+              <span className="font-bebas text-[9px] uppercase tracking-[0.25em] text-brand-beige/60">UGC</span>
+              <span className="font-bebas font-bold text-xs text-gray-500 tabular-nums tracking-widest">
                 <span className="text-brand-beige">{counter}</span>
               </span>
             </div>
             <div className="w-1/3 flex items-center justify-between px-2">
-              <span className="font-montserrat text-[9px] uppercase tracking-[0.25em] text-brand-beige/60">Estáticos</span>
-              <span className="font-barlow font-bold text-xs text-gray-500 tabular-nums tracking-widest">
+              <span className="font-bebas text-[9px] uppercase tracking-[0.25em] text-brand-beige/60">Estáticos</span>
+              <span className="font-bebas font-bold text-xs text-gray-500 tabular-nums tracking-widest">
                 <span className="text-brand-beige">{counter}</span>
               </span>
             </div>
             <div className="w-1/3 flex items-center justify-between px-2">
-              <span className="font-montserrat text-[9px] uppercase tracking-[0.25em] text-brand-beige/60">Producciones</span>
-              <span className="font-barlow font-bold text-xs text-gray-500 tabular-nums tracking-widest">
+              <span className="font-bebas text-[9px] uppercase tracking-[0.25em] text-brand-beige/60">Producciones</span>
+              <span className="font-bebas font-bold text-xs text-gray-500 tabular-nums tracking-widest">
                 <span className="text-brand-beige">{counter}</span>
               </span>
             </div>

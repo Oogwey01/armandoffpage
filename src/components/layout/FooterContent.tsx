@@ -153,13 +153,13 @@ export function FooterContent() {
         <section className="rounded-2xl border border-brand-beige/30 bg-gradient-to-br from-brand-black to-[#0a0a0a] p-6 md:p-10 mb-14">
           <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
             <div>
-              <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-3">
+              <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-3">
                 Lead magnet gratuito
               </p>
-              <h3 className="font-barlow font-black text-2xl md:text-3xl uppercase text-white leading-tight mb-2">
+              <h3 className="font-dafoe text-4xl md:text-5xl text-white leading-[1.05] mb-2">
                 Guía: 10 hooks que venden
               </h3>
-              <p className="font-montserrat text-sm text-gray-300 font-light leading-relaxed">
+              <p className="font-bebas text-sm text-gray-300 font-light leading-relaxed tracking-wide">
                 Recibe tips de contenido semanales + la guía con los hooks que
                 usamos para escalar FRESA FIT a 3.8M+ de alcance.
               </p>
@@ -179,7 +179,7 @@ export function FooterContent() {
                   disabled={status === "loading" || status === "success"}
                   aria-label="Email para newsletter"
                   aria-invalid={status === "error"}
-                  className="w-full h-12 rounded-xl bg-brand-black/60 border border-white/15 focus:border-brand-beige focus:ring-2 focus:ring-brand-beige/40 outline-none px-4 font-montserrat text-sm text-white placeholder-white/40 transition-all disabled:opacity-50"
+                  className="w-full h-12 rounded-xl bg-brand-black/60 border border-white/15 focus:border-brand-beige focus:ring-2 focus:ring-brand-beige/40 outline-none px-4 font-bebas text-sm text-white placeholder-white/40 transition-all disabled:opacity-50 tracking-wide"
                 />
               </div>
               <motion.button
@@ -188,7 +188,7 @@ export function FooterContent() {
                 whileHover={{ scale: status === "idle" ? 1.02 : 1 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.25, ease: ANIMATION_EASE }}
-                className="h-12 rounded-xl bg-brand-beige text-brand-black font-barlow font-bold text-sm uppercase tracking-widest hover:bg-brand-beige-light transition-colors disabled:opacity-70 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+                className="h-12 rounded-xl bg-brand-beige text-brand-black font-bebas font-bold text-sm uppercase tracking-widest hover:bg-brand-beige-light transition-colors disabled:opacity-70 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
               >
                 {status === "loading" && (
                   <span
@@ -209,7 +209,7 @@ export function FooterContent() {
                     initial={{ opacity: 0, y: -4 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="font-montserrat text-xs text-red-400"
+                    className="font-bebas text-xs text-red-400 tracking-wide"
                   >
                     Ingresa un email válido
                   </motion.p>
@@ -218,7 +218,7 @@ export function FooterContent() {
                   <motion.p
                     initial={{ opacity: 0, y: -4 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="font-montserrat text-xs text-green-400 flex items-center gap-2"
+                    className="font-bebas text-xs text-green-400 flex items-center gap-2 tracking-wide"
                   >
                     <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">
                       <path
@@ -241,7 +241,7 @@ export function FooterContent() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pb-10">
           {FOOTER_COLUMNS.map((col) => (
             <div key={col.title}>
-              <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-4">
+              <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-4">
                 {col.title}
               </p>
               <ul className="flex flex-col gap-2.5">
@@ -249,7 +249,7 @@ export function FooterContent() {
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      className="font-montserrat text-sm text-white/70 hover:text-brand-beige transition-colors"
+                      className="font-bebas text-sm text-white/70 hover:text-brand-beige transition-colors tracking-wide"
                     >
                       {link.label}
                     </a>
@@ -261,14 +261,14 @@ export function FooterContent() {
 
           {/* Columna de contacto + socials */}
           <div className="col-span-2 lg:col-span-1">
-            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-4">
+            <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-4">
               Contacto
             </p>
             <ul className="flex flex-col gap-2.5 mb-5">
               <li>
                 <a
                   href="mailto:armandofresafit@gmail.com"
-                  className="font-montserrat text-sm text-white/70 hover:text-brand-beige transition-colors break-all"
+                  className="font-bebas text-sm text-white/70 hover:text-brand-beige transition-colors break-all tracking-wide"
                 >
                   armandofresafit@gmail.com
                 </a>
@@ -278,7 +278,7 @@ export function FooterContent() {
                   href="https://wa.me/526621000000"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-montserrat text-sm text-white/70 hover:text-brand-beige transition-colors"
+                  className="font-bebas text-sm text-white/70 hover:text-brand-beige transition-colors tracking-wide"
                 >
                   WhatsApp directo
                 </a>
@@ -318,7 +318,7 @@ export function FooterContent() {
             {TRUST_BADGES.map((badge) => (
               <li
                 key={badge.label}
-                className="flex items-center gap-2 font-montserrat text-xs text-white/60"
+                className="flex items-center gap-2 font-bebas text-xs text-white/60 tracking-wide"
               >
                 <span className="text-brand-beige">{badge.icon}</span>
                 {badge.label}
@@ -330,21 +330,21 @@ export function FooterContent() {
         {/* ── Pagos + copyright ── */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 py-6 border-t border-white/5">
           <div className="flex items-center gap-3">
-            <span className="font-montserrat text-[10px] uppercase tracking-widest text-white/40">
+            <span className="font-bebas text-[10px] uppercase tracking-widest text-white/40">
               Aceptamos:
             </span>
             <div className="flex flex-wrap gap-2">
               {PAYMENT_METHODS.map((m) => (
                 <span
                   key={m}
-                  className="font-barlow font-bold text-[10px] tracking-wide uppercase text-white/60 border border-white/15 rounded px-2 py-1"
+                  className="font-bebas font-bold text-[10px] tracking-wide uppercase text-white/60 border border-white/15 rounded px-2 py-1"
                 >
                   {m}
                 </span>
               ))}
             </div>
           </div>
-          <p className="font-montserrat text-xs text-white/40 text-center">
+          <p className="font-bebas text-xs text-white/40 text-center tracking-wide">
             &copy; {new Date().getFullYear()} ArmandoFF. Todos los derechos
             reservados.
           </p>
