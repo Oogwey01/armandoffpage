@@ -140,7 +140,7 @@ export function FooterContent() {
         <div
           className="absolute inset-0 opacity-70"
           style={{
-            backgroundImage: "url('/images/backgrounds/1.svg')",
+            backgroundImage: "url('/images/backgrounds/Mesa%20de%20trabajo%208pagina.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",

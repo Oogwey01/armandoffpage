@@ -48,19 +48,7 @@ const CONTENT_TYPES = [
 
 export function ContentIntro() {
   return (
-    <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 bg-brand-black overflow-hidden">
-      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute inset-0 opacity-70"
-          style={{
-            backgroundImage: "url('/images/backgrounds/5.svg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
-        <div className="absolute inset-0 bg-brand-black/25" />
-      </div>
+    <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 overflow-hidden">
       <div className="relative z-10 container-custom">
         {/* Eyebrow */}
         <motion.div

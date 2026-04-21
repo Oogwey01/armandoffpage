@@ -90,24 +90,26 @@ export default function ContenidoPage() {
     <>
       <ScrollProgress />
       <Header onOpenForm={open} />
-      <main className="bg-brand-black min-h-screen">
+      <main className="relative bg-brand-black min-h-screen">
+        {/* ── Fondo único continuo ── */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "url('/images/backgrounds/backgroundFULL.png')",
+            backgroundSize: "100% 100%",
+            backgroundPosition: "top center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+        <div aria-hidden="true" className="absolute inset-0 bg-brand-black/30 pointer-events-none" />
         {/* Hero section */}
         <HeroContent ctaHref="#paquetes" />
         <SectionDivider />
         {/* ── El problema real ── */}
-        <section className="relative py-16 md:py-24 bg-brand-black overflow-hidden">
-          {/* Background: SVG + orb + dot pattern */}
+        <section className="relative py-16 md:py-24 overflow-hidden">
+          {/* Background: orb + dot pattern */}
           <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-            <div
-              className="absolute inset-0 opacity-70"
-              style={{
-                backgroundImage: "url('/images/backgrounds/4.svg')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
-            />
-            <div className="absolute inset-0 bg-brand-black/25" />
             <motion.div
               className="absolute rounded-full"
               style={{
@@ -227,19 +229,7 @@ export default function ContenidoPage() {
 
         <SectionDivider />
         {/* ── Por qué tiene sentido ── */}
-        <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 bg-brand-black overflow-hidden">
-          <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-            <div
-              className="absolute inset-0 opacity-70"
-              style={{
-                backgroundImage: "url('/images/backgrounds/6.svg')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
-            />
-            <div className="absolute inset-0 bg-brand-black/25" />
-          </div>
+        <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 overflow-hidden">
           <AnimateOnScroll className="relative z-10 container-custom">
             <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4">
               POR QU&Eacute; TIENE SENTIDO
@@ -331,19 +321,7 @@ export default function ContenidoPage() {
 
         <SectionDivider />
         {/* ── ¿Es para ti? ── */}
-        <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 bg-brand-black overflow-hidden">
-          <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-            <div
-              className="absolute inset-0 opacity-70"
-              style={{
-                backgroundImage: "url('/images/backgrounds/8.svg')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
-            />
-            <div className="absolute inset-0 bg-brand-black/25" />
-          </div>
+        <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 overflow-hidden">
           <AnimateOnScroll className="relative z-10 container-custom">
             <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4">
               &iquest;ES PARA TI?

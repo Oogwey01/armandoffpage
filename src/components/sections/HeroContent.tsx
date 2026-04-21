@@ -59,19 +59,8 @@ export function HeroContent({
       aria-label="Hero — Sistema creativo para vender más"
       className="relative pt-28 sm:pt-36 md:pt-36 pb-14 md:pb-20 overflow-hidden flex items-center justify-center"
     >
-      {/* ── Background ── */}
+      {/* ── Overlays ── */}
       <div aria-hidden="true" className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] to-brand-black" />
-        <div
-          className="absolute inset-0 opacity-70 pointer-events-none"
-          style={{
-            backgroundImage: "url('/images/backgrounds/3.svg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
-        <div className="absolute inset-0 bg-brand-black/25 pointer-events-none" />
         <motion.div
           className="absolute rounded-full pointer-events-none"
           style={{

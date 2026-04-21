@@ -207,20 +207,8 @@ export function StatsSection() {
     <section
       ref={sectionRef}
       aria-label="Prueba real — estadísticas de FRESA FIT"
-      className="relative px-4 sm:px-6 lg:px-8 py-10 md:py-14 bg-brand-gray overflow-hidden"
+      className="relative px-4 sm:px-6 lg:px-8 py-10 md:py-14 overflow-hidden"
     >
-      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute inset-0 opacity-70"
-          style={{
-            backgroundImage: "url('/images/backgrounds/1.svg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
-        <div className="absolute inset-0 bg-brand-black/25" />
-      </div>
       <div className="relative z-10 container-custom">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 items-stretch">
           {/* Columna izquierda — título + stats */}

@@ -27,7 +27,7 @@ export function BrandLogos() {
   return (
     <section
       aria-label="Plataformas y partners"
-      className="px-4 sm:px-6 lg:px-8 py-6 md:py-16 bg-brand-gray border-y border-white/5"
+      className="relative px-4 sm:px-6 lg:px-8 py-6 md:py-16 border-y border-white/5"
     >
       <AnimatedSection className="container-custom text-center mb-4 md:mb-8">
         <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige/70">

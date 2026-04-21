@@ -368,19 +368,7 @@ export function VideoShowcase() {
   return (
     <>
       {/* ── MOBILE ──────────────────────────────────────────────────────── */}
-      <section className="relative md:hidden py-12 bg-brand-gray overflow-hidden space-y-12">
-        <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-          <div
-            className="absolute inset-0 opacity-70"
-            style={{
-              backgroundImage: "url('/images/backgrounds/2.svg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
-          />
-          <div className="absolute inset-0 bg-brand-black/25" />
-        </div>
+      <section className="relative md:hidden py-12 overflow-hidden space-y-12">
         <div className="relative z-10 space-y-12">
           <MobileDeck items={UGC_ITEMS}    mediaType="video" eyebrow="Contenido UGC"  heading="TU MARCA CON CONTENIDO" accent="PREMIUM" />
           <MobileDeck items={STATIC_ITEMS} mediaType="image" eyebrow="Diseño estático" heading="PUBLICIDAD QUE"        accent="CONVIERTE" />
@@ -391,23 +379,10 @@ export function VideoShowcase() {
       {/* ── DESKTOP: triple deck sticky ─────────────────────────────────── */}
       <div
         ref={containerRef}
-        className="hidden md:block bg-brand-gray"
+        className="hidden md:block"
         style={{ height: SECTION_HEIGHT }}
       >
         <div className="relative sticky top-0 h-screen overflow-hidden flex flex-col">
-          <div aria-hidden="true" className="absolute inset-0 pointer-events-none z-0">
-            <div
-              className="absolute inset-0 opacity-70"
-              style={{
-                backgroundImage: "url('/images/backgrounds/2.svg')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
-            />
-            <div className="absolute inset-0 bg-brand-black/25" />
-          </div>
-
           {/* Barra de progreso */}
           <div className="relative z-10 flex-none bg-white/10" style={{ height: PROGRESS_H }}>
             <motion.div

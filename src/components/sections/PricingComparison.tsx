@@ -319,20 +319,8 @@ export function PricingComparison({ onCta }: PricingComparisonProps) {
     <section
       id="paquetes"
       aria-label="Elige tu nivel"
-      className="relative px-4 sm:px-6 lg:px-8 pt-8 pb-16 md:py-24 bg-brand-gray overflow-hidden"
+      className="relative px-4 sm:px-6 lg:px-8 pt-8 pb-16 md:py-24 overflow-hidden"
     >
-      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute inset-0 opacity-70"
-          style={{
-            backgroundImage: "url('/images/backgrounds/7.svg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
-        <div className="absolute inset-0 bg-brand-black/30" />
-      </div>
       <div className="relative z-10 container-custom">
         {/* Header */}
         <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4 md:mb-6">
