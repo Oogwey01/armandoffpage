@@ -96,8 +96,18 @@ export default function ContenidoPage() {
         <SectionDivider />
         {/* ── El problema real ── */}
         <section className="relative py-16 md:py-24 bg-brand-black overflow-hidden">
-          {/* Background: orb + dot pattern */}
+          {/* Background: SVG + orb + dot pattern */}
           <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+            <div
+              className="absolute inset-0 opacity-70"
+              style={{
+                backgroundImage: "url('/images/backgrounds/4.svg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+            />
+            <div className="absolute inset-0 bg-brand-black/25" />
             <motion.div
               className="absolute rounded-full"
               style={{
@@ -131,11 +141,11 @@ export default function ContenidoPage() {
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="flex items-center justify-center gap-3 mb-6"
             >
-              <span className="h-px w-8 bg-brand-beige/60 flex-none" />
-              <p className="font-montserrat text-brand-beige text-xs uppercase tracking-[0.3em]">
+              <span className="h-px w-8 bg-[#8f0000] flex-none" />
+              <p className="font-montserrat text-white text-xs uppercase tracking-[0.3em]">
                 El problema real
               </p>
-              <span className="h-px w-8 bg-brand-beige/60 flex-none" />
+              <span className="h-px w-8 bg-[#8f0000] flex-none" />
             </motion.div>
 
             {/* Heading */}
@@ -181,7 +191,7 @@ export default function ContenidoPage() {
                 >
                   {/* Label row */}
                   <div className="flex items-center justify-between mb-4">
-                    <span className="font-montserrat text-[10px] tracking-[0.3em] uppercase text-brand-beige/70">
+                    <span className="font-montserrat text-[10px] tracking-[0.3em] uppercase text-[#8f0000]">
                       Problema {String(index + 1).padStart(2, "0")}
                     </span>
                     <span className="text-brand-beige/25 text-xs tracking-widest">· · ·</span>
@@ -217,9 +227,21 @@ export default function ContenidoPage() {
 
         <SectionDivider />
         {/* ── Por qué tiene sentido ── */}
-        <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-20 bg-brand-black">
-          <AnimateOnScroll className="container-custom">
-            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4">
+        <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 bg-brand-black overflow-hidden">
+          <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+            <div
+              className="absolute inset-0 opacity-70"
+              style={{
+                backgroundImage: "url('/images/backgrounds/6.svg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+            />
+            <div className="absolute inset-0 bg-brand-black/25" />
+          </div>
+          <AnimateOnScroll className="relative z-10 container-custom">
+            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-[#8f0000] text-center mb-4">
               POR QU&Eacute; TIENE SENTIDO
             </p>
 
@@ -309,9 +331,21 @@ export default function ContenidoPage() {
 
         <SectionDivider />
         {/* ── ¿Es para ti? ── */}
-        <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-20 bg-brand-black">
-          <AnimateOnScroll className="container-custom">
-            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4">
+        <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 bg-brand-black overflow-hidden">
+          <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+            <div
+              className="absolute inset-0 opacity-70"
+              style={{
+                backgroundImage: "url('/images/backgrounds/8.svg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+            />
+            <div className="absolute inset-0 bg-brand-black/25" />
+          </div>
+          <AnimateOnScroll className="relative z-10 container-custom">
+            <p className="font-barlow font-bold text-xs tracking-[0.3em] uppercase text-[#8f0000] text-center mb-4">
               &iquest;ES PARA TI?
             </p>
 

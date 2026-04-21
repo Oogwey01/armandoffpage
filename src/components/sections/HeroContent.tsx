@@ -62,6 +62,16 @@ export function HeroContent({
       {/* ── Background ── */}
       <div aria-hidden="true" className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] to-brand-black" />
+        <div
+          className="absolute inset-0 opacity-70 pointer-events-none"
+          style={{
+            backgroundImage: "url('/images/backgrounds/3.svg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+        <div className="absolute inset-0 bg-brand-black/25 pointer-events-none" />
         <motion.div
           className="absolute rounded-full pointer-events-none"
           style={{
@@ -109,11 +119,11 @@ export function HeroContent({
           transition={{ duration: 0.6, delay: 0.1, ease: ANIMATION_EASE }}
           className="flex items-center justify-center gap-3 mb-6"
         >
-          <span className="h-px w-10 bg-brand-beige/60 flex-none" />
-          <p className="font-montserrat text-brand-beige text-xs uppercase tracking-[0.3em]">
+          <span className="h-px w-10 bg-[#8f0000] flex-none" />
+          <p className="font-bebas text-white text-sm uppercase tracking-[0.3em]">
             Sistema Creativo Probado
           </p>
-          <span className="h-px w-10 bg-brand-beige/60 flex-none" />
+          <span className="h-px w-10 bg-[#8f0000] flex-none" />
         </motion.div>
 
         {/* Headline */}
@@ -121,7 +131,7 @@ export function HeroContent({
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="font-barlow font-black uppercase leading-[0.85] tracking-tight mb-8"
+          className="font-bebas uppercase leading-[0.85] tracking-tight mb-8"
         >
           <motion.span
             variants={staggerItem}
@@ -137,11 +147,9 @@ export function HeroContent({
           </motion.span>
           <motion.span
             variants={staggerItem}
-            className="block text-6xl sm:text-7xl md:text-8xl lg:text-9xl"
+            className="block text-6xl sm:text-7xl md:text-8xl lg:text-9xl bg-gradient-to-r from-brand-beige via-brand-beige-light to-brand-beige bg-clip-text text-transparent"
           >
-            <span className="font-akira bg-gradient-to-r from-brand-beige via-brand-beige-light to-brand-beige bg-clip-text text-transparent">
-              VENDE MÁS.
-            </span>
+            VENDE MÁS.
           </motion.span>
         </motion.h1>
 
@@ -157,11 +165,11 @@ export function HeroContent({
               key={label}
               className="flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-full px-5 py-2.5"
             >
-              <span className="font-barlow font-black text-xl sm:text-2xl text-brand-beige leading-none">
+              <span className="font-bebas text-xl sm:text-2xl text-[#8f0000] leading-none">
                 {num}
               </span>
               <span className="h-3 w-px bg-white/15" />
-              <span className="font-montserrat text-[11px] uppercase tracking-widest text-gray-400 leading-none">
+              <span className="font-bebas text-xs uppercase tracking-widest text-gray-400 leading-none">
                 {label}
               </span>
             </div>
@@ -173,7 +181,7 @@ export function HeroContent({
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.75, ease: ANIMATION_EASE }}
-          className="font-montserrat font-light text-sm sm:text-base text-gray-300 max-w-lg mx-auto mb-8 leading-relaxed"
+          className="font-bebas text-base sm:text-lg text-gray-300 max-w-lg mx-auto mb-8 tracking-wide"
         >
           El mismo sistema creativo con el que construimos FRESA FIT,
           aplicado a tu marca.

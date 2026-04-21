@@ -23,6 +23,7 @@ const config: Config = {
         akira: ["Akira Expanded", "sans-serif"],
         barlow: ["Barlow", "sans-serif"],
         montserrat: ["Montserrat", "sans-serif"],
+        bebas: ["var(--font-bebas)", "sans-serif"],
       },
       animation: {
         "fade-in": "fadeIn 0.6s ease-out forwards",

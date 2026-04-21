@@ -48,8 +48,20 @@ const CONTENT_TYPES = [
 
 export function ContentIntro() {
   return (
-    <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-20 bg-brand-black">
-      <div className="container-custom">
+    <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 bg-brand-black overflow-hidden">
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute inset-0 opacity-70"
+          style={{
+            backgroundImage: "url('/images/backgrounds/5.svg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+        <div className="absolute inset-0 bg-brand-black/25" />
+      </div>
+      <div className="relative z-10 container-custom">
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -58,11 +70,11 @@ export function ContentIntro() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="flex items-center justify-center gap-3 mb-6"
         >
-          <span className="h-px w-8 bg-brand-beige/60 flex-none" />
-          <p className="font-montserrat text-brand-beige text-xs uppercase tracking-[0.3em]">
+          <span className="h-px w-8 bg-[#8f0000] flex-none" />
+          <p className="font-montserrat text-white text-xs uppercase tracking-[0.3em]">
             Qué producimos
           </p>
-          <span className="h-px w-8 bg-brand-beige/60 flex-none" />
+          <span className="h-px w-8 bg-[#8f0000] flex-none" />
         </motion.div>
 
         {/* Heading */}
@@ -100,7 +112,7 @@ export function ContentIntro() {
               <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 sm:p-7 hover:border-brand-beige/25 hover:bg-white/[0.06] transition-colors duration-300 h-full">
                 {/* Header: badge + icon */}
                 <div className="flex items-center justify-between mb-5">
-                  <span className="font-barlow font-bold text-[10px] tracking-[0.3em] uppercase bg-brand-beige/10 text-brand-beige border border-brand-beige/20 px-2.5 py-1 rounded-full">
+                  <span className="font-barlow font-bold text-[10px] tracking-[0.3em] uppercase bg-[#8f0000]/10 text-[#8f0000] border border-[#8f0000]/30 px-2.5 py-1 rounded-full">
                     {type.badge}
                   </span>
                   <span className="text-brand-beige/60">{type.icon}</span>

@@ -243,11 +243,11 @@ function DeckTitle({ eyebrow, heading, accent }: { eyebrow: string; heading: str
   return (
     <div className="text-center">
       <div className="flex items-center justify-center gap-2 mb-2">
-        <span className="h-px w-6 bg-brand-beige/60 flex-none" />
-        <p className="font-montserrat text-brand-beige text-[10px] lg:text-xs uppercase tracking-[0.3em]">
+        <span className="h-px w-6 bg-[#8f0000] flex-none" />
+        <p className="font-montserrat text-white text-[10px] lg:text-xs uppercase tracking-[0.3em]">
           {eyebrow}
         </p>
-        <span className="h-px w-6 bg-brand-beige/60 flex-none" />
+        <span className="h-px w-6 bg-[#8f0000] flex-none" />
       </div>
       <h3 className="font-barlow font-black text-xl md:text-2xl lg:text-3xl xl:text-4xl uppercase leading-[0.95] tracking-tight text-white">
         {heading}{" "}
@@ -372,10 +372,24 @@ export function VideoShowcase() {
   return (
     <>
       {/* ── MOBILE ──────────────────────────────────────────────────────── */}
-      <section className="md:hidden py-12 bg-brand-gray overflow-hidden space-y-12">
-        <MobileDeck items={UGC_ITEMS}    mediaType="video" eyebrow="Contenido UGC"  heading="TU MARCA CON CONTENIDO" accent="PREMIUM" />
-        <MobileDeck items={STATIC_ITEMS} mediaType="image" eyebrow="Diseño estático" heading="PUBLICIDAD QUE"        accent="CONVIERTE" />
-        <MobileDeck items={PROD_ITEMS}   mediaType="video" eyebrow="Producciones"    heading="CONTENIDO QUE"         accent="VENDE" />
+      <section className="relative md:hidden py-12 bg-brand-gray overflow-hidden space-y-12">
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+          <div
+            className="absolute inset-0 opacity-70"
+            style={{
+              backgroundImage: "url('/images/backgrounds/2.svg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+          />
+          <div className="absolute inset-0 bg-brand-black/25" />
+        </div>
+        <div className="relative z-10 space-y-12">
+          <MobileDeck items={UGC_ITEMS}    mediaType="video" eyebrow="Contenido UGC"  heading="TU MARCA CON CONTENIDO" accent="PREMIUM" />
+          <MobileDeck items={STATIC_ITEMS} mediaType="image" eyebrow="Diseño estático" heading="PUBLICIDAD QUE"        accent="CONVIERTE" />
+          <MobileDeck items={PROD_ITEMS}   mediaType="video" eyebrow="Producciones"    heading="CONTENIDO QUE"         accent="VENDE" />
+        </div>
       </section>
 
       {/* ── DESKTOP: triple deck sticky ─────────────────────────────────── */}
@@ -384,10 +398,22 @@ export function VideoShowcase() {
         className="hidden md:block bg-brand-gray"
         style={{ height: SECTION_HEIGHT }}
       >
-        <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
+        <div className="relative sticky top-0 h-screen overflow-hidden flex flex-col">
+          <div aria-hidden="true" className="absolute inset-0 pointer-events-none z-0">
+            <div
+              className="absolute inset-0 opacity-70"
+              style={{
+                backgroundImage: "url('/images/backgrounds/2.svg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+            />
+            <div className="absolute inset-0 bg-brand-black/25" />
+          </div>
 
           {/* Barra de progreso */}
-          <div className="relative flex-none bg-white/10" style={{ height: PROGRESS_H }}>
+          <div className="relative z-10 flex-none bg-white/10" style={{ height: PROGRESS_H }}>
             <motion.div
               style={{ width: progressWidth, willChange: "width" }}
               className="absolute inset-y-0 left-0 bg-brand-beige"
@@ -408,7 +434,7 @@ export function VideoShowcase() {
           </div>
 
           {/* Triple deck */}
-          <div className="flex-1 flex overflow-hidden">
+          <div className="relative z-10 flex-1 flex overflow-hidden">
             <DeckStack
               items={UGC_ITEMS}
               scrollYProgress={scrollYProgress}
@@ -439,7 +465,7 @@ export function VideoShowcase() {
           </div>
 
           {/* Footer — contadores */}
-          <div className="flex-none flex px-6" style={{ height: FOOTER_H }}>
+          <div className="relative z-10 flex-none flex px-6" style={{ height: FOOTER_H }}>
             <div className="w-1/3 flex items-center justify-between px-2">
               <span className="font-montserrat text-[9px] uppercase tracking-[0.25em] text-brand-beige/60">UGC</span>
               <span className="font-barlow font-bold text-xs text-gray-500 tabular-nums tracking-widest">

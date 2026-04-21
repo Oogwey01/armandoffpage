@@ -135,8 +135,20 @@ export function FooterContent() {
   };
 
   return (
-    <footer className="bg-brand-gray border-t border-brand-beige/20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-14 md:pt-20">
+    <footer className="relative bg-brand-gray border-t border-brand-beige/20 overflow-hidden">
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute inset-0 opacity-70"
+          style={{
+            backgroundImage: "url('/images/backgrounds/1.svg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+        <div className="absolute inset-0 bg-brand-black/25" />
+      </div>
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-14 md:pt-20">
         {/* ── Newsletter premium ── */}
         <section className="rounded-2xl border border-brand-beige/30 bg-gradient-to-br from-brand-black to-[#0a0a0a] p-6 md:p-10 mb-14">
           <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center">

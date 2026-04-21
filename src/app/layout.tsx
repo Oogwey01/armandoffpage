@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow, Montserrat } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const barlow = Barlow({
@@ -13,6 +14,12 @@ const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   variable: "--font-montserrat",
+  display: "swap",
+});
+
+const bebasNeue = localFont({
+  src: "../../public/fonts/BebasNeue-Regular.ttf",
+  variable: "--font-bebas",
   display: "swap",
 });
 
@@ -56,7 +63,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={`${barlow.variable} ${montserrat.variable}`}>
+    <html lang="es" className={`${barlow.variable} ${montserrat.variable} ${bebasNeue.variable}`}>
       <body>{children}</body>
     </html>
   );
