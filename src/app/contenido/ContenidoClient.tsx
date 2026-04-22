@@ -106,7 +106,6 @@ export default function ContenidoClient() {
         <div aria-hidden="true" className="absolute inset-0 bg-brand-black/30 pointer-events-none" />
         {/* Hero section */}
         <HeroContent ctaHref="#paquetes" />
-        <SectionDivider />
         {/* ── El problema real ── */}
         <section className="relative py-16 md:py-24 overflow-hidden">
           {/* Background: orb + dot pattern */}
@@ -225,7 +224,6 @@ export default function ContenidoClient() {
         <SectionDivider />
         <ContentIntro />
 
-        <SectionDivider />
         <VideoShowcase />
 
         <SectionDivider />
@@ -262,6 +260,7 @@ export default function ContenidoClient() {
                     { service: "Fotógrafo de producto", price: "$3,500 – $8,000" },
                     { service: "Editor de video", price: "$1,500 – $4,000" },
                     { service: "Diseñador gráfico", price: "$800 – $2,500" },
+                    { service: "Media buyer / trafficker", price: "$8,000 – $20,000" },
                     { service: "Director creativo con criterio de ads", price: "Difícil de encontrar", highlight: true },
                   ].map(({ service, price, highlight }) => (
                     <li key={service} className="flex items-center gap-3 px-5 py-4">
@@ -300,7 +299,7 @@ export default function ContenidoClient() {
                     "Dirección creativa estratégica",
                     "Producción y edición audiovisual",
                     "Diseño gráfico integrado",
-                    "Criterio de paid media aplicado",
+                    "Gestión de pauta incluida (Meta, Google, TikTok)",
                   ].map((feature) => (
                     <li key={feature} className="flex items-center gap-3 px-5 py-4">
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-brand-beige/15 border border-brand-beige/40 text-brand-beige shrink-0">
@@ -348,7 +347,7 @@ export default function ContenidoClient() {
                 <ul className="divide-y divide-white/5">
                   {[
                     { label: "Producto con tracción", desc: "Tienes un producto o servicio y quieres vender más" },
-                    { label: "Inviertes en ads", desc: "Inviertes o quieres invertir en publicidad digital" },
+                    { label: "Quieres escalar con pauta", desc: "Ya inviertes en ads o estás listo para empezar a hacerlo en serio" },
                     { label: "Visión de inversión", desc: "Entiendes que el contenido es una inversión, no un gasto" },
                     { label: "Marca con ambición", desc: "Quieres que tu marca se vea como lo que realmente es" },
                   ].map(({ label, desc }) => (

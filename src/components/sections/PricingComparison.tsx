@@ -98,13 +98,22 @@ const COMPARISON_ROWS: Array<{
     ],
   },
   {
+    category: "Publicidad gestionada",
+    rows: [
+      { label: "Meta Ads (Facebook + Instagram)", values: [true, true, true] },
+      { label: "Google Ads (Search + PMax)", values: [false, true, true] },
+      { label: "TikTok Ads", values: [false, false, true] },
+      { label: "Retargeting & display programático", values: [false, false, true] },
+      { label: "Reporte de performance mensual", values: [false, false, true] },
+    ],
+  },
+  {
     category: "Estrategia & extras",
     rows: [
       { label: "Brief creativo mensual", values: [true, true, true] },
       { label: "Contenido en crudo entregable", values: [true, true, true] },
       { label: "Derechos de uso completos", values: [true, true, true] },
       { label: "Dirección creativa dedicada", values: [false, true, true] },
-      { label: "Reporte de performance mensual", values: [false, false, true] },
     ],
   },
 ];
@@ -326,9 +335,13 @@ export function PricingComparison({ onCta }: PricingComparisonProps) {
         <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4 md:mb-6">
           Elige tu nivel
         </p>
-        <p className="font-bebas text-sm md:text-base text-gray-400 font-light text-center max-w-2xl mx-auto mb-8 tracking-wide">
-          Todo listo para paid media y orgánico. Derechos de uso incluidos en
-          todos los paquetes.
+        <p className="font-bebas text-sm md:text-base text-gray-400 font-light text-center max-w-2xl mx-auto mb-3 tracking-wide">
+          Contenido + gestión de ads bajo una sola dirección creativa.
+          Derechos totales y sin permanencia en todos los planes.
+        </p>
+        <p className="font-bebas text-[11px] text-gray-500 font-light text-center max-w-2xl mx-auto mb-8 tracking-wide">
+          La inversión en pauta (ad spend) se paga directo a cada plataforma y
+          no está incluida en el precio mensual.
         </p>
 
         {/* Popular features */}

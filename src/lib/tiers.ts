@@ -3,7 +3,7 @@ export type TierId = "presencia" | "autoridad" | "dominacion";
 export interface TierFeature {
   text: string;
   // Categoría — mapea el ícono a mostrar
-  category: "image" | "video" | "strategy" | "raw";
+  category: "image" | "video" | "strategy" | "raw" | "ads";
 }
 
 export interface Tier {
@@ -20,6 +20,7 @@ export interface Tier {
   videoCount: number;
   images: TierFeature[];
   videos: TierFeature[];
+  ads: TierFeature[];
   extras: TierFeature[];
   highlight?: boolean;
   // Texto del CTA diferenciado por tier
@@ -51,6 +52,16 @@ export const TIERS: Tier[] = [
       {
         text: "1 video de alta producción con modelo y locación",
         category: "video",
+      },
+    ],
+    ads: [
+      {
+        text: "Gestión de Meta Ads (Facebook + Instagram)",
+        category: "ads",
+      },
+      {
+        text: "Setup de campañas, creativos y optimización semanal",
+        category: "ads",
       },
     ],
     extras: [
@@ -88,6 +99,24 @@ export const TIERS: Tier[] = [
         category: "video",
       },
     ],
+    ads: [
+      {
+        text: "Gestión de Meta Ads (Facebook + Instagram)",
+        category: "ads",
+      },
+      {
+        text: "Gestión de Google Ads (Search + Performance Max)",
+        category: "ads",
+      },
+      {
+        text: "Setup, creativos y optimización semanal en ambos canales",
+        category: "ads",
+      },
+      {
+        text: "Dirección de pauta integrada con el brief creativo",
+        category: "ads",
+      },
+    ],
     extras: [
       {
         text: "Brief creativo mensual con la estrategia detrás incluido",
@@ -122,6 +151,36 @@ export const TIERS: Tier[] = [
       {
         text: "4 videos de alta producción con modelo y locación",
         category: "video",
+      },
+    ],
+    ads: [
+      {
+        text: "Gestión de Meta Ads (Facebook + Instagram)",
+        category: "ads",
+      },
+      {
+        text: "Gestión de Google Ads (Search + Performance Max)",
+        category: "ads",
+      },
+      {
+        text: "Gestión de TikTok Ads con creativos nativos",
+        category: "ads",
+      },
+      {
+        text: "Retargeting y display programático cross-canal",
+        category: "ads",
+      },
+      {
+        text: "Optimización semanal en todos los canales",
+        category: "ads",
+      },
+      {
+        text: "Dirección de pauta integrada con el brief creativo",
+        category: "ads",
+      },
+      {
+        text: "Reporte de performance mensual con acciones",
+        category: "ads",
       },
     ],
     extras: [

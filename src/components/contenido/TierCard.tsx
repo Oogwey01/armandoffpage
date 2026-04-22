@@ -91,11 +91,37 @@ function StarIcon({ className = "" }: { className?: string }) {
   );
 }
 
+function MegaphoneIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M3 10v4a1 1 0 001 1h2l7 4V5L6 9H4a1 1 0 00-1 1z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M17 8a5 5 0 010 8"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+      <path
+        d="M20 5a9 9 0 010 14"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 const ICON_MAP = {
   image: CameraIcon,
   video: VideoIcon,
   strategy: StrategyIcon,
   raw: RawContentIcon,
+  ads: MegaphoneIcon,
 } as const;
 
 // Variante de draw-in escalonado para cada item
@@ -271,6 +297,20 @@ export function TierCard({
             className="flex flex-col gap-1 mb-5"
           >
             {tier.videos.map((f, i) => (
+              <FeatureItem key={f.text} feature={f} index={i} highlighted={isHighlighted} />
+            ))}
+          </motion.ul>
+
+          <div className="h-px bg-white/10 mb-5" />
+
+          <p className="font-bebas text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-3">
+            Gestión de publicidad
+          </p>
+          <motion.ul
+            variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
+            className="flex flex-col gap-1 mb-5"
+          >
+            {tier.ads.map((f, i) => (
               <FeatureItem key={f.text} feature={f} index={i} highlighted={isHighlighted} />
             ))}
           </motion.ul>
