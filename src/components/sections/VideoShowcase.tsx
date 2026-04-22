@@ -368,7 +368,7 @@ export function VideoShowcase() {
       >
         <div className="relative sticky top-0 h-screen overflow-hidden flex flex-col">
           {/* Barra de progreso */}
-          <div className="relative z-10 flex-none bg-white/10" style={{ height: PROGRESS_H }}>
+          <div className="relative z-10 flex-none" style={{ height: PROGRESS_H }}>
             <motion.div
               style={{ width: progressWidth, willChange: "width" }}
               className="absolute inset-y-0 left-0 bg-brand-beige"

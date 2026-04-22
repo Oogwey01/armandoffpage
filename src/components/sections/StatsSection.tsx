@@ -291,7 +291,7 @@ export function StatsSection() {
               className="relative w-full min-h-[480px] flex-1 bg-brand-black/60 border border-white/10 rounded-2xl overflow-hidden [will-change:transform]"
             >
               <Image
-                src="/images/statistics/Meta_stats.jpg"
+                src="/images/statistics/META2-stats.jpg"
                 alt="Estadísticas reales de alcances y ROAS de FRESA FIT en Meta Ads"
                 fill
                 className="object-contain"
@@ -308,7 +308,7 @@ export function StatsSection() {
               className="relative w-full min-h-[480px] flex-1 bg-brand-black/60 border border-white/10 rounded-2xl overflow-hidden [will-change:transform]"
             >
               <Image
-                src="/images/statistics/MLstats.jpg"
+                src="/images/statistics/ML2-stats.jpg"
                 alt="Estadísticas reales de alcances y ROAS de FRESA FIT en Mercado Libre"
                 fill
                 className="object-contain"
