@@ -1,9 +1,17 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import Image from "next/image";
 import { useState } from "react";
-import type { Tier, TierFeature } from "@/lib/tiers";
+import type { AdPlatform, Tier, TierFeature } from "@/lib/tiers";
 import { ANIMATION_EASE } from "@/lib/animations/variants";
+
+const PLATFORM_LOGOS: Record<AdPlatform, { src: string; alt: string }> = {
+  meta: { src: "/images/logos/meta-ads.png", alt: "Meta Ads" },
+  instagram: { src: "/images/logos/instagram.png", alt: "Instagram" },
+  google: { src: "/images/logos/Google_Ads_logo.png", alt: "Google Ads" },
+  tiktok: { src: "/images/logos/tiktok.webp", alt: "TikTok" },
+};
 
 // ── Iconografía custom por categoría de feature ──
 function CameraIcon({ className = "" }: { className?: string }) {
@@ -145,25 +153,47 @@ function FeatureItem({
   highlighted: boolean;
 }) {
   const Icon = ICON_MAP[feature.category];
+  const platforms = feature.platforms;
+
+  const hasPlatforms = platforms && platforms.length > 0;
 
   return (
     <motion.li
       custom={index}
       variants={featureVariants}
-      className="group/item flex items-start gap-3 rounded-lg px-2 py-1.5 -mx-2 hover:bg-brand-beige/5 transition-colors"
+      className="group/item flex items-center gap-3 rounded-lg px-2 py-1.5 -mx-2 hover:bg-brand-beige/5 transition-colors"
     >
-      <span
-        className={`shrink-0 flex items-center justify-center w-6 h-6 rounded-md transition-all ${
-          highlighted
-            ? "text-brand-beige bg-brand-beige/10 group-hover/item:bg-brand-beige/20 group-hover/item:rotate-6"
-            : "text-brand-beige/70 group-hover/item:text-brand-beige group-hover/item:rotate-6"
-        }`}
-      >
-        <Icon className="w-4 h-4" />
-      </span>
-      <span className="font-bebas text-sm text-gray-300 leading-snug uppercase group-hover/item:text-white transition-colors tracking-wide">
+      {!hasPlatforms && (
+        <span
+          className={`shrink-0 flex items-center justify-center w-6 h-6 rounded-md transition-all ${
+            highlighted
+              ? "text-brand-beige bg-brand-beige/10 group-hover/item:bg-brand-beige/20 group-hover/item:rotate-6"
+              : "text-brand-beige/70 group-hover/item:text-brand-beige group-hover/item:rotate-6"
+          }`}
+        >
+          <Icon className="w-4 h-4" />
+        </span>
+      )}
+      <span className="flex-1 font-bebas text-sm text-gray-300 leading-snug uppercase group-hover/item:text-white transition-colors tracking-wide">
         {feature.text}
       </span>
+      {hasPlatforms && (
+        <span className="shrink-0 flex items-center gap-2 transition-transform group-hover/item:scale-110">
+          {platforms!.map((p) => {
+            const logo = PLATFORM_LOGOS[p];
+            return (
+              <Image
+                key={p}
+                src={logo.src}
+                alt={logo.alt}
+                width={32}
+                height={32}
+                className="h-7 w-7 object-contain"
+              />
+            );
+          })}
+        </span>
+      )}
     </motion.li>
   );
 }

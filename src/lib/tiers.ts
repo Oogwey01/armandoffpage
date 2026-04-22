@@ -1,9 +1,13 @@
 export type TierId = "presencia" | "autoridad" | "dominacion";
 
+export type AdPlatform = "meta" | "instagram" | "google" | "tiktok";
+
 export interface TierFeature {
   text: string;
   // Categoría — mapea el ícono a mostrar
   category: "image" | "video" | "strategy" | "raw" | "ads";
+  // Plataformas — reemplaza el ícono por los logos correspondientes
+  platforms?: AdPlatform[];
 }
 
 export interface Tier {
@@ -58,6 +62,7 @@ export const TIERS: Tier[] = [
       {
         text: "Gestión de Meta Ads (Facebook + Instagram)",
         category: "ads",
+        platforms: ["meta", "instagram"],
       },
       {
         text: "Setup de campañas, creativos y optimización semanal",
@@ -103,10 +108,12 @@ export const TIERS: Tier[] = [
       {
         text: "Gestión de Meta Ads (Facebook + Instagram)",
         category: "ads",
+        platforms: ["meta", "instagram"],
       },
       {
         text: "Gestión de Google Ads (Search + Performance Max)",
         category: "ads",
+        platforms: ["google"],
       },
       {
         text: "Setup, creativos y optimización semanal en ambos canales",
@@ -157,14 +164,17 @@ export const TIERS: Tier[] = [
       {
         text: "Gestión de Meta Ads (Facebook + Instagram)",
         category: "ads",
+        platforms: ["meta", "instagram"],
       },
       {
         text: "Gestión de Google Ads (Search + Performance Max)",
         category: "ads",
+        platforms: ["google"],
       },
       {
         text: "Gestión de TikTok Ads con creativos nativos",
         category: "ads",
+        platforms: ["tiktok"],
       },
       {
         text: "Retargeting y display programático cross-canal",
