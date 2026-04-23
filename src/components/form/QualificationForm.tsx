@@ -26,7 +26,7 @@ const TOTAL_STEPS = 10;
 
 const MARKETING_CHANNELS_WITH_LOGO = [
   { value: "Meta Ads", label: "Meta Ads", logo: "/images/logos/meta-ads.png" },
-  { value: "TikTok Ads", label: "TikTok Ads", logo: "/images/logos/tik-tok-ads.png" },
+  { value: "TikTok Ads", label: "TikTok Ads", logo: "/images/logos/tiktokADS.png" },
   { value: "TikTok Shop", label: "TikTok Shop", logo: "/images/logos/tikTOKSHOP.png" },
   { value: "Shopify", label: "Shopify", logo: "/images/logos/Shopify-badge.png" },
   { value: "Mercado Libre", label: "Mercado Libre", logo: "/images/logos/mercado-libre.png" },
@@ -151,6 +151,7 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [direction, setDirection] = useState<1 | -1>(1);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -274,19 +275,7 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
       }
 
       clearSavedData();
-
-      const { nombre, email } = allData;
-      const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
-      if (calendlyUrl) {
-        window.open(
-          `${calendlyUrl}?name=${encodeURIComponent(nombre)}&email=${encodeURIComponent(email)}`,
-          "_blank"
-        );
-      }
-
-      onClose();
-      reset();
-      setCurrentStep(1);
+      setShowSuccess(true);
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Ocurrió un error inesperado. Inténtalo de nuevo.";
@@ -296,13 +285,24 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
     }
   }, [trigger, getValues, onClose, reset]);
 
+  // ---- Close (limpia estado + cierra modal) -------------------------------
+
+  const handleClose = useCallback(() => {
+    onClose();
+    if (showSuccess) {
+      reset();
+      setCurrentStep(1);
+      setShowSuccess(false);
+    }
+  }, [onClose, reset, showSuccess]);
+
   // ---- Overlay click ------------------------------------------------------
 
   const handleOverlayClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (e.target === e.currentTarget) onClose();
+      if (e.target === e.currentTarget) handleClose();
     },
-    [onClose]
+    [handleClose]
   );
 
   // ---- Marketing channels helpers -----------------------------------------
@@ -741,60 +741,116 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            {/* Header */}
-            <div className="sticky top-0 bg-brand-gray z-10 p-6 pb-4 border-b border-white/10">
-              <div className="flex items-center justify-between">
-                <h2 className="heading-md text-white">Agendar Cita</h2>
+            {showSuccess ? (
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="relative p-8 sm:p-10 text-center"
+              >
                 <button
                   type="button"
-                  onClick={onClose}
-                  className="text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
-                  aria-label="Cerrar formulario"
+                  onClick={handleClose}
+                  className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
+                  aria-label="Cerrar"
                 >
                   <CloseIcon className="w-6 h-6" />
                 </button>
-              </div>
 
-              {/* Progress bar */}
-              <div
-                className="w-full h-2 bg-white/10 rounded-full overflow-hidden mt-4"
-                role="progressbar"
-                aria-valuenow={currentStep}
-                aria-valuemin={1}
-                aria-valuemax={TOTAL_STEPS}
-                aria-label={`Paso ${currentStep} de ${TOTAL_STEPS}`}
-              >
-                <div
-                  className="bg-brand-beige h-full transition-all duration-500 rounded-full"
-                  style={{ width: `${(currentStep / TOTAL_STEPS) * 100}%` }}
-                />
-              </div>
-
-              {/* Step indicator */}
-              <p className="text-sm text-gray-400 mt-2 font-montserrat">
-                Paso {currentStep} de {TOTAL_STEPS}
-              </p>
-            </div>
-
-            {/* Body */}
-            <div className="p-6">
-              <AnimatePresence mode="wait" custom={direction}>
                 <motion.div
-                  key={currentStep}
-                  custom={direction}
-                  variants={stepVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  transition={{ duration: 0.22, ease: "easeInOut" }}
+                  initial={{ scale: 0.6, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1.2, 0.36, 1] }}
+                  className="relative mx-auto mb-6 w-20 h-20 rounded-full bg-brand-beige/15 flex items-center justify-center"
                 >
-                  {renderStep()}
+                  <span aria-hidden="true" className="absolute inset-0 rounded-full border-2 border-brand-beige/40 animate-ping" />
+                  <svg viewBox="0 0 24 24" fill="none" className="w-10 h-10 text-brand-beige" aria-hidden="true">
+                    <motion.path
+                      d="M5 12l5 5L20 7"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+                    />
+                  </svg>
                 </motion.div>
-              </AnimatePresence>
 
-              {/* Buttons */}
-              <div className="mt-8">{renderButtons()}</div>
-            </div>
+                <h2 className="font-barlow font-black text-2xl sm:text-3xl uppercase text-white leading-tight mb-3">
+                  ¡Datos enviados <span className="text-brand-beige">correctamente</span>!
+                </h2>
+                <p className="font-montserrat text-sm sm:text-base text-gray-300 font-light leading-relaxed max-w-sm mx-auto mb-8">
+                  Gracias por considerarnos. En breve nos pondremos en contacto contigo.
+                </p>
+
+                <button
+                  type="button"
+                  onClick={handleClose}
+                  className="w-full h-12 rounded-xl bg-brand-beige text-brand-black font-barlow font-bold text-sm uppercase tracking-widest hover:bg-brand-beige-light transition-colors"
+                >
+                  Cerrar
+                </button>
+              </motion.div>
+            ) : (
+              <>
+                {/* Header */}
+                <div className="sticky top-0 bg-brand-gray z-10 p-6 pb-4 border-b border-white/10">
+                  <div className="flex items-center justify-between">
+                    <h2 className="heading-md text-white">Agendar Cita</h2>
+                    <button
+                      type="button"
+                      onClick={onClose}
+                      className="text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
+                      aria-label="Cerrar formulario"
+                    >
+                      <CloseIcon className="w-6 h-6" />
+                    </button>
+                  </div>
+
+                  {/* Progress bar */}
+                  <div
+                    className="w-full h-2 bg-white/10 rounded-full overflow-hidden mt-4"
+                    role="progressbar"
+                    aria-valuenow={currentStep}
+                    aria-valuemin={1}
+                    aria-valuemax={TOTAL_STEPS}
+                    aria-label={`Paso ${currentStep} de ${TOTAL_STEPS}`}
+                  >
+                    <div
+                      className="bg-brand-beige h-full transition-all duration-500 rounded-full"
+                      style={{ width: `${(currentStep / TOTAL_STEPS) * 100}%` }}
+                    />
+                  </div>
+
+                  {/* Step indicator */}
+                  <p className="text-sm text-gray-400 mt-2 font-montserrat">
+                    Paso {currentStep} de {TOTAL_STEPS}
+                  </p>
+                </div>
+
+                {/* Body */}
+                <div className="p-6">
+                  <AnimatePresence mode="wait" custom={direction}>
+                    <motion.div
+                      key={currentStep}
+                      custom={direction}
+                      variants={stepVariants}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                      transition={{ duration: 0.22, ease: "easeInOut" }}
+                    >
+                      {renderStep()}
+                    </motion.div>
+                  </AnimatePresence>
+
+                  {/* Buttons */}
+                  <div className="mt-8">{renderButtons()}</div>
+                </div>
+              </>
+            )}
           </motion.div>
         </div>
       )}
