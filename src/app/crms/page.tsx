@@ -411,7 +411,15 @@ export default function CRMsPage() {
         </section>
 
       </main>
-      <FooterContent />
+      <FooterContent
+        leadMagnet={{
+          eyebrow: "Lead magnet gratuito",
+          title: "Plantilla: Flujos de CRM que recuperan ventas",
+          description:
+            "Recibe los 8 flujos de email/SMS (carrito abandonado, post-compra, reactivación) que usamos en FRESA FIT para recuperar hasta 30% de ingresos extra sin invertir un peso más en ads.",
+          buttonLabel: "Descargar plantillas de flujos",
+        }}
+      />
       <FloatingActions />
       <QualificationForm isOpen={isOpen} onClose={close} />
     </>

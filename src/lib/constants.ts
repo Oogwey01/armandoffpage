@@ -1,7 +1,6 @@
 import { Testimonial, Service, Stat, Pillar, StudentInterview, WrittenReview, CaseStudy } from "./types";
 
 export const NAV_LINKS = [
-  { label: "Mentoría", href: "#servicios" },
   { label: "Contenido", href: "/contenido" },
   { label: "CRM'S", href: "/crms" },
   { label: "Nosotros", href: "#quien-soy" },

@@ -34,9 +34,6 @@ export default function About() {
     <section
       id="quien-soy"
       className="section-padding relative overflow-hidden"
-      style={{
-        background: "linear-gradient(135deg, #111111 0%, #2a2a2a 30%, #3d3d3d 50%, #2a2a2a 70%, #111111 100%)",
-      }}
     >
       {/* Radial glow — top right (beige) */}
       <div
@@ -87,6 +84,13 @@ export default function About() {
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           >
+            <div className="flex items-center justify-start gap-3 mb-6">
+              <span className="h-px w-10 bg-[#8f0000] flex-none" />
+              <p className="font-bebas text-white text-sm uppercase tracking-[0.3em]">
+                Operadores, no teóricos
+              </p>
+              <span className="h-px w-10 bg-[#8f0000] flex-none" />
+            </div>
             <h2 className="font-barlow font-black text-2xl sm:text-3xl md:text-4xl text-white leading-tight mb-4">
               &ldquo;No gestionamos tu negocio desde una oficina teórica&rdquo;
             </h2>

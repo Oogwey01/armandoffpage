@@ -120,17 +120,17 @@ export function HeroContent({
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="font-dafoe leading-[0.9] mb-8"
+          className="font-barlow font-black uppercase tracking-tight leading-[0.95] mb-8"
         >
           <motion.span
             variants={staggerItem}
-            className="block text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl"
+            className="block text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
           >
             El contenido que
           </motion.span>
           <motion.span
             variants={staggerItem}
-            className="block text-6xl sm:text-7xl md:text-8xl lg:text-9xl bg-gradient-to-r from-brand-beige via-brand-beige-light to-brand-beige bg-clip-text text-transparent"
+            className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl bg-gradient-to-r from-brand-beige via-brand-beige-light to-brand-beige bg-clip-text text-transparent"
           >
             vende más.
           </motion.span>

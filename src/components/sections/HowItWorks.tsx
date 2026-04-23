@@ -150,7 +150,7 @@ export default function HowItWorks() {
   const activeTabData = PLATFORM_TABS.find((t) => t.id === activeTab)!;
 
   return (
-    <section id="como-funciona" className="section-padding bg-brand-black">
+    <section id="como-funciona" className="section-padding relative">
       <div ref={sectionRef} className="container-custom">
 
         {/* ── Header ── */}
@@ -160,6 +160,13 @@ export default function HowItWorks() {
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <span className="h-px w-10 bg-[#8f0000] flex-none" />
+            <p className="font-bebas text-white text-sm uppercase tracking-[0.3em]">
+              Metodología probada
+            </p>
+            <span className="h-px w-10 bg-[#8f0000] flex-none" />
+          </div>
           <h2 className="heading-lg text-white">COMO FUNCIONA</h2>
           <div className="w-20 h-1 bg-brand-beige mx-auto mt-4" />
           <p className="body-text max-w-2xl mx-auto mt-6">

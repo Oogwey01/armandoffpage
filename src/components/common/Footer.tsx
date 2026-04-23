@@ -10,7 +10,6 @@ import {
 
 const FOOTER_LINKS = [
   { label: "Inicio", href: "#inicio" },
-  { label: "Mentoría", href: "#servicios" },
   { label: "Servicios", href: "#proximos-servicios" },
   { label: "Historia", href: "#quien-soy" },
   { label: "Contacto", href: "#contacto" },

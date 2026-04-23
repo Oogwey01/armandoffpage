@@ -11,7 +11,6 @@ const FOOTER_COLUMNS = [
     title: "Servicios",
     links: [
       { label: "Paquetes de contenido", href: "#paquetes" },
-      { label: "Mentoría 1:1", href: "#servicios" },
       { label: "Webinars", href: "#webinar" },
       { label: "Casos de estudio", href: "#casos" },
     ],
@@ -114,7 +113,27 @@ const TRUST_BADGES = [
 
 const PAYMENT_METHODS = ["Visa", "Mastercard", "AMEX", "SPEI", "PayPal"];
 
-export function FooterContent() {
+interface LeadMagnet {
+  eyebrow?: string;
+  title: string;
+  description: string;
+  buttonLabel: string;
+  successLabel?: string;
+}
+
+const DEFAULT_LEAD_MAGNET: LeadMagnet = {
+  eyebrow: "Lead magnet gratuito",
+  title: "Guía: 10 hooks que venden",
+  description:
+    "Recibe tips de contenido semanales + la guía con los hooks que usamos para escalar FRESA FIT a 3.8M+ de alcance.",
+  buttonLabel: "Recibir Tips de Contenido",
+};
+
+interface FooterContentProps {
+  leadMagnet?: LeadMagnet;
+}
+
+export function FooterContent({ leadMagnet = DEFAULT_LEAD_MAGNET }: FooterContentProps = {}) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle"
@@ -154,14 +173,13 @@ export function FooterContent() {
           <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
             <div>
               <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-3">
-                Lead magnet gratuito
+                {leadMagnet.eyebrow ?? "Lead magnet gratuito"}
               </p>
               <h3 className="font-barlow font-black text-2xl md:text-3xl uppercase text-white leading-tight mb-2">
-                Guía: 10 hooks que venden
+                {leadMagnet.title}
               </h3>
               <p className="font-bebas text-sm text-gray-300 font-light leading-relaxed tracking-wide">
-                Recibe tips de contenido semanales + la guía con los hooks que
-                usamos para escalar FRESA FIT a 3.8M+ de alcance.
+                {leadMagnet.description}
               </p>
             </div>
 
@@ -197,10 +215,10 @@ export function FooterContent() {
                   />
                 )}
                 {status === "success"
-                  ? "¡Revisa tu correo!"
+                  ? leadMagnet.successLabel ?? "¡Revisa tu correo!"
                   : status === "loading"
                   ? "Enviando…"
-                  : "Recibir Tips de Contenido"}
+                  : leadMagnet.buttonLabel}
               </motion.button>
 
               <AnimatePresence>

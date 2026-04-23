@@ -143,9 +143,6 @@ export default function Hero({ onOpenForm }: HeroProps) {
       id="inicio"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Base gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] to-brand-black" />
-
       {/* Orb 1 — top-left, oro principal */}
       <motion.div
         className="absolute rounded-full pointer-events-none"
@@ -204,13 +201,24 @@ export default function Hero({ onOpenForm }: HeroProps) {
         }}
       />
 
-      {/* Bottom gradient fade for smooth transition to next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-black to-transparent" />
 
       {/* Content */}
       <div className="relative z-10 w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-left lg:text-center pt-32 md:pt-40 pb-16 md:pb-20">
         {/* Hero top — parallax sutil: el título se mueve levemente más lento que el scroll */}
         <ParallaxText speed={0.15} className="mb-16 mx-auto">
+          {/* Eyebrow */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+            className="flex items-center justify-start lg:justify-center gap-3 mb-6"
+          >
+            <span className="h-px w-10 bg-[#8f0000] flex-none" />
+            <p className="font-bebas text-white text-sm uppercase tracking-[0.3em]">
+              Sistema de crecimiento
+            </p>
+            <span className="h-px w-10 bg-[#8f0000] flex-none" />
+          </motion.div>
           {/* Title */}
           <motion.h1
             initial={{ opacity: 0, y: -30 }}
@@ -275,36 +283,70 @@ export default function Hero({ onOpenForm }: HeroProps) {
         <div>
           {/* Metric cards with stagger entrance */}
           <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4"
+            className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
           >
             {[
-              { num: "$5M+",     desc: "Invertidos en Meta Ads con dinero propio",  img: "/images/statistics/Meta_stats.jpg" },
-              { num: "$30M+",    desc: "Facturados en Mercado Libre en 2 años",     img: "/images/statistics/MLstats.jpg" },
-              { num: "+4,000",   desc: "Ventas generadas en TikTok Shop",           img: "/images/statistics/SCREEN.jpg" },
-              { num: "Platinum", desc: "MercadoLíder — nivel más alto en ML",       img: "/images/statistics/stats ML.jpeg" },
-            ].map(({ num, desc, img }) => (
-              <motion.div key={num} variants={staggerItem} className="rounded-xl overflow-hidden border border-white/10 flex flex-col">
-                <div className="relative aspect-[3/4]">
+              { platform: "Meta Ads",      num: "$5M+",     desc: "Invertidos con dinero propio",        img: "/images/statistics/META2-stats.jpg" },
+              { platform: "Mercado Libre", num: "$30M+",    desc: "Facturados en 2 años",                img: "/images/statistics/ML2-stats.jpg" },
+              { platform: "TikTok Shop",   num: "+4,000",   desc: "Ventas generadas",                    img: "/images/statistics/SCREEN.jpg" },
+              { platform: "MercadoLíder",  num: "Platinum", desc: "Nivel más alto en ML",                img: "/images/statistics/stats ML.jpeg" },
+            ].map(({ platform, num, desc, img }) => (
+              <motion.div
+                key={num}
+                variants={staggerItem}
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-brand-beige/40 transition-colors duration-500"
+              >
+                {/* Fondo blurred continuo */}
+                <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
                   <Image
                     src={img}
-                    alt={num}
+                    alt=""
                     fill
                     sizes="(max-width: 768px) 50vw, 25vw"
-                    className="object-cover"
+                    className="object-cover scale-125 blur-2xl opacity-40"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-b from-brand-black/40 via-brand-black/55 to-brand-black/90" />
                 </div>
-                <div className="bg-brand-gray px-2 py-2 sm:px-3 sm:py-3 text-center">
-                  <span className="font-barlow font-black text-2xl sm:text-3xl md:text-4xl text-white leading-none">
+
+                {/* Imagen principal flotante */}
+                <div className="relative aspect-[3/4] p-3 sm:p-4">
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={img}
+                      alt={num}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      className="object-contain drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)]"
+                    />
+                  </div>
+                </div>
+
+                {/* Stats sin fondo plano */}
+                <div className="relative px-3 pb-4 sm:pb-5 text-center">
+                  <div className="h-px w-10 mx-auto bg-gradient-to-r from-transparent via-brand-beige/70 to-transparent mb-3" />
+                  <p className="font-bebas text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-brand-beige/80 mb-1.5">
+                    {platform}
+                  </p>
+                  <p className="font-barlow font-black text-2xl sm:text-3xl md:text-4xl text-white leading-none mb-2 tracking-tight">
                     {num}
-                  </span>
-                  <p className="font-montserrat text-[10px] sm:text-sm text-gray-300 mt-1 leading-tight">
+                  </p>
+                  <p className="font-montserrat text-[10px] sm:text-xs text-gray-400 leading-tight">
                     {desc}
                   </p>
                 </div>
+
+                {/* Hover glow dorado */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-500"
+                  style={{ boxShadow: "inset 0 0 30px rgba(200,157,105,0.15), 0 0 40px rgba(200,157,105,0.18)" }}
+                />
               </motion.div>
             ))}
           </motion.div>
@@ -323,6 +365,20 @@ export default function Hero({ onOpenForm }: HeroProps) {
 
         {/* ── Por qué nos eligen ── */}
         <div className="mt-10 md:mt-24">
+          {/* Eyebrow */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="flex items-center justify-start lg:justify-center gap-3 mb-6"
+          >
+            <span className="h-px w-10 bg-[#8f0000] flex-none" />
+            <p className="font-bebas text-white text-sm uppercase tracking-[0.3em]">
+              Casos de éxito
+            </p>
+            <span className="h-px w-10 bg-[#8f0000] flex-none" />
+          </motion.div>
           {/* Section title */}
           <motion.h2
             initial={{ opacity: 0, y: 24 }}

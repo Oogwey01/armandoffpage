@@ -279,16 +279,11 @@ export function StatsSection() {
             <Timeline />
           </div>
 
-          {/* Columna derecha — imágenes con parallax y glow en hover */}
+          {/* Columna derecha — imágenes con parallax */}
           <div className="lg:col-span-2 hidden lg:flex flex-col gap-4">
             <motion.div
               style={{ y: imageY }}
-              whileHover={{
-                boxShadow: "0 0 48px 0 rgba(200,157,105,0.35)",
-                borderColor: "rgba(200,157,105,0.5)",
-              }}
-              transition={{ duration: 0.4, ease: ANIMATION_EASE }}
-              className="relative w-full min-h-[480px] flex-1 bg-brand-black/60 border border-white/10 rounded-2xl overflow-hidden [will-change:transform]"
+              className="relative w-full min-h-[480px] flex-1 [will-change:transform]"
             >
               <Image
                 src="/images/statistics/META2-stats.jpg"
@@ -300,12 +295,7 @@ export function StatsSection() {
             </motion.div>
             <motion.div
               style={{ y: imageY }}
-              whileHover={{
-                boxShadow: "0 0 48px 0 rgba(200,157,105,0.35)",
-                borderColor: "rgba(200,157,105,0.5)",
-              }}
-              transition={{ duration: 0.4, ease: ANIMATION_EASE }}
-              className="relative w-full min-h-[480px] flex-1 bg-brand-black/60 border border-white/10 rounded-2xl overflow-hidden [will-change:transform]"
+              className="relative w-full min-h-[480px] flex-1 [will-change:transform]"
             >
               <Image
                 src="/images/statistics/ML2-stats.jpg"

@@ -29,7 +29,7 @@ export default function Pillars({ onOpenForm }: PillarsProps) {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section id="pilares" className="section-padding bg-brand-black">
+    <section id="pilares" className="section-padding relative">
       <div className="container-custom">
         {/* Section title */}
         <motion.div
@@ -39,6 +39,13 @@ export default function Pillars({ onOpenForm }: PillarsProps) {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <span className="h-px w-10 bg-[#8f0000] flex-none" />
+            <p className="font-bebas text-white text-sm uppercase tracking-[0.3em]">
+              Base del sistema
+            </p>
+            <span className="h-px w-10 bg-[#8f0000] flex-none" />
+          </div>
           <h2 className="heading-lg text-center text-white">
             NUESTROS PILARES
           </h2>

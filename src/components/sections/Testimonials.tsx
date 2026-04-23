@@ -72,7 +72,7 @@ export default function Testimonials() {
   };
 
   return (
-    <section id="testimonios" className="section-padding bg-brand-gray">
+    <section id="testimonios" className="section-padding relative">
       <div className="container-custom">
         {/* Section title */}
         <motion.div
@@ -82,6 +82,13 @@ export default function Testimonials() {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <span className="h-px w-10 bg-[#8f0000] flex-none" />
+            <p className="font-bebas text-white text-sm uppercase tracking-[0.3em]">
+              Resultados reales
+            </p>
+            <span className="h-px w-10 bg-[#8f0000] flex-none" />
+          </div>
           <h2 className="heading-lg text-center text-white">
             LO QUE DICEN NUESTROS CLIENTES
           </h2>
