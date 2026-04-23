@@ -387,8 +387,8 @@ export default function Hero({ onOpenForm }: HeroProps) {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="font-barlow font-black text-2xl sm:text-3xl md:text-5xl text-white mb-10"
           >
-            VE POR QUÉ 600+ MARCAS
-            NOS ELIGEN
+            VE POR QUÉ <span className="text-brand-beige">600+ MARCAS</span>
+            {" "}NOS ELIGEN
           </motion.h2>
 
           {/* Brand result cards — stagger entrance */}

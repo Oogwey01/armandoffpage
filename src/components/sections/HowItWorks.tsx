@@ -167,7 +167,7 @@ export default function HowItWorks() {
             </p>
             <span className="h-px w-10 bg-[#8f0000] flex-none" />
           </div>
-          <h2 className="heading-lg text-white">COMO FUNCIONA</h2>
+          <h2 className="heading-lg text-white">COMO <span className="text-brand-beige">FUNCIONA</span></h2>
           <div className="w-20 h-1 bg-brand-beige mx-auto mt-4" />
           <p className="body-text max-w-2xl mx-auto mt-6">
             Te ayudaremos a implementar un sistema de crecimiento completo basado en anuncios de Facebook, anuncios de TikTok, tienda de TikTok, optimización de la tasa de conversión de Shopify, correo electrónico/SMS y mucho más.

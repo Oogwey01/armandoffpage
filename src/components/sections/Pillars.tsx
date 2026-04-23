@@ -47,7 +47,7 @@ export default function Pillars({ onOpenForm }: PillarsProps) {
             <span className="h-px w-10 bg-[#8f0000] flex-none" />
           </div>
           <h2 className="heading-lg text-center text-white">
-            NUESTROS PILARES
+            NUESTROS <span className="text-brand-beige">PILARES</span>
           </h2>
           <div className="w-20 h-1 bg-brand-beige mx-auto mt-4 mb-12" />
         </motion.div>

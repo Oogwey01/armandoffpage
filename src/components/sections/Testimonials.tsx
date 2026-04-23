@@ -90,7 +90,7 @@ export default function Testimonials() {
             <span className="h-px w-10 bg-[#8f0000] flex-none" />
           </div>
           <h2 className="heading-lg text-center text-white">
-            LO QUE DICEN NUESTROS CLIENTES
+            LO QUE DICEN NUESTROS <span className="text-brand-beige">CLIENTES</span>
           </h2>
           <div className="w-20 h-1 bg-brand-beige mx-auto mt-4 mb-12" />
         </motion.div>

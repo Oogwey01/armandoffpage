@@ -17,7 +17,7 @@ interface ShowcaseModule {
 
 const MODULES: readonly ShowcaseModule[] = [
   {
-    src: "/images/crms/showcase/01-pipeline.webp",
+    src: "/images/crms/showcase/01-pipeline.svg",
     label: "Pipeline de Ventas",
     category: "VENTAS",
     title: "Pipeline de Ventas",
@@ -25,7 +25,7 @@ const MODULES: readonly ShowcaseModule[] = [
       "Tablero kanban por etapa con tiempos, responsables y alertas de estancamiento.",
   },
   {
-    src: "/images/crms/showcase/02-dashboard.webp",
+    src: "/images/crms/showcase/02-dashboard.svg",
     label: "Dashboard Ejecutivo",
     category: "DATOS",
     title: "Dashboard Ejecutivo",
@@ -33,7 +33,7 @@ const MODULES: readonly ShowcaseModule[] = [
       "KPIs de ventas, retención y CAC en tiempo real, segmentados por canal.",
   },
   {
-    src: "/images/crms/showcase/03-automation.webp",
+    src: "/images/crms/showcase/03-automation.svg",
     label: "Automatización de Flujos",
     category: "AUTOMATIZACIÓN",
     title: "Automatización de Flujos",
@@ -41,7 +41,7 @@ const MODULES: readonly ShowcaseModule[] = [
       "Follow-ups, recuperación de carrito y alertas internas sin intervención manual.",
   },
   {
-    src: "/images/crms/showcase/04-leads.webp",
+    src: "/images/crms/showcase/04-leads.svg",
     label: "Captura y Segmentación",
     category: "VENTAS",
     title: "Captura y Segmentación",
@@ -49,7 +49,7 @@ const MODULES: readonly ShowcaseModule[] = [
       "Formularios, landing y scoring automático para priorizar los leads correctos.",
   },
   {
-    src: "/images/crms/showcase/05-reports.webp",
+    src: "/images/crms/showcase/05-reports.svg",
     label: "Reportes Personalizados",
     category: "DATOS",
     title: "Reportes Personalizados",
@@ -57,7 +57,7 @@ const MODULES: readonly ShowcaseModule[] = [
       "Reportes que responden tus preguntas reales, no los que vienen de fábrica.",
   },
   {
-    src: "/images/crms/showcase/06-integrations.webp",
+    src: "/images/crms/showcase/06-integrations.svg",
     label: "Integraciones",
     category: "INTEGRACIÓN",
     title: "Integraciones Nativas",

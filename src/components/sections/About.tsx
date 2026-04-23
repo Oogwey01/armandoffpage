@@ -92,7 +92,7 @@ export default function About() {
               <span className="h-px w-10 bg-[#8f0000] flex-none" />
             </div>
             <h2 className="font-barlow font-black text-2xl sm:text-3xl md:text-4xl text-white leading-tight mb-4">
-              &ldquo;No gestionamos tu negocio desde una oficina teórica&rdquo;
+              &ldquo;No gestionamos tu negocio desde una <span className="text-brand-beige">oficina teórica</span>&rdquo;
             </h2>
             <p className="font-montserrat text-sm sm:text-base text-gray-400 font-light leading-relaxed mb-10">
               Todo lo que aplicamos en tu marca lo operamos primero en la nuestra. Estos son los datos reales de FRESA FIT:
