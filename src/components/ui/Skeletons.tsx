@@ -114,14 +114,11 @@ export function VideoShowcaseSkeleton() {
 
 export function BrandLogosSkeleton() {
   return (
-    <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16 bg-brand-gray border-y border-white/5">
-      <div className="container-custom text-center mb-8">
-        <Shimmer className="h-4 w-56 mx-auto" />
-      </div>
-      <div className="flex gap-12 justify-center">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <Shimmer key={i} className="h-12 w-28 shrink-0" />
-        ))}
+    <section className="px-4 sm:px-6 lg:px-8 py-14 md:py-20 border-y border-white/5">
+      <div className="container-custom text-center max-w-3xl mx-auto space-y-4">
+        <Shimmer className="h-3 w-48 mx-auto" />
+        <Shimmer className="h-10 w-80 mx-auto" />
+        <Shimmer className="h-4 w-96 mx-auto" />
       </div>
     </section>
   );

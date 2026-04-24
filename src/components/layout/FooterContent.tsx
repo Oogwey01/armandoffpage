@@ -293,7 +293,7 @@ export function FooterContent({ leadMagnet = DEFAULT_LEAD_MAGNET }: FooterConten
               </li>
               <li>
                 <a
-                  href="https://wa.me/526621000000"
+                  href="https://wa.me/526623160125"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-bebas text-sm text-white/70 hover:text-brand-beige transition-colors tracking-wide"

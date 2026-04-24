@@ -426,7 +426,7 @@ export function PricingComparison({ onCta }: PricingComparisonProps) {
         {/* WhatsApp CTA */}
         <div className="flex justify-center mt-12 md:mt-16">
           <a
-            href="https://wa.me/526621000000"
+            href="https://wa.me/526623160125"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-[#25D366] text-white font-bebas font-bold text-base uppercase tracking-wide px-10 sm:px-16 py-4 rounded-xl hover:bg-[#20bd5a] hover:scale-[1.02] transition-all"

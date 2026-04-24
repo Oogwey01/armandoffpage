@@ -25,39 +25,37 @@ interface StatItem {
 const STATS: StatItem[] = [
   {
     label: "ROAS promedio",
-    end: 5.2,
-    decimals: 1,
+    end: 5.49,
+    decimals: 2,
     suffix: "x",
-    desc: "Retorno sobre inversión publicitaria",
+    desc: "Retorno sobre inversión publicitaria en Meta Ads",
     chart: [20, 35, 30, 55, 60, 75, 90],
     comparison: "vs 2.1x promedio del sector",
     highlight: true,
   },
   {
-    label: "Alcance total",
-    end: 3.8,
+    label: "Ventas totales",
+    end: 48.6,
     decimals: 1,
+    prefix: "$",
     suffix: "M+",
-    desc: "Personas alcanzadas en Meta y TikTok",
+    desc: "Valor generado en Meta Ads + Mercado Libre",
     chart: [15, 25, 40, 38, 55, 70, 85],
-    comparison: "vs 800K promedio",
+    comparison: "$18.9M Meta + $29.7M ML",
   },
   {
-    label: "Impresiones",
-    end: 12,
-    suffix: "M+",
-    desc: "Views acumulados del contenido",
+    label: "Órdenes generadas",
+    end: 44117,
+    desc: "Compras acumuladas entre ambas plataformas",
     chart: [10, 20, 30, 50, 65, 80, 95],
-    comparison: "vs 2M promedio",
+    comparison: "12,860 Meta + 31,257 ML",
   },
   {
-    label: "CTR promedio",
-    end: 4.8,
-    decimals: 1,
-    suffix: "%",
-    desc: "Sobre el benchmark del sector",
+    label: "Unidades vendidas",
+    end: 31263,
+    desc: "Unidades vendidas en Mercado Libre",
     chart: [30, 40, 35, 55, 65, 70, 82],
-    comparison: "vs 1.2% promedio",
+    comparison: "1.57M visitas · MercadoLíder Platinum",
   },
 ];
 
@@ -66,9 +64,9 @@ const TIMELINE = [
   { month: "Ene", value: 18, detail: "Inicio de campañas" },
   { month: "Feb", value: 32, detail: "+78% alcance" },
   { month: "Mar", value: 45, detail: "Optimización creativos" },
-  { month: "Abr", value: 58, detail: "ROAS 4.1x" },
+  { month: "Abr", value: 58, detail: "ROAS 4.3x" },
   { month: "May", value: 72, detail: "+155% impresiones" },
-  { month: "Jun", value: 88, detail: "ROAS 5.2x" },
+  { month: "Jun", value: 88, detail: "ROAS 5.49x" },
   { month: "Jul", value: 96, detail: "Pico histórico" },
 ];
 
@@ -225,8 +223,8 @@ export function StatsSection() {
               PROPIA MARCA.</span>
             </h2>
             <p className="font-bebas text-sm md:text-base text-gray-400 font-light max-w-2xl mb-6 tracking-wide">
-              Estadísticas de alcances y ROAS reales de FRESA FIT — probado con
-              presupuesto propio en Meta Ads y TikTok.
+              Estadísticas de ventas y ROAS reales de FRESA FIT — probado con
+              presupuesto propio en Meta Ads y Mercado Libre.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">

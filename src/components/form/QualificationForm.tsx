@@ -48,6 +48,7 @@ const ADS_INVESTMENT_OPTIONS = [
   "$15K-$50K MXN",
   "$50K-$150K MXN",
   "$150K+ MXN",
+  "Prefiero no decirlo",
 ] as const;
 
 const MONTHLY_REVENUE_OPTIONS = [
@@ -57,6 +58,7 @@ const MONTHLY_REVENUE_OPTIONS = [
   "$50K-$150K MXN",
   "$150K-$500K MXN",
   "$500K+ MXN",
+  "Prefiero no decirlo",
 ] as const;
 
 const START_WHEN_OPTIONS = [

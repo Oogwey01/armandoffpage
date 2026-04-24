@@ -12,7 +12,7 @@ interface FloatingActionsProps {
 
 // Botones flotantes — WhatsApp (siempre visible) + Scroll to top (aparece tras 50vh)
 export function FloatingActions({
-  whatsappNumber = "526621000000",
+  whatsappNumber = "526623160125",
   whatsappMessage = "Hola, quiero saber más sobre los paquetes de contenido",
 }: FloatingActionsProps) {
   const [showScrollTop, setShowScrollTop] = useState(false);

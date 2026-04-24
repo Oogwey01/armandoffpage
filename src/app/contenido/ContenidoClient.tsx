@@ -227,6 +227,9 @@ export default function ContenidoClient() {
         <VideoShowcase />
 
         <SectionDivider />
+        <PricingComparison onCta={open} />
+
+        <SectionDivider />
         {/* ── Por qué tiene sentido ── */}
         <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 overflow-hidden">
           <AnimateOnScroll className="relative z-10 container-custom">
@@ -315,9 +318,6 @@ export default function ContenidoClient() {
             </div>
           </AnimateOnScroll>
         </section>
-
-        <SectionDivider />
-        <PricingComparison onCta={open} />
 
         <SectionDivider />
         {/* ── ¿Es para ti? ── */}
