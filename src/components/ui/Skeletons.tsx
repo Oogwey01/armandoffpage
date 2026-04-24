@@ -114,7 +114,7 @@ export function VideoShowcaseSkeleton() {
 
 export function BrandLogosSkeleton() {
   return (
-    <section className="px-4 sm:px-6 lg:px-8 py-14 md:py-20 border-y border-white/5">
+    <section className="px-4 sm:px-6 lg:px-8 py-20 md:py-28 border-y border-white/5">
       <div className="container-custom text-center max-w-3xl mx-auto space-y-4">
         <Shimmer className="h-3 w-48 mx-auto" />
         <Shimmer className="h-10 w-80 mx-auto" />

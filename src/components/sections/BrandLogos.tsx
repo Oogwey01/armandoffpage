@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import { AnimatedSection } from "@/components/ui/content/AnimatedSection";
 
 interface FloatingLogo {
@@ -20,153 +19,85 @@ interface FloatingLogo {
   // Amplitud de movimiento flotante (px)
   yRange: number;
   xRange: number;
-  // Desplazamiento por scroll (px) — cantidad total de movimiento de arriba a abajo del viewport
-  scrollY: number;
-  scrollX: number;
 }
 
+// Layout: 3 logos arriba + 3 abajo distribuidos uniformemente
+// Todos dentro del rango seguro 14%-86% horizontal para no salirse en mobile
+// Todos los SVGs usan viewBox 24x24 y mismas clases de tamaño para consistencia visual
 const LOGOS: FloatingLogo[] = [
   {
-    src: "/images/logos/meta-ads.png",
-    alt: "Meta Ads",
+    src: "/images/logos/meta.svg",
+    alt: "Meta",
     top: "20%",
-    left: "10%",
-    sizeClass: "w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16",
+    left: "14%",
+    sizeClass: "w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20",
     duration: 7,
     delay: 0,
     yRange: 10,
     xRange: 6,
-    scrollY: -180,
-    scrollX: -40,
   },
   {
-    src: "/images/logos/Google_Ads_logo.png",
+    src: "/images/logos/facebook.svg",
+    alt: "Facebook",
+    top: "20%",
+    left: "50%",
+    sizeClass: "w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20",
+    duration: 7.5,
+    delay: 1.6,
+    yRange: 10,
+    xRange: 5,
+  },
+  {
+    src: "/images/logos/google-ads.svg",
     alt: "Google Ads",
-    top: "18%",
-    left: "88%",
-    sizeClass: "w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16",
+    top: "20%",
+    left: "86%",
+    sizeClass: "w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20",
     duration: 6.5,
     delay: 1.2,
     yRange: 8,
-    xRange: 8,
-    scrollY: 160,
-    scrollX: 50,
+    xRange: 6,
   },
   {
-    src: "/images/logos/instagram.png",
+    src: "/images/logos/instagram.svg",
     alt: "Instagram",
-    top: "78%",
+    top: "82%",
     left: "14%",
-    sizeClass: "w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14",
+    sizeClass: "w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20",
     duration: 8,
     delay: 0.8,
     yRange: 12,
     xRange: 4,
-    scrollY: 140,
-    scrollX: -60,
   },
   {
-    src: "/images/logos/tiktokADS.png",
-    alt: "TikTok Ads",
-    top: "82%",
-    left: "86%",
-    sizeClass: "w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14",
-    duration: 5.5,
-    delay: 2,
-    yRange: 8,
-    xRange: 10,
-    scrollY: -200,
-    scrollX: 70,
-  },
-  {
-    src: "/images/logos/whatsapp.webp",
+    src: "/images/logos/whatsapp.svg",
     alt: "WhatsApp",
-    top: "50%",
-    left: "92%",
-    sizeClass: "w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14",
+    top: "82%",
+    left: "50%",
+    sizeClass: "w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20",
     duration: 6,
     delay: 0.4,
     yRange: 10,
+    xRange: 5,
+  },
+  {
+    src: "/images/logos/tiktok.svg",
+    alt: "TikTok",
+    top: "82%",
+    left: "86%",
+    sizeClass: "w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20",
+    duration: 5.5,
+    delay: 2,
+    yRange: 8,
     xRange: 6,
-    scrollY: 120,
-    scrollX: -80,
   },
 ];
 
-interface FloatingLogoItemProps {
-  logo: FloatingLogo;
-  index: number;
-  scrollYProgress: MotionValue<number>;
-}
-
-function FloatingLogoItem({ logo, index, scrollYProgress }: FloatingLogoItemProps) {
-  // Desplazamiento parallax controlado por scroll — de -scrollY a +scrollY
-  const scrollTranslateY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [-logo.scrollY, logo.scrollY]
-  );
-  const scrollTranslateX = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [-logo.scrollX, logo.scrollX]
-  );
-
-  return (
-    <motion.div
-      className="absolute -translate-x-1/2 -translate-y-1/2 opacity-50 md:opacity-60 will-change-transform"
-      style={{
-        top: logo.top,
-        left: logo.left,
-        y: scrollTranslateY,
-        x: scrollTranslateX,
-      }}
-      initial={{ opacity: 0, scale: 0.7 }}
-      whileInView={{ opacity: 0.5, scale: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{
-        duration: 0.6,
-        delay: index * 0.12,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-    >
-      <motion.div
-        className={`relative flex items-center justify-center ${logo.sizeClass}`}
-        animate={{
-          y: [0, -logo.yRange, 0, logo.yRange * 0.5, 0],
-          x: [0, logo.xRange * 0.5, 0, -logo.xRange * 0.5, 0],
-        }}
-        transition={{
-          duration: logo.duration,
-          delay: logo.delay,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      >
-        <Image
-          src={logo.src}
-          alt={logo.alt}
-          fill
-          sizes="(max-width: 640px) 48px, (max-width: 768px) 56px, 64px"
-          className="object-contain drop-shadow-[0_6px_20px_rgba(200,157,105,0.15)]"
-        />
-      </motion.div>
-    </motion.div>
-  );
-}
-
 export function BrandLogos() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
   return (
     <section
-      ref={sectionRef}
       aria-label="Gestión de pauta publicitaria"
-      className="relative px-4 sm:px-6 lg:px-8 py-14 md:py-20 border-y border-white/5 overflow-hidden"
+      className="relative px-4 sm:px-6 lg:px-8 py-20 md:py-28 border-y border-white/5 overflow-hidden"
     >
       {/* Dot pattern de fondo */}
       <div
@@ -202,15 +133,44 @@ export function BrandLogos() {
       />
 
       <div className="relative container-custom">
-        {/* Canvas de logos flotantes — detrás del texto con parallax scroll */}
+        {/* Canvas de logos flotantes — detrás del texto */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           {LOGOS.map((logo, i) => (
-            <FloatingLogoItem
+            <motion.div
               key={logo.alt}
-              logo={logo}
-              index={i}
-              scrollYProgress={scrollYProgress}
-            />
+              className="absolute -translate-x-1/2 -translate-y-1/2 opacity-50 md:opacity-60"
+              style={{ top: logo.top, left: logo.left }}
+              initial={{ opacity: 0, scale: 0.7 }}
+              whileInView={{ opacity: 0.5, scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.12,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              <motion.div
+                className={`relative flex items-center justify-center ${logo.sizeClass}`}
+                animate={{
+                  y: [0, -logo.yRange, 0, logo.yRange * 0.5, 0],
+                  x: [0, logo.xRange * 0.5, 0, -logo.xRange * 0.5, 0],
+                }}
+                transition={{
+                  duration: logo.duration,
+                  delay: logo.delay,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  fill
+                  sizes="(max-width: 640px) 64px, (max-width: 768px) 80px, 96px"
+                  className="object-contain drop-shadow-[0_6px_20px_rgba(200,157,105,0.15)]"
+                />
+              </motion.div>
+            </motion.div>
           ))}
         </div>
 
@@ -231,8 +191,8 @@ export function BrandLogos() {
 
         {/* Lista textual accesible — visible solo para lectores de pantalla */}
         <p className="sr-only">
-          Plataformas que gestionamos: Meta Ads, Instagram, WhatsApp, TikTok Ads
-          y Google Ads.
+          Plataformas que gestionamos: Meta, Facebook, Instagram, WhatsApp,
+          TikTok y Google Ads.
         </p>
       </div>
     </section>
