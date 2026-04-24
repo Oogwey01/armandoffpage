@@ -44,7 +44,7 @@ export const TIERS: Tier[] = [
     videoCount: 4,
     images: [
       {
-        text: "6 composiciones visuales avanzadas listas para ads o feed",
+        text: "9 composiciones visuales avanzadas listas para ads o feed",
         category: "image",
       },
     ],
@@ -86,11 +86,11 @@ export const TIERS: Tier[] = [
     priceValue: 18900,
     diyCost: 33000,
     totalPieces: "22 piezas de contenido profesional al mes",
-    imageCount: 14,
+    imageCount: 21,
     videoCount: 8,
     images: [
       {
-        text: "14 composiciones visuales avanzadas listas para ads o feed",
+        text: "21 composiciones visuales avanzadas listas para ads o feed",
         category: "image",
       },
     ],
@@ -142,11 +142,11 @@ export const TIERS: Tier[] = [
     priceValue: 34900,
     diyCost: 66000,
     totalPieces: "44 piezas de contenido profesional al mes",
-    imageCount: 28,
+    imageCount: 42,
     videoCount: 16,
     images: [
       {
-        text: "28 composiciones visuales avanzadas listas para ads o feed",
+        text: "42 composiciones visuales avanzadas listas para ads o feed",
         category: "image",
       },
     ],

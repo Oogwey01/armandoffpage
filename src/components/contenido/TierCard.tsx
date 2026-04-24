@@ -231,21 +231,26 @@ interface TierCardProps {
   tier: Tier;
   flatTop?: boolean;
   showRibbon?: boolean;
-  onCta: () => void;
   onOpenROI?: (tierId: Tier["id"]) => void;
+}
+
+// Construye URL de WhatsApp con mensaje pre-cargado pidiendo empresa y necesidad
+export function buildWhatsAppUrl(tierName: string): string {
+  const message = `Hola, me interesa el plan ${tierName}. Quisiera más información.\n\nMi empresa: \nMi necesidad: `;
+  return `https://wa.me/526623160125?text=${encodeURIComponent(message)}`;
 }
 
 export function TierCard({
   tier,
   flatTop = false,
   showRibbon = true,
-  onCta,
   onOpenROI,
 }: TierCardProps) {
   const isHighlighted = !!tier.highlight;
   const [hovered, setHovered] = useState(false);
 
   const radiusClasses = flatTop ? "rounded-b-2xl" : "rounded-2xl";
+  const whatsappUrl = buildWhatsAppUrl(tier.name);
 
   return (
     <div className="relative h-full">
@@ -359,16 +364,18 @@ export function TierCard({
             ))}
           </motion.ul>
 
-          {/* CTA diferenciado por tier */}
-          <motion.button
-            onClick={onCta}
+          {/* CTA diferenciado por tier — abre WhatsApp con mensaje pre-cargado */}
+          <motion.a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{
               scale: 1.03,
               boxShadow: "0 0 28px 0 rgba(200,157,105,0.55)",
             }}
             whileTap={{ scale: 0.98 }}
             transition={{ duration: 0.25, ease: ANIMATION_EASE }}
-            className="mt-auto relative w-full bg-brand-beige text-brand-black font-bebas font-bold text-sm uppercase tracking-normal py-3.5 rounded-full hover:bg-brand-beige-light transition-colors [will-change:transform]"
+            className="mt-auto relative w-full bg-brand-beige text-brand-black font-bebas font-bold text-sm uppercase tracking-normal py-3.5 rounded-full hover:bg-brand-beige-light transition-colors [will-change:transform] inline-flex items-center justify-center"
           >
             <span className="inline-flex items-center gap-2 whitespace-nowrap">
               {tier.ctaLabel}
@@ -380,7 +387,7 @@ export function TierCard({
                 →
               </motion.span>
             </span>
-          </motion.button>
+          </motion.a>
 
           {/* Micro-copy + link al ROI calculator */}
           <p className="mt-3 text-center font-bebas text-[11px] text-gray-400 tracking-wide">

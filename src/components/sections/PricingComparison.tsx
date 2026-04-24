@@ -3,15 +3,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, type ReactNode } from "react";
 import { TIERS, type Tier, type TierId } from "@/lib/tiers";
-import { TierCard } from "@/components/contenido/TierCard";
+import { TierCard, buildWhatsAppUrl } from "@/components/contenido/TierCard";
 import { ROICalculator } from "@/components/ui/ROICalculator";
 import { ANIMATION_EASE } from "@/lib/animations/variants";
 
 type ViewMode = "cards" | "table";
-
-interface PricingComparisonProps {
-  onCta: () => void;
-}
 
 // Feature destacada con tooltip
 interface PopularFeature {
@@ -175,10 +171,8 @@ function InfoTooltip({ text }: { text: string }) {
 }
 
 function ComparisonTable({
-  onCta,
   onOpenROI,
 }: {
-  onCta: () => void;
   onOpenROI: (tier: TierId) => void;
 }) {
   const [hoveredCol, setHoveredCol] = useState<number | null>(null);
@@ -241,13 +235,14 @@ function ComparisonTable({
                     t.highlight ? "bg-brand-beige/5" : ""
                   } ${isHovered ? "bg-brand-beige/10" : ""}`}
                 >
-                  <button
-                    type="button"
-                    onClick={onCta}
-                    className="w-full bg-brand-beige text-brand-black font-bebas font-bold text-xs uppercase tracking-wide py-2.5 rounded-full hover:bg-brand-beige-light hover:scale-[1.02] transition-all"
+                  <a
+                    href={buildWhatsAppUrl(t.name)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full bg-brand-beige text-brand-black font-bebas font-bold text-xs uppercase tracking-wide py-2.5 rounded-full hover:bg-brand-beige-light hover:scale-[1.02] transition-all"
                   >
                     {t.ctaLabel} →
-                  </button>
+                  </a>
                   <button
                     type="button"
                     onClick={() => onOpenROI(t.id)}
@@ -313,7 +308,7 @@ function CategoryGroup({
   );
 }
 
-export function PricingComparison({ onCta }: PricingComparisonProps) {
+export function PricingComparison() {
   const [view, setView] = useState<ViewMode>("cards");
   const [activeTier, setActiveTier] = useState<number>(1);
   const [roiOpen, setRoiOpen] = useState(false);
@@ -414,11 +409,10 @@ export function PricingComparison({ onCta }: PricingComparisonProps) {
               <CardsView
                 activeTier={activeTier}
                 setActiveTier={setActiveTier}
-                onCta={onCta}
                 onOpenROI={openROI}
               />
             ) : (
-              <ComparisonTable onCta={onCta} onOpenROI={openROI} />
+              <ComparisonTable onOpenROI={openROI} />
             )}
           </motion.div>
         </AnimatePresence>
@@ -455,12 +449,10 @@ export function PricingComparison({ onCta }: PricingComparisonProps) {
 function CardsView({
   activeTier,
   setActiveTier,
-  onCta,
   onOpenROI,
 }: {
   activeTier: number;
   setActiveTier: (i: number) => void;
-  onCta: () => void;
   onOpenROI: (tier: TierId) => void;
 }) {
   return (
@@ -492,7 +484,6 @@ function CardsView({
           tier={TIERS[activeTier]}
           flatTop
           showRibbon={false}
-          onCta={onCta}
           onOpenROI={onOpenROI}
         />
       </div>
@@ -503,7 +494,6 @@ function CardsView({
           <TierCard
             key={t.id}
             tier={t}
-            onCta={onCta}
             onOpenROI={onOpenROI}
           />
         ))}

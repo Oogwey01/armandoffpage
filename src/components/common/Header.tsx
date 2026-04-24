@@ -8,9 +8,14 @@ import { NAV_LINKS } from "@/lib/constants";
 
 interface HeaderProps {
   onOpenForm: () => void;
+  // Override opcional del CTA — si se provee, renderiza un link en lugar del botón "Agendar Cita"
+  cta?: {
+    label: string;
+    href: string;
+  };
 }
 
-export default function Header({ onOpenForm }: HeaderProps) {
+export default function Header({ onOpenForm, cta }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -111,14 +116,24 @@ export default function Header({ onOpenForm }: HeaderProps) {
             </nav>
 
             {/* RIGHT: CTA — compact on mobile, full on desktop */}
-            <button
-              onClick={onOpenForm}
-              className="flex-shrink-0 flex items-center gap-1.5 rounded-xl bg-[#C89D69] text-black font-bold uppercase transition-colors duration-200 hover:bg-[#B08A55]
-                         px-3 py-2 text-xs lg:px-8 lg:py-2.5 lg:text-base"
-            >
-              <span>Agendar Cita</span>
-              <span className="text-[9px] lg:text-[10px] font-bold opacity-75 tracking-widest">GRATIS</span>
-            </button>
+            {cta ? (
+              <a
+                href={cta.href}
+                className="flex-shrink-0 flex items-center rounded-xl bg-[#C89D69] text-black font-bold uppercase transition-colors duration-200 hover:bg-[#B08A55]
+                           px-3 py-2 text-xs lg:px-8 lg:py-2.5 lg:text-base"
+              >
+                {cta.label}
+              </a>
+            ) : (
+              <button
+                onClick={onOpenForm}
+                className="flex-shrink-0 flex items-center gap-1.5 rounded-xl bg-[#C89D69] text-black font-bold uppercase transition-colors duration-200 hover:bg-[#B08A55]
+                           px-3 py-2 text-xs lg:px-8 lg:py-2.5 lg:text-base"
+              >
+                <span>Agendar Cita</span>
+                <span className="text-[9px] lg:text-[10px] font-bold opacity-75 tracking-widest">GRATIS</span>
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -184,19 +199,32 @@ export default function Header({ onOpenForm }: HeaderProps) {
 
               {/* Drawer CTA */}
               <div className="px-6 mt-auto pb-10">
-                <motion.button
-                  onClick={() => {
-                    closeMobileMenu();
-                    onOpenForm();
-                  }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 + NAV_LINKS.length * 0.05 }}
-                  className="w-full flex flex-col items-center rounded-xl bg-brand-beige px-6 py-3 text-sm font-bold text-brand-black hover:bg-brand-beige-light transition-colors duration-200"
-                >
-                  <span>Agendar Cita</span>
-                  <span className="text-[10px] font-normal opacity-60 leading-tight tracking-widest">GRATIS</span>
-                </motion.button>
+                {cta ? (
+                  <motion.a
+                    href={cta.href}
+                    onClick={closeMobileMenu}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.1 + NAV_LINKS.length * 0.05 }}
+                    className="w-full flex items-center justify-center rounded-xl bg-brand-beige px-6 py-3 text-sm font-bold text-brand-black hover:bg-brand-beige-light transition-colors duration-200"
+                  >
+                    {cta.label}
+                  </motion.a>
+                ) : (
+                  <motion.button
+                    onClick={() => {
+                      closeMobileMenu();
+                      onOpenForm();
+                    }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.1 + NAV_LINKS.length * 0.05 }}
+                    className="w-full flex flex-col items-center rounded-xl bg-brand-beige px-6 py-3 text-sm font-bold text-brand-black hover:bg-brand-beige-light transition-colors duration-200"
+                  >
+                    <span>Agendar Cita</span>
+                    <span className="text-[10px] font-normal opacity-60 leading-tight tracking-widest">GRATIS</span>
+                  </motion.button>
+                )}
               </div>
             </motion.div>
           </>

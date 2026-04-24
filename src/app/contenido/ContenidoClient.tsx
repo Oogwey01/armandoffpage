@@ -90,7 +90,7 @@ export default function ContenidoClient() {
   return (
     <>
       <ScrollProgress />
-      <Header onOpenForm={open} />
+      <Header onOpenForm={open} cta={{ label: "Ver paquetes", href: "#paquetes" }} />
       <main className="relative bg-brand-black min-h-screen">
         {/* ── Fondo único continuo ── */}
         <div
@@ -227,7 +227,7 @@ export default function ContenidoClient() {
         <VideoShowcase />
 
         <SectionDivider />
-        <PricingComparison onCta={open} />
+        <PricingComparison />
 
         <SectionDivider />
         {/* ── Por qué tiene sentido ── */}
