@@ -144,7 +144,7 @@ export default function ContenidoClient() {
               className="flex items-center justify-center gap-3 mb-6"
             >
               <span className="h-px w-8 bg-[#8f0000] flex-none" />
-              <p className="font-bebas text-white text-xs uppercase tracking-[0.3em]">
+              <p className="font-montserrat text-white text-xs uppercase tracking-[0.3em]">
                 El problema real
               </p>
               <span className="h-px w-8 bg-[#8f0000] flex-none" />
@@ -170,7 +170,7 @@ export default function ContenidoClient() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="font-bebas text-gray-400 text-center text-base md:text-lg mb-10 md:mb-12 max-w-xl mx-auto font-light tracking-wide"
+              className="font-montserrat text-gray-400 text-center text-base md:text-lg mb-10 md:mb-12 max-w-xl mx-auto font-light tracking-wide"
             >
               Cada día te está costando clientes sin que te des cuenta.
             </motion.p>
@@ -193,21 +193,21 @@ export default function ContenidoClient() {
                 >
                   {/* Label row */}
                   <div className="flex items-center justify-between mb-4">
-                    <span className="font-bebas text-xs sm:text-sm tracking-[0.3em] uppercase text-brand-beige/70">
+                    <span className="font-montserrat text-xs sm:text-sm tracking-[0.3em] uppercase text-brand-beige/70">
                       Problema {String(index + 1).padStart(2, "0")}
                     </span>
                     <span className="text-brand-beige/25 text-xs tracking-widest">· · ·</span>
                   </div>
 
                   {/* Problem text */}
-                  <p className="font-bebas text-gray-300 text-base leading-relaxed relative z-10 tracking-wide">
+                  <p className="font-montserrat text-gray-300 text-base leading-relaxed relative z-10 tracking-wide">
                     {problem}
                   </p>
 
                   {/* Background number */}
                   <span
                     aria-hidden="true"
-                    className="font-bebas absolute bottom-2 right-3 text-[72px] sm:text-[88px] text-brand-beige/[0.06] leading-none select-none pointer-events-none"
+                    className="font-montserrat absolute bottom-2 right-3 text-[72px] sm:text-[88px] text-brand-beige/[0.06] leading-none select-none pointer-events-none"
                   >
                     {String(index + 1).padStart(2, "0")}
                   </span>
@@ -233,7 +233,7 @@ export default function ContenidoClient() {
         {/* ── Por qué tiene sentido ── */}
         <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 overflow-hidden">
           <AnimateOnScroll className="relative z-10 container-custom">
-            <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4">
+            <p className="font-montserrat font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4">
               POR QU&Eacute; TIENE SENTIDO
             </p>
 
@@ -242,7 +242,7 @@ export default function ContenidoClient() {
               <span className="text-brand-beige">RESOLVERLO SOLO</span>
             </h2>
 
-            <p className="font-bebas text-sm md:text-base text-gray-400 font-light text-center mb-10 md:mb-12 max-w-2xl mx-auto tracking-wide">
+            <p className="font-montserrat text-sm md:text-base text-gray-400 font-light text-center mb-10 md:mb-12 max-w-2xl mx-auto tracking-wide">
               Si hoy intentaras construir esto por tu cuenta, esto es lo que pagarías por pieza.
             </p>
 
@@ -251,10 +251,10 @@ export default function ContenidoClient() {
               {/* Por separado */}
               <div className="bg-white/[0.02] border border-white/10 rounded-2xl overflow-hidden">
                 <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10 bg-white/[0.02]">
-                  <span className="font-bebas font-bold text-[10px] tracking-[0.3em] uppercase bg-red-500/15 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full">
+                  <span className="font-montserrat font-bold text-[10px] tracking-[0.3em] uppercase bg-red-500/15 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full">
                     POR SEPARADO
                   </span>
-                  <p className="font-bebas font-bold text-sm tracking-[0.2em] uppercase text-gray-400">
+                  <p className="font-montserrat font-bold text-sm tracking-[0.2em] uppercase text-gray-400">
                     FREELANCERS
                   </p>
                 </div>
@@ -270,8 +270,8 @@ export default function ContenidoClient() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 shrink-0">
                         <CloseIcon className="w-3 h-3" />
                       </span>
-                      <p className="font-bebas font-bold text-sm text-gray-300 flex-1 tracking-wide">{service}</p>
-                      <span className={`font-bebas font-bold text-sm shrink-0 ${highlight ? "text-red-400/70 italic" : "text-red-400"}`}>
+                      <p className="font-montserrat font-bold text-sm text-gray-300 flex-1 tracking-wide">{service}</p>
+                      <span className={`font-montserrat font-bold text-sm shrink-0 ${highlight ? "text-red-400/70 italic" : "text-red-400"}`}>
                         {price}
                       </span>
                     </li>
@@ -282,18 +282,18 @@ export default function ContenidoClient() {
               {/* Con nosotros */}
               <div className="bg-white/[0.02] border border-brand-beige/30 rounded-2xl overflow-hidden">
                 <div className="flex items-center gap-3 px-5 py-4 border-b border-brand-beige/20 bg-brand-beige/[0.04]">
-                  <span className="font-bebas font-bold text-[10px] tracking-[0.3em] uppercase bg-brand-beige text-brand-black px-2.5 py-1 rounded-full">
+                  <span className="font-montserrat font-bold text-[10px] tracking-[0.3em] uppercase bg-brand-beige text-brand-black px-2.5 py-1 rounded-full">
                     CON NOSOTROS
                   </span>
-                  <p className="font-bebas font-bold text-sm tracking-[0.2em] uppercase text-brand-beige">
+                  <p className="font-montserrat font-bold text-sm tracking-[0.2em] uppercase text-brand-beige">
                     TODO INCLUIDO
                   </p>
                 </div>
                 <div className="px-5 py-5 border-b border-white/5 flex items-baseline gap-3">
-                  <p className="font-bebas font-black text-4xl sm:text-5xl text-brand-beige leading-none">
+                  <p className="font-montserrat font-black text-4xl sm:text-5xl text-brand-beige leading-none">
                     -$500
                   </p>
-                  <p className="font-bebas text-sm text-gray-400 font-light tracking-wide">
+                  <p className="font-montserrat text-sm text-gray-400 font-light tracking-wide">
                     por pieza
                   </p>
                 </div>
@@ -310,7 +310,7 @@ export default function ContenidoClient() {
                           <path d="M5 12l5 5L20 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </span>
-                      <p className="font-bebas font-bold text-sm text-white flex-1 tracking-wide">{feature}</p>
+                      <p className="font-montserrat font-bold text-sm text-white flex-1 tracking-wide">{feature}</p>
                     </li>
                   ))}
                 </ul>
@@ -323,7 +323,7 @@ export default function ContenidoClient() {
         {/* ── ¿Es para ti? ── */}
         <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 overflow-hidden">
           <AnimateOnScroll className="relative z-10 container-custom">
-            <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4">
+            <p className="font-montserrat font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4">
               &iquest;ES PARA TI?
             </p>
 
@@ -337,10 +337,10 @@ export default function ContenidoClient() {
               {/* Sí es para ti */}
               <div className="bg-white/[0.02] border border-brand-beige/30 rounded-2xl overflow-hidden">
                 <div className="flex items-center gap-3 px-5 py-4 border-b border-brand-beige/20 bg-brand-beige/[0.04]">
-                  <span className="font-bebas font-bold text-[10px] tracking-[0.3em] uppercase bg-brand-beige text-brand-black px-2.5 py-1 rounded-full">
+                  <span className="font-montserrat font-bold text-[10px] tracking-[0.3em] uppercase bg-brand-beige text-brand-black px-2.5 py-1 rounded-full">
                     SÍ
                   </span>
-                  <p className="font-bebas font-bold text-sm tracking-[0.2em] uppercase text-brand-beige">
+                  <p className="font-montserrat font-bold text-sm tracking-[0.2em] uppercase text-brand-beige">
                     ES PARA TI
                   </p>
                 </div>
@@ -358,8 +358,8 @@ export default function ContenidoClient() {
                         </svg>
                       </span>
                       <div className="flex-1">
-                        <p className="font-bebas font-bold text-sm text-white mb-0.5 tracking-wide">{label}</p>
-                        <p className="font-bebas text-sm text-gray-400 font-light leading-snug tracking-wide">{desc}</p>
+                        <p className="font-montserrat font-bold text-sm text-white mb-0.5 tracking-wide">{label}</p>
+                        <p className="font-montserrat text-sm text-gray-400 font-light leading-snug tracking-wide">{desc}</p>
                       </div>
                     </li>
                   ))}
@@ -369,10 +369,10 @@ export default function ContenidoClient() {
               {/* No es para ti */}
               <div className="bg-white/[0.02] border border-white/10 rounded-2xl overflow-hidden">
                 <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10 bg-white/[0.02]">
-                  <span className="font-bebas font-bold text-[10px] tracking-[0.3em] uppercase bg-white/10 text-gray-400 px-2.5 py-1 rounded-full">
+                  <span className="font-montserrat font-bold text-[10px] tracking-[0.3em] uppercase bg-white/10 text-gray-400 px-2.5 py-1 rounded-full">
                     NO
                   </span>
-                  <p className="font-bebas font-bold text-sm tracking-[0.2em] uppercase text-gray-400">
+                  <p className="font-montserrat font-bold text-sm tracking-[0.2em] uppercase text-gray-400">
                     ES PARA TI
                   </p>
                 </div>
@@ -387,8 +387,8 @@ export default function ContenidoClient() {
                         <CloseIcon className="w-3 h-3" />
                       </span>
                       <div className="flex-1">
-                        <p className="font-bebas font-bold text-sm text-gray-300 mb-0.5 tracking-wide">{label}</p>
-                        <p className="font-bebas text-sm text-gray-500 font-light leading-snug tracking-wide">{desc}</p>
+                        <p className="font-montserrat font-bold text-sm text-gray-300 mb-0.5 tracking-wide">{label}</p>
+                        <p className="font-montserrat text-sm text-gray-500 font-light leading-snug tracking-wide">{desc}</p>
                       </div>
                     </li>
                   ))}

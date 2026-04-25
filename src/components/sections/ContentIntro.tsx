@@ -59,7 +59,7 @@ export function ContentIntro() {
           className="flex items-center justify-center gap-3 mb-6"
         >
           <span className="h-px w-8 bg-[#8f0000] flex-none" />
-          <p className="font-bebas text-white text-xs uppercase tracking-[0.3em]">
+          <p className="font-montserrat text-white text-xs uppercase tracking-[0.3em]">
             Qué producimos
           </p>
           <span className="h-px w-8 bg-[#8f0000] flex-none" />
@@ -83,7 +83,7 @@ export function ContentIntro() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="font-bebas text-sm md:text-base text-gray-400 font-light text-center mb-12 md:mb-14 max-w-2xl mx-auto tracking-wide"
+          className="font-montserrat text-sm md:text-base text-gray-400 font-light text-center mb-12 md:mb-14 max-w-2xl mx-auto tracking-wide"
         >
           Cada formato cumple una función dentro de tu estrategia de paid media.
           Producimos los tres con el mismo criterio creativo.
@@ -100,7 +100,7 @@ export function ContentIntro() {
               <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 sm:p-7 hover:border-brand-beige/25 hover:bg-white/[0.06] transition-colors duration-300 h-full">
                 {/* Header: badge + icon */}
                 <div className="flex items-center justify-between mb-5">
-                  <span className="font-bebas font-bold text-[10px] tracking-[0.3em] uppercase bg-brand-beige/10 text-brand-beige border border-brand-beige/30 px-2.5 py-1 rounded-full">
+                  <span className="font-montserrat font-bold text-[10px] tracking-[0.3em] uppercase bg-brand-beige/10 text-brand-beige border border-brand-beige/30 px-2.5 py-1 rounded-full">
                     {type.badge}
                   </span>
                   <span className="text-brand-beige/60">{type.icon}</span>
@@ -112,14 +112,14 @@ export function ContentIntro() {
                 </h3>
 
                 {/* Description */}
-                <p className="font-bebas text-sm text-gray-400 font-light leading-relaxed tracking-wide">
+                <p className="font-montserrat text-sm text-gray-400 font-light leading-relaxed tracking-wide">
                   {type.description}
                 </p>
 
                 {/* Background number */}
                 <span
                   aria-hidden="true"
-                  className="font-bebas absolute bottom-2 right-3 text-[72px] text-brand-beige/[0.04] leading-none select-none pointer-events-none"
+                  className="font-montserrat absolute bottom-2 right-3 text-[72px] text-brand-beige/[0.04] leading-none select-none pointer-events-none"
                 >
                   {type.number}
                 </span>
@@ -136,7 +136,7 @@ export function ContentIntro() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="flex flex-col items-center gap-1.5 mt-10"
         >
-          <span className="font-bebas text-[9px] tracking-[0.3em] uppercase text-white/25">
+          <span className="font-montserrat text-[9px] tracking-[0.3em] uppercase text-white/25">
             Ver ejemplos
           </span>
           <motion.span

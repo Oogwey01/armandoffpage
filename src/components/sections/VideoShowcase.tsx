@@ -143,13 +143,13 @@ function StickyDeckCard({
         <div className="absolute inset-0 bg-gradient-to-t from-brand-black/80 via-transparent to-transparent pointer-events-none" />
 
         <div className="absolute top-3 left-3 z-10">
-          <span className="font-bebas font-bold text-[9px] tracking-[0.2em] uppercase bg-brand-beige text-brand-black px-2 py-0.5 rounded-full">
+          <span className="font-montserrat font-bold text-[9px] tracking-[0.2em] uppercase bg-brand-beige text-brand-black px-2 py-0.5 rounded-full">
             {item.badge}
           </span>
         </div>
 
         <div className="absolute bottom-4 left-3 right-3 z-10">
-          <p className="font-bebas font-bold text-xs text-white drop-shadow-lg tracking-wide">
+          <p className="font-montserrat font-bold text-xs text-white drop-shadow-lg tracking-wide">
             {item.label}
           </p>
         </div>
@@ -205,12 +205,12 @@ function MobileCard({ item, mediaType }: { item: DeckItem; mediaType: "video" | 
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-brand-black/80 via-transparent to-transparent pointer-events-none" />
         <div className="absolute top-3 left-3 z-10">
-          <span className="font-bebas font-bold text-[10px] tracking-[0.25em] uppercase bg-brand-beige text-brand-black px-2.5 py-1 rounded-full">
+          <span className="font-montserrat font-bold text-[10px] tracking-[0.25em] uppercase bg-brand-beige text-brand-black px-2.5 py-1 rounded-full">
             {item.badge}
           </span>
         </div>
         <div className="absolute bottom-4 left-3 right-3 z-10">
-          <p className="font-bebas font-bold text-sm text-white drop-shadow-md tracking-wide">{item.label}</p>
+          <p className="font-montserrat font-bold text-sm text-white drop-shadow-md tracking-wide">{item.label}</p>
         </div>
       </div>
     </div>
@@ -223,7 +223,7 @@ function DeckTitle({ eyebrow, heading, accent }: { eyebrow: string; heading: str
     <div className="text-center">
       <div className="flex items-center justify-center gap-2 mb-2">
         <span className="h-px w-6 bg-[#8f0000] flex-none" />
-        <p className="font-bebas text-white text-[10px] lg:text-xs uppercase tracking-[0.3em]">
+        <p className="font-montserrat text-white text-[10px] lg:text-xs uppercase tracking-[0.3em]">
           {eyebrow}
         </p>
         <span className="h-px w-6 bg-[#8f0000] flex-none" />
@@ -304,7 +304,7 @@ function MobileDeck({
           <MobileCard key={item.src} item={item} mediaType={mediaType} />
         ))}
       </div>
-      <p className="text-center font-bebas text-xs text-gray-500 mt-2 tracking-wide">
+      <p className="text-center font-montserrat text-xs text-gray-500 mt-2 tracking-wide">
         Desliza para ver más →
       </p>
     </div>
@@ -422,20 +422,20 @@ export function VideoShowcase() {
           {/* Footer — contadores */}
           <div className="relative z-10 flex-none flex px-6" style={{ height: FOOTER_H }}>
             <div className="w-1/3 flex items-center justify-between px-2">
-              <span className="font-bebas text-[9px] uppercase tracking-[0.25em] text-brand-beige/60">UGC</span>
-              <span className="font-bebas font-bold text-xs text-gray-500 tabular-nums tracking-widest">
+              <span className="font-montserrat text-[9px] uppercase tracking-[0.25em] text-brand-beige/60">UGC</span>
+              <span className="font-montserrat font-bold text-xs text-gray-500 tabular-nums tracking-widest">
                 <span className="text-brand-beige">{counter}</span>
               </span>
             </div>
             <div className="w-1/3 flex items-center justify-between px-2">
-              <span className="font-bebas text-[9px] uppercase tracking-[0.25em] text-brand-beige/60">Estáticos</span>
-              <span className="font-bebas font-bold text-xs text-gray-500 tabular-nums tracking-widest">
+              <span className="font-montserrat text-[9px] uppercase tracking-[0.25em] text-brand-beige/60">Estáticos</span>
+              <span className="font-montserrat font-bold text-xs text-gray-500 tabular-nums tracking-widest">
                 <span className="text-brand-beige">{counter}</span>
               </span>
             </div>
             <div className="w-1/3 flex items-center justify-between px-2">
-              <span className="font-bebas text-[9px] uppercase tracking-[0.25em] text-brand-beige/60">Producciones</span>
-              <span className="font-bebas font-bold text-xs text-gray-500 tabular-nums tracking-widest">
+              <span className="font-montserrat text-[9px] uppercase tracking-[0.25em] text-brand-beige/60">Producciones</span>
+              <span className="font-montserrat font-bold text-xs text-gray-500 tabular-nums tracking-widest">
                 <span className="text-brand-beige">{counter}</span>
               </span>
             </div>

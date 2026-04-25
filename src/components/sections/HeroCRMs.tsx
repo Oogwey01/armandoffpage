@@ -110,7 +110,7 @@ export function HeroCRMs({
           className="flex items-center justify-center gap-3 mb-6"
         >
           <span className="h-px w-10 bg-[#8f0000] flex-none" />
-          <p className="font-bebas text-white text-sm uppercase tracking-[0.3em]">
+          <p className="font-montserrat text-white text-sm uppercase tracking-[0.3em]">
             Sistemas a la medida
           </p>
           <span className="h-px w-10 bg-[#8f0000] flex-none" />
@@ -121,7 +121,7 @@ export function HeroCRMs({
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="font-bebas uppercase leading-[0.85] tracking-tight mb-8"
+          className="font-montserrat uppercase leading-[0.85] tracking-tight mb-8"
         >
           <motion.span
             variants={staggerItem}
@@ -155,11 +155,11 @@ export function HeroCRMs({
               key={label}
               className="flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-full px-5 py-2.5"
             >
-              <span className="font-bebas text-xl sm:text-2xl text-[#8f0000] leading-none">
+              <span className="font-montserrat text-xl sm:text-2xl text-[#8f0000] leading-none">
                 {num}
               </span>
               <span className="h-3 w-px bg-white/15" />
-              <span className="font-bebas text-xs uppercase tracking-widest text-gray-400 leading-none">
+              <span className="font-montserrat text-xs uppercase tracking-widest text-gray-400 leading-none">
                 {label}
               </span>
             </div>
@@ -171,7 +171,7 @@ export function HeroCRMs({
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.75, ease: ANIMATION_EASE }}
-          className="font-bebas text-base sm:text-lg text-gray-300 max-w-lg mx-auto mb-8 tracking-wide"
+          className="font-montserrat text-base sm:text-lg text-gray-300 max-w-lg mx-auto mb-8 tracking-wide"
         >
           Construimos el CRM que tu operación realmente necesita.
           Sin suscripciones infladas ni procesos genéricos.

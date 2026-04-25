@@ -175,7 +175,7 @@ function FeatureItem({
           <Icon className="w-4 h-4" />
         </span>
       )}
-      <span className="flex-1 font-bebas text-sm text-gray-300 leading-snug uppercase group-hover/item:text-white transition-colors tracking-wide">
+      <span className="flex-1 font-montserrat text-sm text-gray-300 leading-snug uppercase group-hover/item:text-white transition-colors tracking-wide">
         {feature.text}
       </span>
       {hasPlatforms && (
@@ -220,7 +220,7 @@ function HighlightRibbon() {
         className="flex items-center gap-2 rounded-full px-4 py-1.5 bg-gradient-to-r from-brand-beige-dark via-brand-beige to-brand-beige-light"
       >
         <StarIcon className="w-3 h-3 text-brand-black" />
-        <span className="font-bebas font-bold text-[10px] tracking-[0.25em] uppercase text-brand-black whitespace-nowrap">
+        <span className="font-montserrat font-bold text-[10px] tracking-[0.25em] uppercase text-brand-black whitespace-nowrap">
           El más elegido
         </span>
       </motion.div>
@@ -288,32 +288,32 @@ export function TierCard({
         }}
       >
         <div className="p-6 md:p-8 flex flex-col flex-1">
-          <p className="font-bebas text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-2">
+          <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-2">
             Tier {tier.number}
           </p>
           <h3 className="font-barlow font-black text-3xl md:text-4xl text-white uppercase mb-4">
             {tier.name}
           </h3>
 
-          <p className="font-bebas text-xs uppercase tracking-wider text-gray-500 mb-1">
+          <p className="font-montserrat text-xs uppercase tracking-wider text-gray-500 mb-1">
             Desde
           </p>
           <div className="flex items-baseline gap-1.5 mb-4">
-            <span className="font-bebas font-black text-4xl md:text-5xl text-white">
+            <span className="font-montserrat font-black text-4xl md:text-5xl text-white">
               {tier.price}
             </span>
-            <span className="font-bebas text-sm text-gray-400 uppercase tracking-wide">
+            <span className="font-montserrat text-sm text-gray-400 uppercase tracking-wide">
               MXN/mes
             </span>
           </div>
 
-          <p className="font-bebas text-sm text-brand-beige font-medium mb-6 leading-snug uppercase tracking-wide">
+          <p className="font-montserrat text-sm text-brand-beige font-medium mb-6 leading-snug uppercase tracking-wide">
             {tier.totalPieces}
           </p>
 
           <div className="h-px bg-white/10 mb-5" />
 
-          <p className="font-bebas text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-3">
+          <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-3">
             Imágenes
           </p>
           <motion.ul
@@ -325,7 +325,7 @@ export function TierCard({
             ))}
           </motion.ul>
 
-          <p className="font-bebas text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-3">
+          <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-3">
             Videos
           </p>
           <motion.ul
@@ -339,7 +339,7 @@ export function TierCard({
 
           <div className="h-px bg-white/10 mb-5" />
 
-          <p className="font-bebas text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-3">
+          <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-3">
             Gestión de publicidad
           </p>
           <motion.ul
@@ -353,7 +353,7 @@ export function TierCard({
 
           <div className="h-px bg-white/10 mb-5" />
 
-          <p className="font-bebas text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-3">
+          <p className="font-montserrat text-[10px] tracking-[0.2em] uppercase text-brand-beige mb-3">
             Incluido
           </p>
           <motion.ul
@@ -389,7 +389,7 @@ export function TierCard({
             }}
             whileTap={{ scale: 0.98 }}
             transition={{ duration: 0.25, ease: ANIMATION_EASE }}
-            className="mt-auto relative w-full bg-brand-beige text-brand-black font-bebas font-bold text-sm uppercase tracking-normal py-3.5 rounded-full hover:bg-brand-beige-light transition-colors [will-change:transform] inline-flex items-center justify-center"
+            className="mt-auto relative w-full bg-brand-beige text-brand-black font-montserrat font-bold text-sm uppercase tracking-normal py-3.5 rounded-full hover:bg-brand-beige-light transition-colors [will-change:transform] inline-flex items-center justify-center"
           >
             <span className="inline-flex items-center gap-2 whitespace-nowrap">
               {tier.ctaLabel}
@@ -404,14 +404,14 @@ export function TierCard({
           </motion.a>
 
           {/* Micro-copy + link al ROI calculator */}
-          <p className="mt-3 text-center font-bebas text-[11px] text-gray-400 tracking-wide">
+          <p className="mt-3 text-center font-montserrat text-[11px] text-gray-400 tracking-wide">
             Sin permanencia · Cancela cuando quieras
           </p>
           {onOpenROI && (
             <button
               type="button"
               onClick={() => onOpenROI(tier.id)}
-              className="mt-2 font-bebas text-xs text-brand-beige/80 hover:text-brand-beige underline-offset-4 hover:underline transition-colors tracking-wide"
+              className="mt-2 font-montserrat text-xs text-brand-beige/80 hover:text-brand-beige underline-offset-4 hover:underline transition-colors tracking-wide"
             >
               Ver ahorro estimado →
             </button>

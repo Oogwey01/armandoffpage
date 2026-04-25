@@ -134,7 +134,7 @@ function FeatureCheck({ value }: { value: string | boolean }) {
     return <span className="text-white/20 text-lg">—</span>;
   }
   return (
-    <span className="font-bebas font-black text-brand-beige text-xl">{value}</span>
+    <span className="font-montserrat font-black text-brand-beige text-xl">{value}</span>
   );
 }
 
@@ -160,7 +160,7 @@ function InfoTooltip({ text }: { text: string }) {
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 4 }}
-            className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-56 rounded-lg bg-brand-black border border-brand-beige/40 px-3 py-2 font-bebas text-[11px] text-white/90 leading-snug z-20 shadow-xl tracking-wide"
+            className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-56 rounded-lg bg-brand-black border border-brand-beige/40 px-3 py-2 font-montserrat text-[11px] text-white/90 leading-snug z-20 shadow-xl tracking-wide"
           >
             {text}
           </motion.span>
@@ -182,7 +182,7 @@ function ComparisonTable({
       <table className="w-full min-w-[640px]">
         <thead className="sticky top-0 z-10 bg-brand-black/95 backdrop-blur-md">
           <tr>
-            <th className="text-left p-4 md:p-6 font-bebas text-xs uppercase tracking-widest text-gray-400 font-bold">
+            <th className="text-left p-4 md:p-6 font-montserrat text-xs uppercase tracking-widest text-gray-400 font-bold">
               Característica
             </th>
             {TIERS.map((t, i) => {
@@ -196,16 +196,16 @@ function ComparisonTable({
                     t.highlight ? "bg-brand-beige/5" : ""
                   } ${isHovered ? "bg-brand-beige/10" : ""}`}
                 >
-                  <p className="font-bebas text-[10px] uppercase tracking-widest text-brand-beige mb-1">
+                  <p className="font-montserrat text-[10px] uppercase tracking-widest text-brand-beige mb-1">
                     Tier {t.number}
                   </p>
-                  <p className="font-bebas font-black text-lg md:text-xl text-white tracking-wide">
+                  <p className="font-montserrat font-black text-lg md:text-xl text-white tracking-wide">
                     {t.name}
                   </p>
-                  <p className="font-bebas font-black text-2xl text-brand-beige mt-1">
+                  <p className="font-montserrat font-black text-2xl text-brand-beige mt-1">
                     {t.price}
                   </p>
-                  <p className="font-bebas text-[10px] text-gray-400 tracking-wide">MXN/mes</p>
+                  <p className="font-montserrat text-[10px] text-gray-400 tracking-wide">MXN/mes</p>
                 </th>
               );
             })}
@@ -239,14 +239,14 @@ function ComparisonTable({
                     href={buildWhatsAppUrl(t.name)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full bg-brand-beige text-brand-black font-bebas font-bold text-xs uppercase tracking-wide py-2.5 rounded-full hover:bg-brand-beige-light hover:scale-[1.02] transition-all"
+                    className="block w-full bg-brand-beige text-brand-black font-montserrat font-bold text-xs uppercase tracking-wide py-2.5 rounded-full hover:bg-brand-beige-light hover:scale-[1.02] transition-all"
                   >
                     {t.ctaLabel} →
                   </a>
                   <button
                     type="button"
                     onClick={() => onOpenROI(t.id)}
-                    className="mt-2 font-bebas text-[11px] text-brand-beige/80 hover:text-brand-beige underline-offset-4 hover:underline tracking-wide"
+                    className="mt-2 font-montserrat text-[11px] text-brand-beige/80 hover:text-brand-beige underline-offset-4 hover:underline tracking-wide"
                   >
                     Ver ahorro →
                   </button>
@@ -276,14 +276,14 @@ function CategoryGroup({
       <tr>
         <td
           colSpan={TIERS.length + 1}
-          className="px-4 md:px-6 pt-6 pb-2 font-bebas font-bold text-[11px] tracking-[0.3em] uppercase text-brand-beige"
+          className="px-4 md:px-6 pt-6 pb-2 font-montserrat font-bold text-[11px] tracking-[0.3em] uppercase text-brand-beige"
         >
           {category}
         </td>
       </tr>
       {rows.map((row) => (
         <tr key={row.label} className="border-t border-white/5">
-          <td className="px-4 md:px-6 py-3 font-bebas text-sm text-gray-300 tracking-wide">
+          <td className="px-4 md:px-6 py-3 font-montserrat text-sm text-gray-300 tracking-wide">
             {row.label}
           </td>
           {row.values.map((v, i) => {
@@ -327,14 +327,14 @@ export function PricingComparison() {
     >
       <div className="relative z-10 container-custom">
         {/* Header */}
-        <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4 md:mb-6">
+        <p className="font-montserrat font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4 md:mb-6">
           Elige tu nivel
         </p>
-        <p className="font-bebas text-sm md:text-base text-gray-400 font-light text-center max-w-2xl mx-auto mb-3 tracking-wide">
+        <p className="font-montserrat text-sm md:text-base text-gray-400 font-light text-center max-w-2xl mx-auto mb-3 tracking-wide">
           Contenido + gestión de ads bajo una sola dirección creativa.
           Derechos totales y sin permanencia en todos los planes.
         </p>
-        <p className="font-bebas text-[11px] text-gray-500 font-light text-center max-w-2xl mx-auto mb-8 tracking-wide">
+        <p className="font-montserrat text-[11px] text-gray-500 font-light text-center max-w-2xl mx-auto mb-8 tracking-wide">
           La inversión en pauta (ad spend) se paga directo a cada plataforma y
           no está incluida en el precio mensual.
         </p>
@@ -362,7 +362,7 @@ export function PricingComparison() {
                   </p>
                   <InfoTooltip text={f.tooltip} />
                 </div>
-                <p className="font-bebas text-xs text-gray-400 leading-snug tracking-wide">
+                <p className="font-montserrat text-xs text-gray-400 leading-snug tracking-wide">
                   {f.description}
                 </p>
               </div>
@@ -384,7 +384,7 @@ export function PricingComparison() {
                 role="tab"
                 aria-selected={view === mode}
                 onClick={() => setView(mode)}
-                className={`px-5 py-2 rounded-full font-bebas font-bold text-[11px] tracking-widest uppercase transition-all ${
+                className={`px-5 py-2 rounded-full font-montserrat font-bold text-[11px] tracking-widest uppercase transition-all ${
                   view === mode
                     ? "bg-brand-beige text-brand-black"
                     : "text-white/60 hover:text-white"
@@ -423,7 +423,7 @@ export function PricingComparison() {
             href="https://wa.me/526623160125"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 bg-[#25D366] text-white font-bebas font-bold text-base uppercase tracking-wide px-10 sm:px-16 py-4 rounded-xl hover:bg-[#20bd5a] hover:scale-[1.02] transition-all"
+            className="inline-flex items-center gap-3 bg-[#25D366] text-white font-montserrat font-bold text-base uppercase tracking-wide px-10 sm:px-16 py-4 rounded-xl hover:bg-[#20bd5a] hover:scale-[1.02] transition-all"
             style={{
               boxShadow:
                 "0 0 20px rgba(37,211,102,0.3), 0 0 50px rgba(37,211,102,0.15)",
@@ -468,7 +468,7 @@ function CardsView({
                 role="tab"
                 aria-selected={active}
                 onClick={() => setActiveTier(i)}
-                className={`flex-1 py-3 font-bebas font-bold text-[11px] uppercase tracking-wider transition-colors ${
+                className={`flex-1 py-3 font-montserrat font-bold text-[11px] uppercase tracking-wider transition-colors ${
                   active
                     ? "bg-brand-black text-white border-t-2 border-x border-brand-beige rounded-t-xl"
                     : "bg-brand-gray/60 text-white/40 border-t-2 border-transparent hover:text-white/70"

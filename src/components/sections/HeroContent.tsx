@@ -109,7 +109,7 @@ export function HeroContent({
           className="flex items-center justify-center gap-3 mb-6"
         >
           <span className="h-px w-10 bg-[#8f0000] flex-none" />
-          <p className="font-bebas text-white text-sm uppercase tracking-[0.3em]">
+          <p className="font-montserrat text-white text-sm uppercase tracking-[0.3em]">
             Sistema Creativo Probado
           </p>
           <span className="h-px w-10 bg-[#8f0000] flex-none" />
@@ -148,11 +148,11 @@ export function HeroContent({
               key={label}
               className="flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-full px-5 py-2.5"
             >
-              <span className="font-bebas text-xl sm:text-2xl text-brand-beige leading-none">
+              <span className="font-montserrat text-xl sm:text-2xl text-brand-beige leading-none">
                 {num}
               </span>
               <span className="h-3 w-px bg-white/15" />
-              <span className="font-bebas text-xs uppercase tracking-widest text-gray-400 leading-none">
+              <span className="font-montserrat text-xs uppercase tracking-widest text-gray-400 leading-none">
                 {label}
               </span>
             </div>
@@ -164,7 +164,7 @@ export function HeroContent({
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.75, ease: ANIMATION_EASE }}
-          className="font-bebas text-base sm:text-lg text-gray-300 max-w-lg mx-auto mb-8 tracking-wide"
+          className="font-montserrat text-base sm:text-lg text-gray-300 max-w-lg mx-auto mb-8 tracking-wide"
         >
           El mismo sistema creativo con el que construimos FRESA FIT,
           aplicado a tu marca.
@@ -184,7 +184,7 @@ export function HeroContent({
             whileHover={{ scale: 1.04, boxShadow: "0 0 36px 6px rgba(200,157,105,0.45)" }}
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.25, ease: ANIMATION_EASE }}
-            className="relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-brand-beige px-10 py-4 font-bebas text-sm font-bold uppercase tracking-widest text-brand-black [will-change:transform]"
+            className="relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-brand-beige px-10 py-4 font-montserrat text-sm font-bold uppercase tracking-widest text-brand-black [will-change:transform]"
           >
             {ripples.map((ripple) => (
               <span
@@ -218,7 +218,7 @@ export function HeroContent({
             >
               ↓
             </motion.span>
-            <span className="font-bebas text-[9px] tracking-[0.3em] uppercase text-white/25">
+            <span className="font-montserrat text-[9px] tracking-[0.3em] uppercase text-white/25">
               Seguir leyendo
             </span>
           </motion.div>

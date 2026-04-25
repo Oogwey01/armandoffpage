@@ -18,12 +18,6 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-const bebasNeue = localFont({
-  src: "../../public/fonts/BebasNeue-Regular.ttf",
-  variable: "--font-bebas",
-  display: "swap",
-});
-
 const mrDafoe = localFont({
   src: "../../public/fonts/MrDafoe-Regular.ttf",
   variable: "--font-dafoe",
@@ -70,7 +64,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={`${barlow.variable} ${montserrat.variable} ${bebasNeue.variable} ${mrDafoe.variable}`}>
+    <html lang="es" className={`${barlow.variable} ${montserrat.variable} ${mrDafoe.variable}`}>
       <body>
         <MetaPixel />
         {children}

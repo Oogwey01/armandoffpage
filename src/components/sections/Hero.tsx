@@ -214,7 +214,7 @@ export default function Hero({ onOpenForm }: HeroProps) {
             className="flex items-center justify-start lg:justify-center gap-3 mb-6"
           >
             <span className="h-px w-10 bg-[#8f0000] flex-none" />
-            <p className="font-bebas text-white text-sm uppercase tracking-[0.3em]">
+            <p className="font-montserrat text-white text-sm uppercase tracking-[0.3em]">
               Sistema de crecimiento
             </p>
             <span className="h-px w-10 bg-[#8f0000] flex-none" />
@@ -330,7 +330,7 @@ export default function Hero({ onOpenForm }: HeroProps) {
                 {/* Stats sin fondo plano */}
                 <div className="relative px-3 pb-4 sm:pb-5 text-center">
                   <div className="h-px w-10 mx-auto bg-gradient-to-r from-transparent via-brand-beige/70 to-transparent mb-3" />
-                  <p className="font-bebas text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-brand-beige/80 mb-1.5">
+                  <p className="font-montserrat text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-brand-beige/80 mb-1.5">
                     {platform}
                   </p>
                   <p className="font-barlow font-black text-2xl sm:text-3xl md:text-4xl text-white leading-none mb-2 tracking-tight">
@@ -374,7 +374,7 @@ export default function Hero({ onOpenForm }: HeroProps) {
             className="flex items-center justify-start lg:justify-center gap-3 mb-6"
           >
             <span className="h-px w-10 bg-[#8f0000] flex-none" />
-            <p className="font-bebas text-white text-sm uppercase tracking-[0.3em]">
+            <p className="font-montserrat text-white text-sm uppercase tracking-[0.3em]">
               Casos de éxito
             </p>
             <span className="h-px w-10 bg-[#8f0000] flex-none" />

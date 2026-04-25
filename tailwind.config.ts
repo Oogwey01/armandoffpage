@@ -23,7 +23,6 @@ const config: Config = {
         akira: ["Akira Expanded", "sans-serif"],
         barlow: ["Barlow", "sans-serif"],
         montserrat: ["Montserrat", "sans-serif"],
-        bebas: ["var(--font-bebas)", "sans-serif"],
         dafoe: ["var(--font-dafoe)", "cursive"],
       },
       animation: {

@@ -162,7 +162,7 @@ export default function HowItWorks() {
         >
           <div className="flex items-center justify-center gap-3 mb-6">
             <span className="h-px w-10 bg-[#8f0000] flex-none" />
-            <p className="font-bebas text-white text-sm uppercase tracking-[0.3em]">
+            <p className="font-montserrat text-white text-sm uppercase tracking-[0.3em]">
               Metodología probada
             </p>
             <span className="h-px w-10 bg-[#8f0000] flex-none" />

@@ -176,14 +176,14 @@ export function BrandLogos() {
 
         {/* Texto encima de los logos */}
         <AnimatedSection className="relative z-10 text-center max-w-3xl mx-auto">
-          <p className="font-bebas font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-4">
+          <p className="font-montserrat font-bold text-xs tracking-[0.3em] uppercase text-brand-beige mb-4">
             También hacemos pauta
           </p>
           <h2 className="font-barlow font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl uppercase leading-[0.95] tracking-tight text-white mb-5">
             NOSOTROS ACTIVAMOS{" "}
             <span className="text-brand-beige">TUS CREATIVOS.</span>
           </h2>
-          <p className="font-bebas text-sm md:text-base text-gray-400 font-light max-w-xl mx-auto tracking-wide">
+          <p className="font-montserrat text-sm md:text-base text-gray-400 font-light max-w-xl mx-auto tracking-wide">
             Producimos el creativo y ejecutamos la pauta. Gestión directa en las
             plataformas donde tu cliente está.
           </p>
