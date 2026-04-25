@@ -123,6 +123,27 @@ El código ya está preparado: si la variable tiene URL, hace POST con todos los
 
 ---
 
+## 4. Custom Conversion en Meta — "Lead Form Premium"
+
+**Estado:** Pendiente. Se hace 100% en Events Manager, **sin código**.
+**Cuándo hacerlo:** después de acumular ≥1 semana de tráfico real con eventos `Lead`.
+
+Hoy disparamos `Lead` en dos lugares con el mismo nombre:
+- Submit del formulario → `content_name: "Qualification Form"`, `content_category: "Lead"` (con email/phone hasheados, EMQ alto)
+- Click en CTA de plan en `/contenido` → `content_name: "<nombre del plan>"`, `content_category: "Plan de contenido"` (sin PII, EMQ bajo)
+
+Crear una **Custom Conversion** que filtre solo el primero permite optimizar campañas hacia el Lead de alta calidad sin perder la señal global del `Lead` consolidado.
+
+### Pasos
+1. Events Manager → **Conversiones personalizadas** → **Crear**.
+2. Origen: el Pixel `1228430842689768`.
+3. Regla: evento `Lead` **donde** `content_category` igual a `Lead` (o `content_name` igual a `Qualification Form`).
+4. Nombre: `Lead Form Premium`.
+5. Categoría: `Lead`.
+6. Una vez creada, usarla como objetivo de optimización en campañas que solo deban perseguir form completado, no clicks en planes.
+
+---
+
 ## Notas finales
 
 - Todos estos cambios son **independientes** y pueden hacerse en cualquier orden.

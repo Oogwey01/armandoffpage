@@ -372,7 +372,7 @@ export function TierCard({
             rel="noopener noreferrer"
             onClick={() =>
               trackEvent(
-                "AddToCart",
+                "Lead",
                 {
                   content_name: tier.name,
                   content_ids: [tier.id],
