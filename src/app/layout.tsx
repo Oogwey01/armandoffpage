@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Barlow, Montserrat } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import { MetaPixel } from "@/components/common/MetaPixel";
 
 const barlow = Barlow({
   subsets: ["latin"],
@@ -70,7 +71,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={`${barlow.variable} ${montserrat.variable} ${bebasNeue.variable} ${mrDafoe.variable}`}>
-      <body>{children}</body>
+      <body>
+        <MetaPixel />
+        {children}
+      </body>
     </html>
   );
 }

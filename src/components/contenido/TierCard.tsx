@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import type { AdPlatform, Tier, TierFeature } from "@/lib/tiers";
 import { ANIMATION_EASE } from "@/lib/animations/variants";
+import { trackEvent } from "@/lib/meta-pixel";
 
 const PLATFORM_LOGOS: Record<AdPlatform, { src: string; alt: string }> = {
   meta: { src: "/images/logos/meta-ads.png", alt: "Meta Ads" },
@@ -369,6 +370,19 @@ export function TierCard({
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() =>
+              trackEvent(
+                "AddToCart",
+                {
+                  content_name: tier.name,
+                  content_ids: [tier.id],
+                  content_category: "Plan de contenido",
+                  content_type: "product",
+                  currency: "MXN",
+                },
+                { sendToCapi: true }
+              )
+            }
             whileHover={{
               scale: 1.03,
               boxShadow: "0 0 28px 0 rgba(200,157,105,0.55)",

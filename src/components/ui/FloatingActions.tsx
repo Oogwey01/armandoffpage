@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ANIMATION_EASE } from "@/lib/animations/variants";
+import { trackEvent } from "@/lib/meta-pixel";
 
 interface FloatingActionsProps {
   // Número de WhatsApp en formato internacional sin símbolos
@@ -107,6 +108,13 @@ export function FloatingActions({
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Contactar por WhatsApp"
+          onClick={() =>
+            trackEvent(
+              "Contact",
+              { content_name: "WhatsApp Floating", method: "whatsapp" },
+              { sendToCapi: true }
+            )
+          }
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           animate={{

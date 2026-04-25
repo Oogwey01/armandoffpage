@@ -7,6 +7,7 @@ import Image from "next/image";
 import { formSchema, FormData, STEP_FIELDS } from "@/lib/schemas";
 import { motion, AnimatePresence } from "framer-motion";
 import { CloseIcon } from "@/components/common/Icons";
+import { generateEventId, getFbp, getFbc, trackEvent } from "@/lib/meta-pixel";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -265,16 +266,35 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
     try {
       const allData = getValues();
 
+      // Mismo eventId para browser y CAPI → Meta deduplica el Lead.
+      const leadEventId = generateEventId();
+      const fbp = getFbp();
+      const fbc = getFbc();
+
       const response = await fetch("/api/submit-form", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(allData),
+        body: JSON.stringify({
+          ...allData,
+          _meta: { eventId: leadEventId, fbp, fbc },
+        }),
       });
 
       if (!response.ok) {
         const errorBody = await response.json().catch(() => null);
         throw new Error(errorBody?.message || `Error del servidor (${response.status})`);
       }
+
+      // Browser pixel — usa el mismo eventId que el servidor enviará por CAPI.
+      trackEvent(
+        "Lead",
+        {
+          content_name: "Qualification Form",
+          content_category: "Lead",
+          currency: "MXN",
+        },
+        { eventId: leadEventId }
+      );
 
       clearSavedData();
       setShowSuccess(true);

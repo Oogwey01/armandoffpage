@@ -1,9 +1,24 @@
 import { NextResponse } from "next/server";
 import { createShopifyCustomer } from "@/lib/shopify";
+import { sendCapiEvent, extractRequestUserData } from "@/lib/meta-capi";
+
+interface SubmitFormBody {
+  nombre?: string;
+  email?: string;
+  whatsapp?: string;
+  businessUrl?: string;
+  marketingChannels?: string[];
+  adsInvestment?: string;
+  monthlyRevenue?: string;
+  goal90Days?: string;
+  startWhen?: string;
+  mainObstacle?: string;
+  _meta?: { eventId?: string; fbp?: string; fbc?: string };
+}
 
 export async function POST(request: Request) {
   try {
-    const data = await request.json();
+    const data = (await request.json()) as SubmitFormBody;
 
     // Validate required fields exist
     if (!data.nombre || !data.email) {
@@ -30,9 +45,33 @@ export async function POST(request: Request) {
 
     // Save customer to Shopify with revenue-based category tag
     try {
-      await createShopifyCustomer(data);
+      await createShopifyCustomer(data as Parameters<typeof createShopifyCustomer>[0]);
     } catch (shopifyError) {
       console.error("[Shopify] Unexpected error:", shopifyError);
+    }
+
+    // Meta Conversions API — mismo eventId que el browser pixel para deduplicar
+    const meta = data._meta;
+    if (meta?.eventId) {
+      const reqData = extractRequestUserData(request);
+      void sendCapiEvent({
+        eventName: "Lead",
+        eventId: meta.eventId,
+        eventSourceUrl: request.headers.get("referer") ?? undefined,
+        userData: {
+          email: data.email,
+          phone: data.whatsapp,
+          firstName: data.nombre,
+          fbp: meta.fbp,
+          fbc: meta.fbc,
+          ...reqData,
+        },
+        customData: {
+          content_name: "Qualification Form",
+          content_category: "Lead",
+          currency: "MXN",
+        },
+      });
     }
 
     // Forward to webhook if configured

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
+import { trackEvent } from "@/lib/meta-pixel";
 
 export function useFormModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,6 +9,11 @@ export function useFormModal() {
   const open = useCallback(() => {
     setIsOpen(true);
     document.body.style.overflow = "hidden";
+    // Sin PII todavía → solo browser pixel.
+    trackEvent("InitiateCheckout", {
+      content_name: "Qualification Form",
+      content_category: "Lead",
+    });
   }, []);
 
   const close = useCallback(() => {
