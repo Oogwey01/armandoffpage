@@ -115,28 +115,59 @@ export async function sendCapiEvent(input: CapiEventInput): Promise<void> {
   if (TEST_EVENT_CODE) body.test_event_code = TEST_EVENT_CODE;
 
   const url = `https://graph.facebook.com/${API_VERSION}/${PIXEL_ID}/events`;
+  const payload = JSON.stringify(body);
 
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
+  // 3 intentos máx con backoff (200ms, 600ms). Meta deduplica por event_id durante
+  // 7 días, así que reintentar el mismo payload es seguro.
+  const MAX_ATTEMPTS = 3;
+  const BACKOFFS_MS = [0, 200, 600];
 
-    if (!res.ok) {
-      const errBody = await res.text();
-      console.error(`[Meta CAPI] ${input.eventName} falló (${res.status}):`, errBody);
-      return;
+  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+    if (BACKOFFS_MS[attempt] > 0) {
+      await new Promise((r) => setTimeout(r, BACKOFFS_MS[attempt]));
     }
 
-    const data = (await res.json()) as { events_received?: number };
-    console.log(
-      `[Meta CAPI] ${input.eventName} OK (event_id=${input.eventId}, recibidos=${data.events_received ?? "?"})${
-        TEST_EVENT_CODE ? ` [TEST=${TEST_EVENT_CODE}]` : ""
-      }`
-    );
-  } catch (err) {
-    console.error(`[Meta CAPI] Error de red en ${input.eventName}:`, err);
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+      });
+
+      if (!res.ok) {
+        const errBody = await res.text();
+        // 5xx = retry; 4xx = fallo definitivo (token, formato, etc.) → no reintentar
+        if (res.status >= 500 && attempt < MAX_ATTEMPTS - 1) {
+          console.warn(
+            `[Meta CAPI] ${input.eventName} ${res.status}, reintentando (${attempt + 1}/${MAX_ATTEMPTS - 1})`
+          );
+          continue;
+        }
+        console.error(`[Meta CAPI] ${input.eventName} falló (${res.status}):`, errBody);
+        return;
+      }
+
+      const data = (await res.json()) as { events_received?: number };
+      console.log(
+        `[Meta CAPI] ${input.eventName} OK (event_id=${input.eventId}, recibidos=${data.events_received ?? "?"}, intentos=${attempt + 1})${
+          TEST_EVENT_CODE ? ` [TEST=${TEST_EVENT_CODE}]` : ""
+        }`
+      );
+      return;
+    } catch (err) {
+      // ECONNRESET, fetch failed, TLS handshake error, etc. → reintentar
+      if (attempt < MAX_ATTEMPTS - 1) {
+        console.warn(
+          `[Meta CAPI] Error de red en ${input.eventName}, reintentando (${attempt + 1}/${MAX_ATTEMPTS - 1}):`,
+          (err as Error).message ?? err
+        );
+        continue;
+      }
+      console.error(
+        `[Meta CAPI] ${input.eventName} falló tras ${MAX_ATTEMPTS} intentos:`,
+        err
+      );
+    }
   }
 }
 
