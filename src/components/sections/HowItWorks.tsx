@@ -9,6 +9,8 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 interface PlatformColumn {
   label: string;
+  imageSrc?: string;
+  imageAlt?: string;
 }
 
 interface PlatformTab {
@@ -55,9 +57,21 @@ const PLATFORM_TABS: PlatformTab[] = [
       "Diseñamos tu página web optimizada para conversión, con embudo completo desde Meta Ads hasta la compra. Plataforma incluida.",
     color: "#95BF47",
     columns: [
-      { label: "Diseño" },
-      { label: "Embudo Meta→Web" },
-      { label: "Plataforma incluida" },
+      {
+        label: "Diseño",
+        imageSrc: "/images/Como_funciona/shopify01.png",
+        imageAlt: "Diseño de tienda Shopify",
+      },
+      {
+        label: "Embudo Meta→Web",
+        imageSrc: "/images/Como_funciona/shopify02.png",
+        imageAlt: "Embudo de Meta Ads a la tienda",
+      },
+      {
+        label: "Plataforma incluida",
+        imageSrc: "/images/Como_funciona/shopify03.png",
+        imageAlt: "Panel de Shopify incluido",
+      },
     ],
   },
   {
@@ -96,7 +110,15 @@ const PLATFORM_TABS: PlatformTab[] = [
 
 /* ── PlaceholderCard ────────────────────────────────────────────────── */
 
-function PlaceholderCard({ label }: { label: string }) {
+function PlaceholderCard({
+  label,
+  imageSrc,
+  imageAlt,
+}: {
+  label: string;
+  imageSrc?: string;
+  imageAlt?: string;
+}) {
   return (
     <div className="flex flex-col gap-3">
       {/* Column label */}
@@ -112,9 +134,19 @@ function PlaceholderCard({ label }: { label: string }) {
           backgroundSize: "24px 24px",
         }}
       >
-        <span className="font-montserrat text-xs text-white/20 select-none">
-          Screenshot
-        </span>
+        {imageSrc ? (
+          <Image
+            src={imageSrc}
+            alt={imageAlt ?? label}
+            fill
+            className="object-cover object-top"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        ) : (
+          <span className="font-montserrat text-xs text-white/20 select-none">
+            Screenshot
+          </span>
+        )}
       </div>
     </div>
   );
@@ -285,7 +317,12 @@ export default function HowItWorks() {
             {/* 3-column card grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
               {activeTabData.columns.map((col, i) => (
-                <PlaceholderCard key={i} label={col.label} />
+                <PlaceholderCard
+                  key={i}
+                  label={col.label}
+                  imageSrc={col.imageSrc}
+                  imageAlt={col.imageAlt}
+                />
               ))}
             </div>
           </motion.div>

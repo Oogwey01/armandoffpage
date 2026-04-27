@@ -159,7 +159,7 @@ export function FooterContent({ leadMagnet = DEFAULT_LEAD_MAGNET }: FooterConten
         <div
           className="absolute inset-0 opacity-70"
           style={{
-            backgroundImage: "url('/images/backgrounds/Mesa%20de%20trabajo%208pagina.png')",
+            backgroundImage: "url('/images/backgrounds/backgroundFULL.webp')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
