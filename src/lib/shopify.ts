@@ -27,6 +27,137 @@ export function getRevenueCategory(monthlyRevenue: string): string {
   return REVENUE_CATEGORY_MAP[monthlyRevenue] ?? "Comunes";
 }
 
+type ShopifyMetafield = {
+  namespace: string;
+  key: string;
+  value: string;
+  type: string;
+};
+
+type ShopifyCustomerPayload = {
+  first_name?: string;
+  email?: string;
+  phone?: string;
+  tags?: string;
+  note?: string;
+  metafields?: ShopifyMetafield[];
+};
+
+type ShopifyErrors = Record<string, string[] | string>;
+
+// Mexico mobile: legacy WhatsApp prefix "+521" (13 digits) → strip the "1" → "+52" (12 digits).
+// Also collapses repeated leading "+", strips spaces / dashes / parens, and drops trailing junk.
+export function normalizePhone(raw: string | undefined): string | undefined {
+  if (!raw) return undefined;
+  let p = raw.trim().replace(/[\s()-]/g, "");
+  if (!p) return undefined;
+  // Collapse multiple leading "+"
+  p = p.replace(/^\++/, "+");
+  // MX legacy: +521XXXXXXXXXX (13 digits after +) → +52XXXXXXXXXX
+  if (/^\+521\d{10}$/.test(p)) {
+    p = "+52" + p.slice(4);
+  }
+  return p;
+}
+
+function parseShopifyError(body: string): {
+  errors: ShopifyErrors;
+  field: "email" | "phone" | "other" | "unknown";
+  reason: string;
+} {
+  let errors: ShopifyErrors = {};
+  try {
+    const parsed = JSON.parse(body) as { errors?: ShopifyErrors };
+    errors = parsed.errors ?? {};
+  } catch {
+    return { errors: {}, field: "unknown", reason: body.slice(0, 200) };
+  }
+  const keys = Object.keys(errors);
+  if (keys.includes("email")) {
+    return { errors, field: "email", reason: JSON.stringify(errors.email) };
+  }
+  if (keys.includes("phone")) {
+    return { errors, field: "phone", reason: JSON.stringify(errors.phone) };
+  }
+  return {
+    errors,
+    field: keys.length ? "other" : "unknown",
+    reason: JSON.stringify(errors),
+  };
+}
+
+async function findCustomerBy(
+  baseUrl: string,
+  headers: Record<string, string>,
+  query: string
+): Promise<{ id: number; tags: string } | null> {
+  const res = await fetch(
+    `${baseUrl}/customers/search.json?query=${encodeURIComponent(query)}`,
+    { headers }
+  );
+  if (!res.ok) return null;
+  const data = (await res.json()) as {
+    customers?: Array<{ id: number; tags: string }>;
+  };
+  return data.customers?.[0] ?? null;
+}
+
+// Resolve the existing customer that caused a 422 conflict.
+// Shopify's customer search index has eventual consistency: a customer created
+// seconds before may not yet be searchable, so we retry with backoff. We
+// prioritize the field that the API said collided.
+async function lookupExistingCustomer(
+  baseUrl: string,
+  headers: Record<string, string>,
+  field: "email" | "phone" | "other" | "unknown",
+  email: string,
+  phone: string | undefined
+): Promise<{ id: number; tags: string } | null> {
+  const queries: string[] = [];
+  if (field === "phone" && phone) queries.push(`phone:${phone}`);
+  queries.push(`email:${email}`);
+  if (field !== "phone" && phone) queries.push(`phone:${phone}`);
+
+  const delays = [0, 1500, 3000];
+  for (const delay of delays) {
+    if (delay) await new Promise((r) => setTimeout(r, delay));
+    for (const q of queries) {
+      const found = await findCustomerBy(baseUrl, headers, q);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+async function postCustomer(
+  baseUrl: string,
+  headers: Record<string, string>,
+  payload: ShopifyCustomerPayload
+): Promise<{ ok: boolean; status: number; body: string }> {
+  const res = await fetch(`${baseUrl}/customers.json`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ customer: payload }),
+  });
+  const body = await res.text();
+  return { ok: res.ok, status: res.status, body };
+}
+
+async function putCustomer(
+  baseUrl: string,
+  headers: Record<string, string>,
+  id: number,
+  payload: ShopifyCustomerPayload
+): Promise<{ ok: boolean; status: number; body: string }> {
+  const res = await fetch(`${baseUrl}/customers/${id}.json`, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ customer: payload }),
+  });
+  const body = await res.text();
+  return { ok: res.ok, status: res.status, body };
+}
+
 /**
  * Creates or updates a Shopify customer with partial form data at a given step.
  * Used to track which step the user reached before abandoning.
@@ -51,78 +182,120 @@ export async function checkpointShopifyCustomer(
     "X-Shopify-Access-Token": accessToken,
   };
 
-  const customerPayload = {
-    customer: {
-      first_name: data.nombre,
-      email: data.email,
-      phone: data.whatsapp,
-      tags: "formulario-incompleto, armandoff-lead",
-      metafields: [
-        {
-          namespace: "armandoff",
-          key: "ultimo_paso",
-          value: `${step} - ${stepName}`,
-          type: "single_line_text_field",
-        },
-        {
-          namespace: "armandoff",
-          key: "checkpoint_at",
-          value: new Date().toISOString(),
-          type: "single_line_text_field",
-        },
-      ],
+  const phone = normalizePhone(data.whatsapp);
+  const metafields: ShopifyMetafield[] = [
+    {
+      namespace: "armandoff",
+      key: "ultimo_paso",
+      value: `${step} - ${stepName}`,
+      type: "single_line_text_field",
     },
+    {
+      namespace: "armandoff",
+      key: "checkpoint_at",
+      value: new Date().toISOString(),
+      type: "single_line_text_field",
+    },
+  ];
+  const tags = "formulario-incompleto, armandoff-lead";
+
+  const payload: ShopifyCustomerPayload = {
+    first_name: data.nombre,
+    email: data.email,
+    phone,
+    tags,
+    metafields,
   };
 
-  // Try to create
-  const createRes = await fetch(`${baseUrl}/customers.json`, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(customerPayload),
-  });
-
-  if (createRes.status === 422) {
-    // Customer exists — search and update
-    const searchRes = await fetch(
-      `${baseUrl}/customers/search.json?query=email:${encodeURIComponent(data.email)}`,
-      { headers }
+  const create = await postCustomer(baseUrl, headers, payload);
+  if (create.ok) {
+    const created = JSON.parse(create.body) as { customer: { id: number } };
+    console.log(
+      `[Shopify] Checkpoint created: customer ${created.customer.id} → paso ${step}`
     );
-    if (!searchRes.ok) return;
-
-    const searchData = (await searchRes.json()) as {
-      customers: Array<{ id: number; tags: string }>;
-    };
-    const existing = searchData.customers[0];
-    if (!existing) return;
-
-    // Only update if still incomplete (don't overwrite a completed form)
-    if (existing.tags.includes("formulario-completo")) return;
-
-    await fetch(`${baseUrl}/customers/${existing.id}.json`, {
-      method: "PUT",
-      headers,
-      body: JSON.stringify({
-        customer: {
-          tags: "formulario-incompleto, armandoff-lead",
-          metafields: customerPayload.customer.metafields,
-        },
-      }),
-    });
-
-    console.log(`[Shopify] Checkpoint updated: customer ${existing.id} → paso ${step}`);
     return;
   }
 
-  if (createRes.ok) {
-    const created = (await createRes.json()) as { customer: { id: number } };
-    console.log(`[Shopify] Checkpoint created: customer ${created.customer.id} → paso ${step}`);
+  if (create.status !== 422) {
+    console.error(
+      `[Shopify] Checkpoint create failed (${create.status}):`,
+      create.body
+    );
+    return;
   }
+
+  const { field, reason } = parseShopifyError(create.body);
+  console.warn(
+    `[Shopify] Checkpoint 422 on field=${field} reason=${reason} — recovering`
+  );
+
+  // Phone invalid → retry without phone, stash original whatsapp in note.
+  if (field === "phone" && /invalid/i.test(reason)) {
+    const fallback: ShopifyCustomerPayload = {
+      ...payload,
+      phone: undefined,
+      note: `WhatsApp (no aceptado por Shopify): ${data.whatsapp}`,
+    };
+    const retry = await postCustomer(baseUrl, headers, fallback);
+    if (retry.ok) {
+      const created = JSON.parse(retry.body) as { customer: { id: number } };
+      console.log(
+        `[Shopify] Checkpoint created without phone: customer ${created.customer.id} → paso ${step}`
+      );
+      return;
+    }
+    if (retry.status !== 422) {
+      console.error(
+        `[Shopify] Checkpoint retry-without-phone failed (${retry.status}):`,
+        retry.body
+      );
+      return;
+    }
+    // Fall through to lookup-and-update path with the no-phone payload.
+    payload.phone = undefined;
+    payload.note = fallback.note;
+  }
+
+  // Look up the existing customer based on which field collided.
+  const existing = await lookupExistingCustomer(
+    baseUrl,
+    headers,
+    field,
+    data.email,
+    payload.phone
+  );
+
+  if (!existing) {
+    console.error(
+      `[Shopify] Checkpoint 422 (${field}) but no existing customer found by email or phone`
+    );
+    return;
+  }
+
+  // Don't downgrade a completed form back to incomplete.
+  if (existing.tags.includes("formulario-completo")) return;
+
+  const update = await putCustomer(baseUrl, headers, existing.id, {
+    tags,
+    metafields,
+  });
+  if (!update.ok) {
+    console.error(
+      `[Shopify] Checkpoint update failed (${update.status}):`,
+      update.body
+    );
+    return;
+  }
+
+  console.log(
+    `[Shopify] Checkpoint updated: customer ${existing.id} → paso ${step}`
+  );
 }
 
 export async function createShopifyCustomer(data: FormData): Promise<void> {
   const storeUrl = process.env.SHOPIFY_STORE_URL;
   const accessToken = process.env.SHOPIFY_ACCESS_TOKEN;
-  const apiVersion = process.env.SHOPIFY_API_VERSION ?? "2024-01";
+  const apiVersion = process.env.SHOPIFY_API_VERSION ?? "2024-10";
 
   if (!storeUrl || !accessToken) {
     console.warn(
@@ -139,127 +312,140 @@ export async function createShopifyCustomer(data: FormData): Promise<void> {
     "X-Shopify-Access-Token": accessToken,
   };
 
-  const customerPayload = {
-    customer: {
-      first_name: data.nombre,
-      email: data.email,
-      phone: data.whatsapp,
-      tags: `${category}, armandoff-lead, formulario-completo`,
-      note: [
-        data.businessUrl ? `URL del negocio: ${data.businessUrl}` : null,
-        `Inversión en ads: ${data.adsInvestment}`,
-        `Meta a 90 días: ${data.goal90Days}`,
-        `Cuándo empezar: ${data.startWhen}`,
-        `Principal obstáculo: ${data.mainObstacle}`,
-      ]
-        .filter(Boolean)
-        .join("\n"),
-      metafields: [
-        {
-          namespace: "armandoff",
-          key: "marketing_channels",
-          value: data.marketingChannels.join(", "),
-          type: "single_line_text_field",
-        },
-        {
-          namespace: "armandoff",
-          key: "monthly_revenue",
-          value: data.monthlyRevenue,
-          type: "single_line_text_field",
-        },
-        {
-          namespace: "armandoff",
-          key: "revenue_category",
-          value: category,
-          type: "single_line_text_field",
-        },
-        {
-          namespace: "armandoff",
-          key: "ads_investment",
-          value: data.adsInvestment,
-          type: "single_line_text_field",
-        },
-        {
-          namespace: "armandoff",
-          key: "start_when",
-          value: data.startWhen,
-          type: "single_line_text_field",
-        },
-        {
-          namespace: "armandoff",
-          key: "submitted_at",
-          value: submittedAt,
-          type: "single_line_text_field",
-        },
-      ],
+  const phone = normalizePhone(data.whatsapp);
+  const tags = `${category}, armandoff-lead, formulario-completo`;
+  const noteLines = [
+    data.businessUrl ? `URL del negocio: ${data.businessUrl}` : null,
+    `Inversión en ads: ${data.adsInvestment}`,
+    `Meta a 90 días: ${data.goal90Days}`,
+    `Cuándo empezar: ${data.startWhen}`,
+    `Principal obstáculo: ${data.mainObstacle}`,
+  ].filter(Boolean) as string[];
+  const metafields: ShopifyMetafield[] = [
+    {
+      namespace: "armandoff",
+      key: "marketing_channels",
+      value: data.marketingChannels.join(", "),
+      type: "single_line_text_field",
     },
+    {
+      namespace: "armandoff",
+      key: "monthly_revenue",
+      value: data.monthlyRevenue,
+      type: "single_line_text_field",
+    },
+    {
+      namespace: "armandoff",
+      key: "revenue_category",
+      value: category,
+      type: "single_line_text_field",
+    },
+    {
+      namespace: "armandoff",
+      key: "ads_investment",
+      value: data.adsInvestment,
+      type: "single_line_text_field",
+    },
+    {
+      namespace: "armandoff",
+      key: "start_when",
+      value: data.startWhen,
+      type: "single_line_text_field",
+    },
+    {
+      namespace: "armandoff",
+      key: "submitted_at",
+      value: submittedAt,
+      type: "single_line_text_field",
+    },
+  ];
+
+  let payload: ShopifyCustomerPayload = {
+    first_name: data.nombre,
+    email: data.email,
+    phone,
+    tags,
+    note: noteLines.join("\n"),
+    metafields,
   };
 
-  const createRes = await fetch(`${baseUrl}/customers.json`, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(customerPayload),
-  });
-
-  if (createRes.status === 422) {
-    // Email already exists — find and update the customer
-    const searchRes = await fetch(
-      `${baseUrl}/customers/search.json?query=email:${encodeURIComponent(data.email)}`,
-      { headers }
+  const create = await postCustomer(baseUrl, headers, payload);
+  if (create.ok) {
+    const created = JSON.parse(create.body) as { customer: { id: number } };
+    console.log(
+      `[Shopify] Created customer ${created.customer.id} → category: ${category}`
     );
+    return;
+  }
 
-    if (!searchRes.ok) {
-      console.error("[Shopify] Failed to search existing customer");
-      return;
-    }
-
-    const searchData = (await searchRes.json()) as {
-      customers: Array<{ id: number }>;
-    };
-    const existing = searchData.customers[0];
-
-    if (!existing) {
-      console.error("[Shopify] Customer not found after 422 conflict");
-      return;
-    }
-
-    const updatePayload = {
-      customer: {
-        tags: customerPayload.customer.tags,
-        note: customerPayload.customer.note,
-        metafields: customerPayload.customer.metafields,
-      },
-    };
-
-    const updateRes = await fetch(
-      `${baseUrl}/customers/${existing.id}.json`,
-      {
-        method: "PUT",
-        headers,
-        body: JSON.stringify(updatePayload),
-      }
+  if (create.status !== 422) {
+    console.error(
+      `[Shopify] Create failed (${create.status}):`,
+      create.body
     );
+    return;
+  }
 
-    if (!updateRes.ok) {
-      const err = await updateRes.text();
-      console.error("[Shopify] Failed to update existing customer:", err);
-    } else {
+  const { field, reason } = parseShopifyError(create.body);
+  console.warn(
+    `[Shopify] Create 422 on field=${field} reason=${reason} — recovering`
+  );
+
+  // Phone invalid → retry without phone, stash original whatsapp in note.
+  if (field === "phone" && /invalid/i.test(reason)) {
+    payload = {
+      ...payload,
+      phone: undefined,
+      note: `WhatsApp (no aceptado por Shopify): ${data.whatsapp}\n${payload.note ?? ""}`.trim(),
+    };
+    const retry = await postCustomer(baseUrl, headers, payload);
+    if (retry.ok) {
+      const created = JSON.parse(retry.body) as { customer: { id: number } };
       console.log(
-        `[Shopify] Updated existing customer ${existing.id} → category: ${category}`
+        `[Shopify] Created customer without phone ${created.customer.id} → category: ${category}`
       );
+      return;
     }
+    if (retry.status !== 422) {
+      console.error(
+        `[Shopify] Create retry-without-phone failed (${retry.status}):`,
+        retry.body
+      );
+      return;
+    }
+    // Fall through into the lookup-and-update branch with the no-phone payload.
+  }
 
+  // Lookup the existing customer based on which field collided.
+  const existing = await lookupExistingCustomer(
+    baseUrl,
+    headers,
+    field,
+    data.email,
+    payload.phone
+  );
+
+  if (!existing) {
+    console.error(
+      `[Shopify] 422 (${field}) but no existing customer found by email or phone — lead lost. body=${create.body}`
+    );
     return;
   }
 
-  if (!createRes.ok) {
-    const err = await createRes.text();
-    console.error("[Shopify] Failed to create customer:", err);
+  const update = await putCustomer(baseUrl, headers, existing.id, {
+    tags,
+    note: payload.note,
+    metafields,
+  });
+  if (!update.ok) {
+    console.error(
+      `[Shopify] Failed to update existing customer (${update.status}):`,
+      update.body
+    );
     return;
   }
 
-  const created = (await createRes.json()) as { customer: { id: number } };
   console.log(
-    `[Shopify] Created customer ${created.customer.id} → category: ${category}`
+    `[Shopify] Updated existing customer ${existing.id} → category: ${category}`
   );
 }
