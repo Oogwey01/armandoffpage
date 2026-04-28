@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Barlow, Montserrat } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { MetaPixel } from "@/components/common/MetaPixel";
 
 const barlow = Barlow({
@@ -77,6 +78,7 @@ export default function RootLayout({
       <body>
         <MetaPixel />
         {children}
+        <Analytics />
       </body>
     </html>
   );
