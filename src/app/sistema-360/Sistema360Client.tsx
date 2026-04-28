@@ -90,6 +90,21 @@ export default function Sistema360Client() {
         cta={{ label: "Ver ejes", href: "#ejes" }}
       />
       <main className="relative bg-brand-black min-h-screen">
+        {/* ── Fondo único continuo ── */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "url('/images/backgrounds/backgroundFULL.webp')",
+            backgroundSize: "100% 100%",
+            backgroundPosition: "top center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-brand-black/30 pointer-events-none"
+        />
         {/* ── HERO compacto ── */}
         <section className="relative pt-32 pb-16 sm:pt-36 md:pt-40 md:pb-24 overflow-hidden">
           {/* Fondo: orbs + dot pattern */}
@@ -226,7 +241,7 @@ export default function Sistema360Client() {
         <SectionDivider />
 
         {/* ── PROOF BAR ── */}
-        <section className="relative px-4 sm:px-6 lg:px-8 py-14 md:py-16 bg-brand-black overflow-hidden">
+        <section className="relative px-4 sm:px-6 lg:px-8 py-14 md:py-16 overflow-hidden">
           <AnimateOnScroll className="container-custom">
             <p className="font-montserrat font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-3">
               Resultados reales
@@ -259,7 +274,7 @@ export default function Sistema360Client() {
         <SectionDivider />
 
         {/* ── CÓMO SE CONECTAN (FAQ corta) ── */}
-        <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 bg-brand-black">
+        <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20">
           <AnimateOnScroll className="container-custom">
             <p className="font-montserrat font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4">
               Cómo se conectan
@@ -300,7 +315,7 @@ export default function Sistema360Client() {
         <SectionDivider />
 
         {/* ── ¿Es para ti? unificado ── */}
-        <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 bg-brand-black">
+        <section className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20">
           <AnimateOnScroll className="container-custom">
             <p className="font-montserrat font-bold text-xs tracking-[0.3em] uppercase text-brand-beige text-center mb-4">
               &iquest;ES PARA TI?
@@ -425,7 +440,7 @@ export default function Sistema360Client() {
         {/* ── CTA cierre ── */}
         <section
           id="diagnostico"
-          className="relative px-4 sm:px-6 lg:px-8 py-20 md:py-28 bg-brand-black overflow-hidden"
+          className="relative px-4 sm:px-6 lg:px-8 py-20 md:py-28 overflow-hidden"
         >
           <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
             <motion.div

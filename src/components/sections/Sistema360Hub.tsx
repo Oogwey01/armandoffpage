@@ -19,7 +19,7 @@ export function Sistema360Hub() {
   return (
     <section
       id="ejes"
-      className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-24 bg-brand-black overflow-hidden"
+      className="relative px-4 sm:px-6 lg:px-8 py-16 md:py-24 overflow-hidden"
     >
       {/* Fondo: orb sutil + dot pattern */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
