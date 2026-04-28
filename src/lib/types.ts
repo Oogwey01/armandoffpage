@@ -52,6 +52,16 @@ export interface WrittenReview {
   source?: string;
 }
 
+export interface Sistema360Axis {
+  number: string;
+  eyebrow: string;
+  title: string;
+  bullets: string[];
+  stat: { value: string; label: string };
+  cta: { label: string; href: string };
+  icon: "marketing" | "strategy" | "scale";
+}
+
 export interface CaseStudy {
   id: number;
   name: string;

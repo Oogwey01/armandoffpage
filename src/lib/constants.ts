@@ -1,12 +1,55 @@
-import { Testimonial, Service, Stat, Pillar, StudentInterview, WrittenReview, CaseStudy } from "./types";
+import { Testimonial, Service, Stat, Pillar, StudentInterview, WrittenReview, CaseStudy, Sistema360Axis } from "./types";
 
 export const NAV_LINKS = [
+  { label: "Sistema 360", href: "/sistema-360" },
   { label: "Contenido", href: "/contenido" },
   { label: "CRM'S", href: "/crms" },
   { label: "Nosotros", href: "#quien-soy" },
   { label: "Reseñas", href: "#testimonios" },
   { label: "Iniciar Sesión", href: "#login" },
 ] as const;
+
+export const SISTEMA_360_AXES: Sistema360Axis[] = [
+  {
+    number: "01",
+    eyebrow: "Marketing & Marketplaces",
+    title: "Vende donde están tus clientes",
+    bullets: [
+      "Meta Ads gestionados con criterio de operador",
+      "TikTok Shop y Mercado Libre como canal real de venta",
+      "Página web y embudo conectado, no parches sueltos",
+    ],
+    stat: { value: "$30M+", label: "vendidos en marketplaces" },
+    cta: { label: "Ver metodología", href: "/#como-funciona" },
+    icon: "marketing",
+  },
+  {
+    number: "02",
+    eyebrow: "Contenido & Ads",
+    title: "Contenido que convierte",
+    bullets: [
+      "Dirección creativa, UGC y producciones con criterio de pauta",
+      "Diseño estático y composiciones visuales para feed y ads",
+      "Pauta gestionada (Meta · Google · TikTok) integrada al contenido",
+    ],
+    stat: { value: "Desde $9,900 MXN", label: "al mes · sin permanencia" },
+    cta: { label: "Ver tiers", href: "/contenido" },
+    icon: "strategy",
+  },
+  {
+    number: "03",
+    eyebrow: "CRM a la medida",
+    title: "El CRM que trabaja por ti",
+    bullets: [
+      "Pipeline diseñado para tu proceso real, no plantilla genérica",
+      "Automatizaciones que recuperan ventas y reducen tareas manuales",
+      "Dashboards con la data que sí mueve decisiones",
+    ],
+    stat: { value: "+40%", label: "conversión promedio" },
+    cta: { label: "Agendar diagnóstico", href: "/crms#diagnostico" },
+    icon: "scale",
+  },
+];
 
 export const STATS: Stat[] = [
   { value: 85, suffix: "%", label: "Retención Promedio" },
