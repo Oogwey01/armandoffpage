@@ -15,7 +15,7 @@ export const formSchema = z.object({
   monthlyRevenue: z.string().min(1, "Selecciona una opción"),
   goal90Days: z.string().min(2, "Mínimo 2 caracteres"),
   startWhen: z.string().min(1, "Selecciona una opción"),
-  mainObstacle: z.string().min(20, "Mínimo 20 caracteres"),
+  mainObstacle: z.string().optional().default(""),
 });
 
 export type FormData = z.infer<typeof formSchema>;
@@ -31,5 +31,5 @@ export const STEP_FIELDS: Record<number, (keyof FormData)[]> = {
   7: ["monthlyRevenue"],
   8: ["goal90Days"],
   9: ["startWhen"],
-  10: ["mainObstacle"],
+  10: [], // optional, no validation required
 };

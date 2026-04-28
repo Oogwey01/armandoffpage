@@ -136,7 +136,7 @@ function buildWhatsAppUrl(d: FormData): string {
     `• Ingresos mensuales: ${d.monthlyRevenue}`,
     `• Meta 90 días: ${d.goal90Days}`,
     `• Cuándo empezar: ${d.startWhen}`,
-    `• Principal obstáculo: ${d.mainObstacle}`,
+    d.mainObstacle ? `• Principal obstáculo: ${d.mainObstacle}` : null,
   ]
     .filter((line): line is string => Boolean(line))
     .join("\n");
@@ -392,7 +392,6 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
   const adsInvestment = watch("adsInvestment");
   const monthlyRevenue = watch("monthlyRevenue");
   const startWhen = watch("startWhen");
-  const mainObstacle = watch("mainObstacle") || "";
 
   // ---- Step animations ----------------------------------------------------
 
@@ -664,11 +663,14 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
           </div>
         );
 
-      // Step 10 — Obstáculo #1
+      // Step 10 — Obstáculo #1 (opcional)
       case 10:
         return (
           <div className="space-y-4">
-            <label className={labelClasses}>¿Cuál es el obstáculo #1 que te frena?</label>
+            <label className={labelClasses}>
+              ¿Cuál es el obstáculo #1 que te frena?{" "}
+              <span className="text-gray-500 font-light normal-case">(opcional)</span>
+            </label>
             <textarea
               rows={5}
               placeholder="Cuéntanos qué te impide crecer..."
@@ -676,16 +678,7 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
               className={`${inputClasses} resize-none`}
               {...register("mainObstacle")}
             />
-            <div className="flex items-center justify-between">
-              <FieldError message={errors.mainObstacle?.message} />
-              <span
-                className={`text-xs ml-auto font-montserrat ${
-                  mainObstacle.length >= 20 ? "text-brand-beige" : "text-gray-500"
-                }`}
-              >
-                {mainObstacle.length}/20 mín.
-              </span>
-            </div>
+            <FieldError message={errors.mainObstacle?.message} />
           </div>
         );
 
