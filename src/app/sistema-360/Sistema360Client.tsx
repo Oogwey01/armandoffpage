@@ -85,10 +85,7 @@ export default function Sistema360Client() {
   return (
     <>
       <ScrollProgress />
-      <Header
-        onOpenForm={open}
-        cta={{ label: "Ver ejes", href: "#ejes" }}
-      />
+      <Header onOpenForm={open} />
       <main className="relative bg-brand-black min-h-screen">
         {/* ── Fondo único continuo ── */}
         <div
@@ -215,13 +212,14 @@ export default function Sistema360Client() {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
             >
-              <a
-                href="#ejes"
+              <button
+                type="button"
+                onClick={open}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-brand-beige px-8 py-4 font-barlow font-bold text-sm uppercase tracking-widest text-brand-black hover:bg-brand-beige-light hover:scale-[1.03] transition-all duration-200"
               >
-                <span>Ver los 3 ejes</span>
-                <span aria-hidden="true">↓</span>
-              </a>
+                <span>Agendar diagnóstico</span>
+                <span aria-hidden="true">→</span>
+              </button>
               <button
                 type="button"
                 onClick={open}
@@ -236,7 +234,7 @@ export default function Sistema360Client() {
         <SectionDivider />
 
         {/* ── 3 EJES (corazón) ── */}
-        <Sistema360Hub />
+        <Sistema360Hub onOpenForm={open} />
 
         <SectionDivider />
 
@@ -490,12 +488,13 @@ export default function Sistema360Client() {
       </main>
 
       <FooterContent
+        onOpenForm={open}
         leadMagnet={{
-          eyebrow: "Lead magnet gratuito",
-          title: "Diagnóstico Sistema 360",
+          eyebrow: "Siguiente paso",
+          title: "Agenda tu diagnóstico gratuito",
           description:
-            "Recibe el checklist con las 12 preguntas que usamos para identificar por qué eje del sistema te conviene arrancar — y qué métricas mover primero.",
-          buttonLabel: "Recibir checklist Sistema 360",
+            "En 30 minutos identificamos por qué eje del sistema te conviene arrancar y qué métricas mover primero. Sin compromiso.",
+          buttonLabel: "Agendar diagnóstico",
         }}
       />
       <FloatingActions />

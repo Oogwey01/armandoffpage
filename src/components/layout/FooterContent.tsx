@@ -1,8 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState, type FormEvent } from "react";
 import { ANIMATION_EASE } from "@/lib/animations/variants";
 
 // ── Estructura de 4 columnas ──
@@ -131,27 +130,13 @@ const DEFAULT_LEAD_MAGNET: LeadMagnet = {
 
 interface FooterContentProps {
   leadMagnet?: LeadMagnet;
+  onOpenForm?: () => void;
 }
 
-export function FooterContent({ leadMagnet = DEFAULT_LEAD_MAGNET }: FooterContentProps = {}) {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
-    "idle"
-  );
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!email || !email.includes("@")) {
-      setStatus("error");
-      return;
-    }
-    setStatus("loading");
-    // Stub: integrar con endpoint real cuando exista
-    await new Promise((r) => setTimeout(r, 800));
-    setStatus("success");
-    setEmail("");
-    setTimeout(() => setStatus("idle"), 4000);
-  };
+export function FooterContent({
+  leadMagnet = DEFAULT_LEAD_MAGNET,
+  onOpenForm,
+}: FooterContentProps = {}) {
 
   return (
     <footer className="relative bg-brand-gray border-t border-brand-beige/20 overflow-hidden">
@@ -183,75 +168,18 @@ export function FooterContent({ leadMagnet = DEFAULT_LEAD_MAGNET }: FooterConten
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3" noValidate>
-              <div className="relative">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (status === "error") setStatus("idle");
-                  }}
-                  placeholder="tu@email.com"
-                  required
-                  disabled={status === "loading" || status === "success"}
-                  aria-label="Email para newsletter"
-                  aria-invalid={status === "error"}
-                  className="w-full h-12 rounded-xl bg-brand-black/60 border border-white/15 focus:border-brand-beige focus:ring-2 focus:ring-brand-beige/40 outline-none px-4 font-montserrat text-sm text-white placeholder-white/40 transition-all disabled:opacity-50 tracking-wide"
-                />
-              </div>
+            <div className="flex flex-col gap-3">
               <motion.button
-                type="submit"
-                disabled={status === "loading" || status === "success"}
-                whileHover={{ scale: status === "idle" ? 1.02 : 1 }}
+                type="button"
+                onClick={onOpenForm}
+                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.25, ease: ANIMATION_EASE }}
-                className="h-12 rounded-xl bg-brand-beige text-brand-black font-montserrat font-bold text-sm uppercase tracking-widest hover:bg-brand-beige-light transition-colors disabled:opacity-70 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+                className="h-12 rounded-xl bg-brand-beige text-brand-black font-montserrat font-bold text-sm uppercase tracking-widest hover:bg-brand-beige-light transition-colors inline-flex items-center justify-center gap-2"
               >
-                {status === "loading" && (
-                  <span
-                    aria-hidden="true"
-                    className="w-4 h-4 rounded-full border-2 border-brand-black/40 border-t-brand-black animate-spin"
-                  />
-                )}
-                {status === "success"
-                  ? leadMagnet.successLabel ?? "¡Revisa tu correo!"
-                  : status === "loading"
-                  ? "Enviando…"
-                  : leadMagnet.buttonLabel}
+                {leadMagnet.buttonLabel}
               </motion.button>
-
-              <AnimatePresence>
-                {status === "error" && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="font-montserrat text-xs text-red-400 tracking-wide"
-                  >
-                    Ingresa un email válido
-                  </motion.p>
-                )}
-                {status === "success" && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="font-montserrat text-xs text-green-400 flex items-center gap-2 tracking-wide"
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">
-                      <path
-                        d="M5 12l5 5L20 7"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    Listo — te llega en unos minutos
-                  </motion.p>
-                )}
-              </AnimatePresence>
-            </form>
+            </div>
           </div>
         </section>
 

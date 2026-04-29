@@ -103,7 +103,7 @@ export default function Header({ onOpenForm, cta }: HeaderProps) {
             </div>
 
             {/* Desktop Navigation — centered via flex-1 */}
-            <nav className="hidden items-center justify-center gap-7 lg:flex lg:flex-1 xl:gap-10">
+            <nav className="hidden items-center justify-center gap-12 lg:flex lg:flex-1">
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.href}

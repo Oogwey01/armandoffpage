@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { staggerContainer, staggerItem } from "@/lib/animations/variants";
-import Link from "next/link";
 import Image from "next/image";
 import { ParallaxText } from "@/components/animations";
 
@@ -273,9 +272,9 @@ export default function Hero({ onOpenForm }: HeroProps) {
             <button onClick={onOpenForm} className="btn-primary uppercase tracking-wide text-center">
               Quiero vender en línea
             </button>
-            <Link href="/metodo" className="btn-outline uppercase tracking-wide text-center">
+            <button onClick={onOpenForm} className="btn-outline uppercase tracking-wide text-center">
               Ver cómo funciona
-            </Link>
+            </button>
           </motion.div>
         </ParallaxText>
 

@@ -90,7 +90,7 @@ export default function ContenidoClient() {
   return (
     <>
       <ScrollProgress />
-      <Header onOpenForm={open} cta={{ label: "Ver paquetes", href: "#paquetes" }} />
+      <Header onOpenForm={open} />
       <main className="relative bg-brand-black min-h-screen">
         {/* ── Fondo único continuo ── */}
         <div
@@ -105,7 +105,7 @@ export default function ContenidoClient() {
         />
         <div aria-hidden="true" className="absolute inset-0 bg-brand-black/30 pointer-events-none" />
         {/* Hero section */}
-        <HeroContent ctaHref="#paquetes" />
+        <HeroContent onCtaClick={open} ctaHref="#" />
         {/* ── El problema real ── */}
         <section className="relative py-16 md:py-24 overflow-hidden">
           {/* Background: orb + dot pattern */}
@@ -227,7 +227,7 @@ export default function ContenidoClient() {
         <VideoShowcase />
 
         <SectionDivider />
-        <PricingComparison />
+        <PricingComparison onOpenForm={open} />
 
         <SectionDivider />
         {/* ── Por qué tiene sentido ── */}
@@ -399,7 +399,16 @@ export default function ContenidoClient() {
         </section>
 
       </main>
-      <FooterContent />
+      <FooterContent
+        onOpenForm={open}
+        leadMagnet={{
+          eyebrow: "Siguiente paso",
+          title: "Agenda tu diagnóstico gratuito",
+          description:
+            "En 30 minutos identificamos qué piezas y qué pauta tiene sentido arrancar. Te armamos una propuesta a tu medida, sin compromiso.",
+          buttonLabel: "Agendar diagnóstico",
+        }}
+      />
       <FloatingActions />
       <QualificationForm isOpen={isOpen} onClose={close} />
     </>

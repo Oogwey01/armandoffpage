@@ -15,7 +15,11 @@ const ICON_MAP: Record<Sistema360Axis["icon"], React.ComponentType<{ className?:
   scale: ScaleIcon,
 };
 
-export function Sistema360Hub() {
+interface Sistema360HubProps {
+  onOpenForm: () => void;
+}
+
+export function Sistema360Hub({ onOpenForm }: Sistema360HubProps) {
   return (
     <section
       id="ejes"
@@ -172,13 +176,14 @@ export function Sistema360Hub() {
                 </div>
 
                 {/* CTA */}
-                <a
-                  href={axis.cta.href}
+                <button
+                  type="button"
+                  onClick={onOpenForm}
                   className="relative z-10 inline-flex items-center justify-center gap-2 rounded-xl border-2 border-brand-beige text-brand-beige font-bold uppercase text-xs sm:text-sm tracking-widest px-5 py-3 hover:bg-brand-beige hover:text-brand-black transition-colors duration-200"
                 >
                   <span>{axis.cta.label}</span>
                   <span aria-hidden="true">→</span>
-                </a>
+                </button>
               </motion.div>
             );
           })}

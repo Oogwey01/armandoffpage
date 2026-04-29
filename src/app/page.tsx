@@ -48,12 +48,13 @@ export default function Home() {
         </div>
       </main>
       <FooterContent
+        onOpenForm={open}
         leadMagnet={{
-          eyebrow: "Lead magnet gratuito",
-          title: "Checklist: Escala tu e-commerce a 7 cifras",
+          eyebrow: "Siguiente paso",
+          title: "Agenda tu diagnóstico gratuito",
           description:
-            "Recibe el sistema completo con el que llevamos FRESA FIT a $30M+ en ML y $5M+ en Meta Ads. Meta, TikTok Shop, Mercado Libre y Shopify en un solo flujo.",
-          buttonLabel: "Descargar checklist gratis",
+            "En 30 minutos identificamos por dónde arrancar y armamos una propuesta a tu medida. Sin compromiso.",
+          buttonLabel: "Agendar diagnóstico",
         }}
       />
       <QualificationForm isOpen={isOpen} onClose={close} />

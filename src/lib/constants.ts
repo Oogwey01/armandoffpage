@@ -1,12 +1,9 @@
 import { Testimonial, Service, Stat, Pillar, StudentInterview, WrittenReview, CaseStudy, Sistema360Axis } from "./types";
 
 export const NAV_LINKS = [
-  { label: "Sistema 360", href: "/sistema-360" },
   { label: "Contenido", href: "/contenido" },
-  { label: "CRM'S", href: "/crms" },
-  { label: "Nosotros", href: "#quien-soy" },
   { label: "Reseñas", href: "#testimonios" },
-  { label: "Iniciar Sesión", href: "#login" },
+  { label: "Nosotros", href: "#quien-soy" },
 ] as const;
 
 export const SISTEMA_360_AXES: Sistema360Axis[] = [
@@ -20,7 +17,7 @@ export const SISTEMA_360_AXES: Sistema360Axis[] = [
       "Página web y embudo conectado, no parches sueltos",
     ],
     stat: { value: "$30M+", label: "vendidos en marketplaces" },
-    cta: { label: "Ver metodología", href: "/#como-funciona" },
+    cta: { label: "Agendar diagnóstico", href: "#" },
     icon: "marketing",
   },
   {
@@ -32,8 +29,8 @@ export const SISTEMA_360_AXES: Sistema360Axis[] = [
       "Diseño estático y composiciones visuales para feed y ads",
       "Pauta gestionada (Meta · Google · TikTok) integrada al contenido",
     ],
-    stat: { value: "Desde $9,900 MXN", label: "al mes · sin permanencia" },
-    cta: { label: "Ver tiers", href: "/contenido" },
+    stat: { value: "A tu medida", label: "cada propuesta es personalizada" },
+    cta: { label: "Agendar diagnóstico", href: "#" },
     icon: "strategy",
   },
   {
@@ -46,7 +43,7 @@ export const SISTEMA_360_AXES: Sistema360Axis[] = [
       "Dashboards con la data que sí mueve decisiones",
     ],
     stat: { value: "+40%", label: "conversión promedio" },
-    cta: { label: "Agendar diagnóstico", href: "/crms#diagnostico" },
+    cta: { label: "Agendar diagnóstico", href: "#" },
     icon: "scale",
   },
 ];

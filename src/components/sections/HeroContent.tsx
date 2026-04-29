@@ -49,7 +49,10 @@ export function HeroContent({
       setTimeout(() => {
         setRipples((prev) => prev.filter((r) => r.id !== ripple.id));
       }, 700);
-      onCtaClick?.();
+      if (onCtaClick) {
+        event.preventDefault();
+        onCtaClick();
+      }
     },
     [onCtaClick]
   );
@@ -180,7 +183,7 @@ export function HeroContent({
           <motion.a
             href={ctaHref}
             onClick={handleCtaClick}
-            aria-label="Ver paquetes de contenido disponibles"
+            aria-label="Agendar diagnóstico"
             whileHover={{ scale: 1.04, boxShadow: "0 0 36px 6px rgba(200,157,105,0.45)" }}
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.25, ease: ANIMATION_EASE }}
@@ -194,7 +197,7 @@ export function HeroContent({
                 style={{ left: ripple.x, top: ripple.y, width: ripple.size, height: ripple.size }}
               />
             ))}
-            <span className="relative z-10">Ver paquetes</span>
+            <span className="relative z-10">Agendar diagnóstico</span>
             <motion.span
               aria-hidden="true"
               animate={{ y: [0, 4, 0] }}

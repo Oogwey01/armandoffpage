@@ -412,12 +412,13 @@ export default function CRMsPage() {
 
       </main>
       <FooterContent
+        onOpenForm={open}
         leadMagnet={{
-          eyebrow: "Lead magnet gratuito",
-          title: "Plantilla: Flujos de CRM que recuperan ventas",
+          eyebrow: "Siguiente paso",
+          title: "Agenda tu diagnóstico gratuito",
           description:
-            "Recibe los 8 flujos de email/SMS (carrito abandonado, post-compra, reactivación) que usamos en FRESA FIT para recuperar hasta 30% de ingresos extra sin invertir un peso más en ads.",
-          buttonLabel: "Descargar plantillas de flujos",
+            "En 30 minutos mapeamos qué procesos de tu operación vale la pena automatizar primero. Sin compromiso.",
+          buttonLabel: "Agendar diagnóstico",
         }}
       />
       <FloatingActions />
