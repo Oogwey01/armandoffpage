@@ -14,8 +14,9 @@ import { generateEventId, getFbp, getFbc, trackEvent } from "@/lib/meta-pixel";
 // ---------------------------------------------------------------------------
 
 interface QualificationFormProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
+  variant?: "modal" | "inline";
 }
 
 // ---------------------------------------------------------------------------
@@ -186,7 +187,15 @@ function LoadingSpinner() {
 // Main component
 // ---------------------------------------------------------------------------
 
-export default function QualificationForm({ isOpen, onClose }: QualificationFormProps) {
+export default function QualificationForm({
+  isOpen = true,
+  onClose,
+  variant = "modal",
+}: QualificationFormProps) {
+  const isInline = variant === "inline";
+  const handleCloseRequest = useCallback(() => {
+    onClose?.();
+  }, [onClose]);
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [direction, setDirection] = useState<1 | -1>(1);
@@ -348,14 +357,14 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
   // ---- Close (limpia estado + cierra modal) -------------------------------
 
   const handleClose = useCallback(() => {
-    onClose();
+    handleCloseRequest();
     if (showSuccess) {
       reset();
       setCurrentStep(1);
       setShowSuccess(false);
       setSubmittedData(null);
     }
-  }, [onClose, reset, showSuccess]);
+  }, [handleCloseRequest, reset, showSuccess]);
 
   // ---- Overlay click ------------------------------------------------------
 
@@ -414,7 +423,7 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
               type="text"
               placeholder="Escribe tu nombre"
               autoComplete="given-name"
-              autoFocus
+              autoFocus={!isInline}
               className={inputClasses}
               {...register("nombre")}
             />
@@ -431,7 +440,7 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
               type="email"
               placeholder="tu@email.com"
               autoComplete="email"
-              autoFocus
+              autoFocus={!isInline}
               className={inputClasses}
               {...register("email")}
             />
@@ -448,7 +457,7 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
               type="tel"
               placeholder="+52 XXX XXX XXXX"
               autoComplete="tel"
-              autoFocus
+              autoFocus={!isInline}
               className={inputClasses}
               {...register("whatsapp")}
             />
@@ -465,7 +474,7 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
             <input
               type="text"
               placeholder="https://tunegocio.com"
-              autoFocus
+              autoFocus={!isInline}
               className={inputClasses}
               {...register("businessUrl")}
             />
@@ -618,7 +627,7 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
             <input
               type="text"
               placeholder="Ej: $150K MXN al mes, 500 clientes..."
-              autoFocus
+              autoFocus={!isInline}
               className={inputClasses}
               {...register("goal90Days")}
             />
@@ -674,7 +683,7 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
             <textarea
               rows={5}
               placeholder="Cuéntanos qué te impide crecer..."
-              autoFocus
+              autoFocus={!isInline}
               className={`${inputClasses} resize-none`}
               {...register("mainObstacle")}
             />
@@ -767,35 +776,22 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
 
   // ---- Main render --------------------------------------------------------
 
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Formulario de calificación para agendar cita"
-        >
-          {/* Overlay */}
-          <motion.div
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={handleOverlayClick}
-            aria-hidden="true"
-          />
+  const modalCardClasses = isInline
+    ? "relative bg-brand-gray rounded-2xl w-full max-w-[640px] mx-auto"
+    : "relative bg-brand-gray rounded-2xl w-[90vw] max-w-[500px] max-h-[90vh] overflow-y-auto";
 
-          {/* Modal */}
-          <motion.div
-            className="relative bg-brand-gray rounded-2xl w-[90vw] max-w-[500px] max-h-[90vh] overflow-y-auto"
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          >
-            {showSuccess ? (
+  const cardMotionProps = isInline
+    ? {}
+    : {
+        initial: { opacity: 0, scale: 0.95, y: 20 },
+        animate: { opacity: 1, scale: 1, y: 0 },
+        exit: { opacity: 0, scale: 0.95, y: 20 },
+        transition: { duration: 0.3, ease: "easeOut" as const },
+      };
+
+  const cardContent = (
+    <motion.div className={modalCardClasses} {...cardMotionProps}>
+      {showSuccess ? (
               (() => {
                 const isQualified =
                   submittedData != null &&
@@ -811,14 +807,16 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
                     transition={{ duration: 0.4, ease: "easeOut" }}
                     className="relative p-8 sm:p-10 text-center"
                   >
-                    <button
-                      type="button"
-                      onClick={handleClose}
-                      className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
-                      aria-label="Cerrar"
-                    >
-                      <CloseIcon className="w-6 h-6" />
-                    </button>
+                    {!isInline && (
+                      <button
+                        type="button"
+                        onClick={handleClose}
+                        className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
+                        aria-label="Cerrar"
+                      >
+                        <CloseIcon className="w-6 h-6" />
+                      </button>
+                    )}
 
                     <motion.div
                       initial={{ scale: 0.6, opacity: 0 }}
@@ -888,22 +886,26 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
                             Enviar mis datos por WhatsApp
                           </a>
                         )}
+                        {!isInline && (
+                          <button
+                            type="button"
+                            onClick={handleClose}
+                            className="mt-1 text-sm font-montserrat text-gray-400 hover:text-white transition-colors py-2"
+                          >
+                            Cerrar
+                          </button>
+                        )}
+                      </div>
+                    ) : (
+                      !isInline && (
                         <button
                           type="button"
                           onClick={handleClose}
-                          className="mt-1 text-sm font-montserrat text-gray-400 hover:text-white transition-colors py-2"
+                          className="w-full h-12 rounded-xl bg-brand-beige text-brand-black font-barlow font-bold text-sm uppercase tracking-widest hover:bg-brand-beige-light transition-colors"
                         >
                           Cerrar
                         </button>
-                      </div>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={handleClose}
-                        className="w-full h-12 rounded-xl bg-brand-beige text-brand-black font-barlow font-bold text-sm uppercase tracking-widest hover:bg-brand-beige-light transition-colors"
-                      >
-                        Cerrar
-                      </button>
+                      )
                     )}
                   </motion.div>
                 );
@@ -914,14 +916,16 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
                 <div className="sticky top-0 bg-brand-gray z-10 p-6 pb-4 border-b border-white/10">
                   <div className="flex items-center justify-between">
                     <h2 className="heading-md text-white">Agendar Cita</h2>
-                    <button
-                      type="button"
-                      onClick={onClose}
-                      className="text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
-                      aria-label="Cerrar formulario"
-                    >
-                      <CloseIcon className="w-6 h-6" />
-                    </button>
+                    {!isInline && (
+                      <button
+                        type="button"
+                        onClick={handleCloseRequest}
+                        className="text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
+                        aria-label="Cerrar formulario"
+                      >
+                        <CloseIcon className="w-6 h-6" />
+                      </button>
+                    )}
                   </div>
 
                   {/* Progress bar */}
@@ -966,7 +970,221 @@ export default function QualificationForm({ isOpen, onClose }: QualificationForm
                 </div>
               </>
             )}
+    </motion.div>
+  );
+
+  if (isInline) {
+    const progressPct = (currentStep / TOTAL_STEPS) * 100;
+    const stepLabel = String(currentStep).padStart(2, "0");
+    const totalLabel = String(TOTAL_STEPS).padStart(2, "0");
+
+    if (showSuccess) {
+      const isQualified =
+        submittedData != null &&
+        QUALIFIED_ADS_TIERS.has(submittedData.adsInvestment);
+      const whatsappUrl = submittedData ? buildWhatsAppUrl(submittedData) : null;
+      const calendlyUrl = submittedData ? buildCalendlyUrl(submittedData) : null;
+      const showCtas = isQualified && (whatsappUrl || calendlyUrl);
+
+      return (
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="w-full"
+        >
+          <div className="px-2 py-6 sm:px-4 sm:py-8 text-center">
+              <motion.div
+                initial={{ scale: 0.6, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1.2, 0.36, 1] }}
+                className="relative mx-auto mb-6 w-20 h-20 rounded-full bg-brand-beige/15 flex items-center justify-center"
+              >
+                <span aria-hidden="true" className="absolute inset-0 rounded-full border-2 border-brand-beige/40 animate-ping" />
+                <svg viewBox="0 0 24 24" fill="none" className="w-10 h-10 text-brand-beige" aria-hidden="true">
+                  <motion.path
+                    d="M5 12l5 5L20 7"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+                  />
+                </svg>
+              </motion.div>
+
+              <h2 className="font-barlow font-black text-2xl sm:text-3xl uppercase text-white leading-tight mb-3">
+                ¡Datos enviados <span className="text-brand-beige">correctamente</span>!
+              </h2>
+              <p className="font-montserrat text-sm sm:text-base text-gray-300 font-light leading-relaxed max-w-sm mx-auto mb-8">
+                {showCtas
+                  ? "Tu perfil encaja con lo que trabajamos. Agenda una llamada o contáctanos directo por WhatsApp."
+                  : "Gracias por considerarnos. En breve nos pondremos en contacto contigo."}
+              </p>
+
+              {showCtas && (
+                <div className="flex flex-col gap-3">
+                  {calendlyUrl && (
+                    <a
+                      href={calendlyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() =>
+                        trackEvent("Schedule", {
+                          content_name: "Qualification Form - Calendly",
+                          content_category: "Lead Qualified",
+                        })
+                      }
+                      className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-4 rounded-xl bg-brand-beige text-brand-black font-barlow font-bold text-sm uppercase tracking-widest hover:bg-brand-beige-light transition-colors"
+                    >
+                      Agendar llamada
+                    </a>
+                  )}
+                  {whatsappUrl && (
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() =>
+                        trackEvent("Contact", {
+                          content_name: "Qualification Form - WhatsApp",
+                          content_category: "Lead Qualified",
+                          method: "whatsapp",
+                        })
+                      }
+                      className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-4 rounded-xl bg-[#25D366] text-white font-barlow font-bold text-sm uppercase tracking-widest hover:bg-[#1FB855] transition-colors"
+                    >
+                      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor" aria-hidden="true">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                      </svg>
+                      Enviar mis datos por WhatsApp
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
           </motion.div>
+      );
+    }
+
+    return (
+      <div className="w-full">
+        {/* Header */}
+        <div className="px-1 pt-2 pb-5 border-b border-white/10">
+            <div className="flex items-end justify-between mb-5">
+              <div>
+                <p className="font-montserrat text-[10px] uppercase tracking-[0.3em] text-brand-beige/90 mb-1">
+                  Aplica al programa
+                </p>
+                <h2 className="font-barlow font-black text-xl sm:text-2xl uppercase text-white leading-none">
+                  Agenda tu cita
+                </h2>
+              </div>
+              <div className="flex items-baseline gap-1.5 font-barlow tabular-nums">
+                <motion.span
+                  key={currentStep}
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  className="font-black text-3xl sm:text-4xl text-brand-beige leading-none"
+                >
+                  {stepLabel}
+                </motion.span>
+                <span className="font-bold text-sm text-white/30 leading-none">
+                  / {totalLabel}
+                </span>
+              </div>
+            </div>
+
+            {/* Barra de progreso premium */}
+            <div
+              className="relative h-1 bg-white/10 rounded-full overflow-hidden"
+              role="progressbar"
+              aria-valuenow={currentStep}
+              aria-valuemin={1}
+              aria-valuemax={TOTAL_STEPS}
+              aria-label={`Paso ${currentStep} de ${TOTAL_STEPS}`}
+            >
+              <motion.div
+                className="absolute inset-y-0 left-0 bg-brand-beige/40 rounded-full blur-md"
+                initial={false}
+                animate={{ width: `${progressPct}%` }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              />
+              <motion.div
+                className="absolute inset-y-0 left-0 bg-gradient-to-r from-brand-beige-dark via-brand-beige to-brand-beige-light rounded-full"
+                initial={false}
+                animate={{ width: `${progressPct}%` }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              />
+            </div>
+          </div>
+
+          {/* Body */}
+          <div className="px-1 pt-7">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={currentStep}
+                custom={direction}
+                variants={stepVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.22, ease: "easeInOut" }}
+              >
+                {renderStep()}
+              </motion.div>
+            </AnimatePresence>
+
+            <div className="mt-8">{renderButtons()}</div>
+
+            {/* Trust line */}
+            <div className="mt-7 flex items-center justify-center gap-2 pt-5 border-t border-white/5">
+              <svg
+                className="w-3.5 h-3.5 text-brand-beige/70 flex-none"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                />
+              </svg>
+              <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-white/40">
+                100% Confidencial · Tus datos están seguros
+              </span>
+            </div>
+          </div>
+      </div>
+    );
+  }
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Formulario de calificación para agendar cita"
+        >
+          {/* Overlay */}
+          <motion.div
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={handleOverlayClick}
+            aria-hidden="true"
+          />
+          {cardContent}
         </div>
       )}
     </AnimatePresence>
