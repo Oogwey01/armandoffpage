@@ -5,9 +5,11 @@ import { trackEvent } from "@/lib/meta-pixel";
 
 export function useFormModal() {
   const [isOpen, setIsOpen] = useState(false);
+  const [whatsappIntent, setWhatsappIntent] = useState(false);
 
   const open = useCallback(() => {
     setIsOpen(true);
+    setWhatsappIntent(false);
     document.body.style.overflow = "hidden";
     // Sin PII todavía → solo browser pixel.
     trackEvent("InitiateCheckout", {
@@ -16,8 +18,21 @@ export function useFormModal() {
     });
   }, []);
 
+  // Variante con bandera "WhatsApp" — el modal muestra un aviso indicando
+  // que las respuestas se enviarán por WA para contextualizar a Armando.
+  const openWhatsapp = useCallback(() => {
+    setIsOpen(true);
+    setWhatsappIntent(true);
+    document.body.style.overflow = "hidden";
+    trackEvent("InitiateCheckout", {
+      content_name: "Qualification Form",
+      content_category: "Lead",
+    });
+  }, []);
+
   const close = useCallback(() => {
     setIsOpen(false);
+    setWhatsappIntent(false);
     document.body.style.overflow = "";
   }, []);
 
@@ -36,5 +51,5 @@ export function useFormModal() {
     };
   }, [isOpen, close]);
 
-  return { isOpen, open, close };
+  return { isOpen, open, openWhatsapp, close, whatsappIntent };
 }

@@ -17,6 +17,7 @@ interface QualificationFormProps {
   isOpen?: boolean;
   onClose?: () => void;
   variant?: "modal" | "inline";
+  whatsappIntent?: boolean;
 }
 
 // ---------------------------------------------------------------------------
@@ -44,16 +45,13 @@ const MARKETING_CHANNELS_TEXT_ONLY = [
 ] as const;
 
 const ADS_INVESTMENT_OPTIONS = [
-  "$0",
-  "$1-$5K MXN",
-  "$5K-$15K MXN",
+  "$1-$15K MXN",
   "$15K-$50K MXN",
   "$50K-$150K MXN",
   "$150K+ MXN",
-  "Prefiero no decirlo",
 ] as const;
 
-const QUALIFIED_ADS_TIERS = new Set<string>([
+const QUALIFIED_REVENUE_TIERS = new Set<string>([
   "$15K-$50K MXN",
   "$50K-$150K MXN",
   "$150K+ MXN",
@@ -62,21 +60,27 @@ const QUALIFIED_ADS_TIERS = new Set<string>([
 const WHATSAPP_NUMBER = "526623160125";
 
 const MONTHLY_REVENUE_OPTIONS = [
-  "$0",
   "$1-$15K MXN",
   "$15K-$50K MXN",
   "$50K-$150K MXN",
-  "$150K-$500K MXN",
-  "$500K+ MXN",
-  "Prefiero no decirlo",
+  "$150K+ MXN",
+] as const;
+
+const PREFER_NOT_TO_SAY = "Prefiero no decirlo";
+
+const GOAL_90D_OPTIONS = [
+  "Duplicar mis ventas (2x)",
+  "Triplicar mis ventas (3x)",
+  "Crecer entre 30-50%",
+  "10x mi facturación actual",
+  "Aún no tengo claridad",
 ] as const;
 
 const START_WHEN_OPTIONS = [
   "Inmediatamente",
   "En 2 semanas",
-  "2-4 semanas",
-  "4-6 semanas",
-  "6+ semanas",
+  "En 1 mes",
+  "+1 mes",
   "Solo estoy explorando",
 ] as const;
 
@@ -95,6 +99,28 @@ const errorClasses = "text-red-400 text-xs mt-1";
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+// Format MX phone numbers as the user types: "+52 (662) 429 6727".
+// Other country codes pass through with just the leading "+" preserved.
+function formatPhoneMx(value: string): string {
+  const hasPlus = value.trimStart().startsWith("+");
+  const digits = value.replace(/\D/g, "");
+
+  if (hasPlus && digits.startsWith("52")) {
+    const local = digits.slice(2, 12); // up to 10 local digits
+    let out = "+52";
+    if (local.length === 0) return out;
+    out += " (" + local.slice(0, 3);
+    if (local.length <= 3) return out;
+    out += ")";
+    out += " " + local.slice(3, 6);
+    if (local.length <= 6) return out;
+    out += " " + local.slice(6, 10);
+    return out;
+  }
+
+  return (hasPlus ? "+" : "") + digits;
+}
 
 function getSavedData(): Partial<FormData> {
   if (typeof window === "undefined") return {};
@@ -191,6 +217,7 @@ export default function QualificationForm({
   isOpen = true,
   onClose,
   variant = "modal",
+  whatsappIntent = false,
 }: QualificationFormProps) {
   const isInline = variant === "inline";
   const handleCloseRequest = useCallback(() => {
@@ -201,6 +228,7 @@ export default function QualificationForm({
   const [direction, setDirection] = useState<1 | -1>(1);
   const [showSuccess, setShowSuccess] = useState(false);
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
+  const [hasBusinessUrl, setHasBusinessUrl] = useState<"yes" | "no" | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -235,8 +263,11 @@ export default function QualificationForm({
     if (!saved || Object.keys(saved).length === 0) return;
     if (saved.nombre) setValue("nombre", saved.nombre);
     if (saved.email) setValue("email", saved.email);
-    if (saved.whatsapp) setValue("whatsapp", saved.whatsapp);
-    if (saved.businessUrl) setValue("businessUrl", saved.businessUrl);
+    if (saved.whatsapp) setValue("whatsapp", formatPhoneMx(saved.whatsapp));
+    if (saved.businessUrl) {
+      setValue("businessUrl", saved.businessUrl);
+      setHasBusinessUrl("yes");
+    }
     if (saved.marketingChannels) setValue("marketingChannels", saved.marketingChannels);
     if (saved.adsInvestment) setValue("adsInvestment", saved.adsInvestment);
     if (saved.monthlyRevenue) setValue("monthlyRevenue", saved.monthlyRevenue);
@@ -400,6 +431,7 @@ export default function QualificationForm({
 
   const adsInvestment = watch("adsInvestment");
   const monthlyRevenue = watch("monthlyRevenue");
+  const goal90Days = watch("goal90Days");
   const startWhen = watch("startWhen");
 
   // ---- Step animations ----------------------------------------------------
@@ -455,29 +487,88 @@ export default function QualificationForm({
             <label className={labelClasses}>¿Cuál es tu WhatsApp?</label>
             <input
               type="tel"
-              placeholder="+52 XXX XXX XXXX"
+              inputMode="tel"
+              placeholder="+52 (662) 429 6727"
               autoComplete="tel"
               autoFocus={!isInline}
               className={inputClasses}
-              {...register("whatsapp")}
+              name="whatsapp"
+              value={watch("whatsapp") ?? ""}
+              onChange={(e) =>
+                setValue("whatsapp", formatPhoneMx(e.target.value), {
+                  shouldValidate: true,
+                })
+              }
+              onBlur={() => trigger("whatsapp")}
             />
             <FieldError message={errors.whatsapp?.message} />
           </div>
         );
 
-      // Step 4 — URL negocio (opcional)
+      // Step 4 — URL negocio (opcional, con toggle Sí/No)
       case 4:
         return (
           <div className="space-y-4">
-            <label className={labelClasses}>¿Cuál es la URL de tu negocio?</label>
-            <p className="text-sm text-gray-400 -mt-4 mb-2">Opcional</p>
-            <input
-              type="text"
-              placeholder="https://tunegocio.com"
-              autoFocus={!isInline}
-              className={inputClasses}
-              {...register("businessUrl")}
-            />
+            <label className={labelClasses}>¿Tu negocio ya tiene página web?</label>
+            <div className="grid grid-cols-2 gap-3">
+              {(["yes", "no"] as const).map((opt) => {
+                const isSelected = hasBusinessUrl === opt;
+                const labelText = opt === "yes" ? "Sí" : "No";
+                return (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => {
+                      setHasBusinessUrl(opt);
+                      if (opt === "no") {
+                        setValue("businessUrl", "", { shouldValidate: true });
+                      }
+                    }}
+                    className={`flex items-center justify-center gap-2 p-4 rounded-lg border min-h-[56px] transition-colors ${
+                      isSelected
+                        ? "border-brand-beige bg-brand-beige/10"
+                        : "border-white/10 hover:border-brand-beige/50"
+                    }`}
+                  >
+                    <span
+                      className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
+                        isSelected ? "border-brand-beige" : "border-white/30"
+                      }`}
+                    >
+                      {isSelected && (
+                        <span className="h-2 w-2 rounded-full bg-brand-beige" />
+                      )}
+                    </span>
+                    <span className="text-base text-white font-montserrat font-medium">
+                      {labelText}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <AnimatePresence initial={false}>
+              {hasBusinessUrl === "yes" && (
+                <motion.div
+                  key="business-url-input"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  className="overflow-hidden"
+                >
+                  <div className="pt-2">
+                    <input
+                      type="text"
+                      placeholder="https://tunegocio.com"
+                      autoFocus
+                      className={inputClasses}
+                      {...register("businessUrl")}
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         );
 
@@ -577,6 +668,22 @@ export default function QualificationForm({
                   <span className="text-sm text-white font-montserrat">{option}</span>
                 </button>
               ))}
+              <button
+                type="button"
+                onClick={() => {
+                  setValue("adsInvestment", PREFER_NOT_TO_SAY, { shouldValidate: true });
+                  autoAdvance();
+                }}
+                className={`w-full flex items-center justify-center p-4 rounded-lg border min-h-[56px] transition-colors mt-3 ${
+                  adsInvestment === PREFER_NOT_TO_SAY
+                    ? "border-brand-beige bg-brand-beige/10"
+                    : "border-white/20 hover:border-brand-beige/50"
+                }`}
+              >
+                <span className="text-base font-barlow font-bold uppercase tracking-wider text-white">
+                  {PREFER_NOT_TO_SAY}
+                </span>
+              </button>
             </div>
             <FieldError message={errors.adsInvestment?.message} />
           </div>
@@ -614,23 +721,73 @@ export default function QualificationForm({
                   <span className="text-sm text-white font-montserrat">{option}</span>
                 </button>
               ))}
+              <button
+                type="button"
+                onClick={() => {
+                  setValue("monthlyRevenue", PREFER_NOT_TO_SAY, { shouldValidate: true });
+                  autoAdvance();
+                }}
+                className={`w-full flex items-center justify-center p-4 rounded-lg border min-h-[56px] transition-colors mt-3 ${
+                  monthlyRevenue === PREFER_NOT_TO_SAY
+                    ? "border-brand-beige bg-brand-beige/10"
+                    : "border-white/20 hover:border-brand-beige/50"
+                }`}
+              >
+                <span className="text-base font-barlow font-bold uppercase tracking-wider text-white">
+                  {PREFER_NOT_TO_SAY}
+                </span>
+              </button>
             </div>
             <FieldError message={errors.monthlyRevenue?.message} />
           </div>
         );
 
-      // Step 8 — Meta 90 días
+      // Step 8 — Meta 90 días (opcional, auto-avance)
       case 8:
         return (
           <div className="space-y-4">
-            <label className={labelClasses}>¿A cuánto quieres llegar en 90 días?</label>
-            <input
-              type="text"
-              placeholder="Ej: $150K MXN al mes, 500 clientes..."
-              autoFocus={!isInline}
-              className={inputClasses}
-              {...register("goal90Days")}
-            />
+            <label className={labelClasses}>
+              ¿A cuánto quieres llegar en 90 días?{" "}
+              <span className="text-gray-500 font-light normal-case">(opcional)</span>
+            </label>
+            <div className="space-y-2">
+              {GOAL_90D_OPTIONS.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => {
+                    setValue("goal90Days", option, { shouldValidate: true });
+                    autoAdvance();
+                  }}
+                  className={`w-full flex items-center gap-3 p-3 rounded-lg border text-left transition-colors ${
+                    goal90Days === option
+                      ? "border-brand-beige bg-brand-beige/10"
+                      : "border-white/10 hover:border-brand-beige/50"
+                  }`}
+                >
+                  <span
+                    className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
+                      goal90Days === option ? "border-brand-beige" : "border-white/30"
+                    }`}
+                  >
+                    {goal90Days === option && (
+                      <span className="h-2 w-2 rounded-full bg-brand-beige" />
+                    )}
+                  </span>
+                  <span className="text-sm text-white font-montserrat">{option}</span>
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setValue("goal90Days", "", { shouldValidate: true });
+                autoAdvance();
+              }}
+              className="w-full text-center text-sm font-montserrat text-gray-400 hover:text-brand-beige transition-colors py-2 mt-2"
+            >
+              Saltar este paso →
+            </button>
             <FieldError message={errors.goal90Days?.message} />
           </div>
         );
@@ -699,7 +856,7 @@ export default function QualificationForm({
   // ---- Render buttons per step --------------------------------------------
 
   function renderButtons() {
-    const isAutoStep = [6, 7, 9].includes(currentStep);
+    const isAutoStep = [6, 7, 8, 9].includes(currentStep);
 
     const backBtn = (
       <button
@@ -795,10 +952,11 @@ export default function QualificationForm({
               (() => {
                 const isQualified =
                   submittedData != null &&
-                  QUALIFIED_ADS_TIERS.has(submittedData.adsInvestment);
+                  QUALIFIED_REVENUE_TIERS.has(submittedData.monthlyRevenue);
                 const whatsappUrl = submittedData ? buildWhatsAppUrl(submittedData) : null;
                 const calendlyUrl = submittedData ? buildCalendlyUrl(submittedData) : null;
-                const showCtas = isQualified && (whatsappUrl || calendlyUrl);
+                const showWhatsapp = whatsappUrl != null;
+                const showCalendly = isQualified && calendlyUrl != null;
 
                 return (
                   <motion.div
@@ -843,70 +1001,58 @@ export default function QualificationForm({
                       ¡Datos enviados <span className="text-brand-beige">correctamente</span>!
                     </h2>
                     <p className="font-montserrat text-sm sm:text-base text-gray-300 font-light leading-relaxed max-w-sm mx-auto mb-8">
-                      {showCtas
+                      {showCalendly
                         ? "Tu perfil encaja con lo que trabajamos. Agenda una llamada o contáctanos directo por WhatsApp."
-                        : "Gracias por considerarnos. En breve nos pondremos en contacto contigo."}
+                        : "Gracias por compartir tus datos. Envíalos por WhatsApp para que sigamos la conversación."}
                     </p>
 
-                    {showCtas ? (
-                      <div className="flex flex-col gap-3">
-                        {calendlyUrl && (
-                          <a
-                            href={calendlyUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={() =>
-                              trackEvent("Schedule", {
-                                content_name: "Qualification Form - Calendly",
-                                content_category: "Lead Qualified",
-                              })
-                            }
-                            className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-4 rounded-xl bg-brand-beige text-brand-black font-barlow font-bold text-sm uppercase tracking-widest hover:bg-brand-beige-light transition-colors"
-                          >
-                            Agendar llamada
-                          </a>
-                        )}
-                        {whatsappUrl && (
-                          <a
-                            href={whatsappUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={() =>
-                              trackEvent("Contact", {
-                                content_name: "Qualification Form - WhatsApp",
-                                content_category: "Lead Qualified",
-                                method: "whatsapp",
-                              })
-                            }
-                            className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-4 rounded-xl bg-[#25D366] text-white font-barlow font-bold text-sm uppercase tracking-widest hover:bg-[#1FB855] transition-colors"
-                          >
-                            <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor" aria-hidden="true">
-                              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-                            </svg>
-                            Enviar mis datos por WhatsApp
-                          </a>
-                        )}
-                        {!isInline && (
-                          <button
-                            type="button"
-                            onClick={handleClose}
-                            className="mt-1 text-sm font-montserrat text-gray-400 hover:text-white transition-colors py-2"
-                          >
-                            Cerrar
-                          </button>
-                        )}
-                      </div>
-                    ) : (
-                      !isInline && (
+                    <div className="flex flex-col gap-3">
+                      {showCalendly && (
+                        <a
+                          href={calendlyUrl!}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() =>
+                            trackEvent("Schedule", {
+                              content_name: "Qualification Form - Calendly",
+                              content_category: "Lead Qualified",
+                            })
+                          }
+                          className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-4 rounded-xl bg-brand-beige text-brand-black font-barlow font-bold text-sm uppercase tracking-widest hover:bg-brand-beige-light transition-colors"
+                        >
+                          Agendar llamada
+                        </a>
+                      )}
+                      {showWhatsapp && (
+                        <a
+                          href={whatsappUrl!}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() =>
+                            trackEvent("Contact", {
+                              content_name: "Qualification Form - WhatsApp",
+                              content_category: isQualified ? "Lead Qualified" : "Lead",
+                              method: "whatsapp",
+                            })
+                          }
+                          className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-4 rounded-xl bg-[#25D366] text-white font-barlow font-bold text-sm uppercase tracking-widest hover:bg-[#1FB855] transition-colors"
+                        >
+                          <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor" aria-hidden="true">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                          </svg>
+                          Enviar mis datos por WhatsApp
+                        </a>
+                      )}
+                      {!isInline && (
                         <button
                           type="button"
                           onClick={handleClose}
-                          className="w-full h-12 rounded-xl bg-brand-beige text-brand-black font-barlow font-bold text-sm uppercase tracking-widest hover:bg-brand-beige-light transition-colors"
+                          className="mt-1 text-sm font-montserrat text-gray-400 hover:text-white transition-colors py-2"
                         >
                           Cerrar
                         </button>
-                      )
-                    )}
+                      )}
+                    </div>
                   </motion.div>
                 );
               })()
@@ -915,7 +1061,9 @@ export default function QualificationForm({
                 {/* Header */}
                 <div className="sticky top-0 bg-brand-gray z-10 p-6 pb-4 border-b border-white/10">
                   <div className="flex items-center justify-between">
-                    <h2 className="heading-md text-white">Agendar Cita</h2>
+                    <h2 className="heading-md text-white">
+                      {whatsappIntent ? "Hablemos por WhatsApp" : "Agendar Cita"}
+                    </h2>
                     {!isInline && (
                       <button
                         type="button"
@@ -927,6 +1075,22 @@ export default function QualificationForm({
                       </button>
                     )}
                   </div>
+
+                  {whatsappIntent && (
+                    <div className="mt-4 flex items-start gap-2.5 rounded-lg border border-[#25D366]/30 bg-[#25D366]/10 px-3 py-2.5">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="w-4 h-4 mt-0.5 text-[#25D366] flex-shrink-0"
+                        aria-hidden="true"
+                      >
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                      </svg>
+                      <p className="font-montserrat text-xs text-white/85 leading-relaxed">
+                        Tus respuestas se enviarán por WhatsApp para que Armando entienda mejor tu situación antes de contactarte.
+                      </p>
+                    </div>
+                  )}
 
                   {/* Progress bar */}
                   <div
@@ -981,10 +1145,11 @@ export default function QualificationForm({
     if (showSuccess) {
       const isQualified =
         submittedData != null &&
-        QUALIFIED_ADS_TIERS.has(submittedData.adsInvestment);
+        QUALIFIED_REVENUE_TIERS.has(submittedData.monthlyRevenue);
       const whatsappUrl = submittedData ? buildWhatsAppUrl(submittedData) : null;
       const calendlyUrl = submittedData ? buildCalendlyUrl(submittedData) : null;
-      const showCtas = isQualified && (whatsappUrl || calendlyUrl);
+      const showWhatsapp = whatsappUrl != null;
+      const showCalendly = isQualified && calendlyUrl != null;
 
       return (
         <motion.div
@@ -1019,51 +1184,49 @@ export default function QualificationForm({
                 ¡Datos enviados <span className="text-brand-beige">correctamente</span>!
               </h2>
               <p className="font-montserrat text-sm sm:text-base text-gray-300 font-light leading-relaxed max-w-sm mx-auto mb-8">
-                {showCtas
+                {showCalendly
                   ? "Tu perfil encaja con lo que trabajamos. Agenda una llamada o contáctanos directo por WhatsApp."
-                  : "Gracias por considerarnos. En breve nos pondremos en contacto contigo."}
+                  : "Gracias por compartir tus datos. Envíalos por WhatsApp para que sigamos la conversación."}
               </p>
 
-              {showCtas && (
-                <div className="flex flex-col gap-3">
-                  {calendlyUrl && (
-                    <a
-                      href={calendlyUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() =>
-                        trackEvent("Schedule", {
-                          content_name: "Qualification Form - Calendly",
-                          content_category: "Lead Qualified",
-                        })
-                      }
-                      className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-4 rounded-xl bg-brand-beige text-brand-black font-barlow font-bold text-sm uppercase tracking-widest hover:bg-brand-beige-light transition-colors"
-                    >
-                      Agendar llamada
-                    </a>
-                  )}
-                  {whatsappUrl && (
-                    <a
-                      href={whatsappUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() =>
-                        trackEvent("Contact", {
-                          content_name: "Qualification Form - WhatsApp",
-                          content_category: "Lead Qualified",
-                          method: "whatsapp",
-                        })
-                      }
-                      className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-4 rounded-xl bg-[#25D366] text-white font-barlow font-bold text-sm uppercase tracking-widest hover:bg-[#1FB855] transition-colors"
-                    >
-                      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor" aria-hidden="true">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-                      </svg>
-                      Enviar mis datos por WhatsApp
-                    </a>
-                  )}
-                </div>
-              )}
+              <div className="flex flex-col gap-3">
+                {showCalendly && (
+                  <a
+                    href={calendlyUrl!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackEvent("Schedule", {
+                        content_name: "Qualification Form - Calendly",
+                        content_category: "Lead Qualified",
+                      })
+                    }
+                    className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-4 rounded-xl bg-brand-beige text-brand-black font-barlow font-bold text-sm uppercase tracking-widest hover:bg-brand-beige-light transition-colors"
+                  >
+                    Agendar llamada
+                  </a>
+                )}
+                {showWhatsapp && (
+                  <a
+                    href={whatsappUrl!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackEvent("Contact", {
+                        content_name: "Qualification Form - WhatsApp",
+                        content_category: isQualified ? "Lead Qualified" : "Lead",
+                        method: "whatsapp",
+                      })
+                    }
+                    className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-4 rounded-xl bg-[#25D366] text-white font-barlow font-bold text-sm uppercase tracking-widest hover:bg-[#1FB855] transition-colors"
+                  >
+                    <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor" aria-hidden="true">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                    </svg>
+                    Enviar mis datos por WhatsApp
+                  </a>
+                )}
+              </div>
             </div>
           </motion.div>
       );

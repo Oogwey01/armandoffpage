@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { CloseIcon } from "@/components/common/Icons";
+import { CloseIcon, ChevronDownIcon } from "@/components/common/Icons";
 import { NAV_LINKS } from "@/lib/constants";
 
 interface HeaderProps {
@@ -18,9 +18,16 @@ interface HeaderProps {
 export default function Header({ onOpenForm, cta }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [expandedMobile, setExpandedMobile] = useState<string | null>(null);
 
   const closeMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(false);
+    setExpandedMobile(null);
+  }, []);
+
+  const toggleMobileSection = useCallback((label: string) => {
+    setExpandedMobile((prev) => (prev === label ? null : label));
   }, []);
 
   useEffect(() => {
@@ -103,16 +110,72 @@ export default function Header({ onOpenForm, cta }: HeaderProps) {
             </div>
 
             {/* Desktop Navigation — centered via flex-1 */}
-            <nav className="hidden items-center justify-center gap-12 lg:flex lg:flex-1">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm font-bold text-white/90 transition-colors duration-200 hover:text-brand-beige"
-                >
-                  {link.label}
-                </a>
-              ))}
+            <nav className="hidden items-center justify-center gap-7 xl:gap-9 lg:flex lg:flex-1">
+              {NAV_LINKS.map((link) => {
+                const hasChildren = link.children && link.children.length > 0;
+                const isOpen = openDropdown === link.label;
+
+                if (!hasChildren) {
+                  return (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      className="text-sm font-bold text-white/90 transition-colors duration-200 hover:text-brand-beige whitespace-nowrap"
+                    >
+                      {link.label}
+                    </a>
+                  );
+                }
+
+                return (
+                  <div
+                    key={link.label}
+                    className="relative"
+                    onMouseEnter={() => setOpenDropdown(link.label)}
+                    onMouseLeave={() => setOpenDropdown((cur) => (cur === link.label ? null : cur))}
+                  >
+                    <button
+                      type="button"
+                      className={`flex items-center gap-1.5 text-sm font-bold transition-colors duration-200 whitespace-nowrap ${
+                        isOpen ? "text-brand-beige" : "text-white/90 hover:text-brand-beige"
+                      }`}
+                      aria-haspopup="true"
+                      aria-expanded={isOpen}
+                    >
+                      {link.label}
+                      <ChevronDownIcon
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                          isOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -6 }}
+                          transition={{ duration: 0.15, ease: "easeOut" }}
+                          className="absolute left-1/2 top-full -translate-x-1/2 pt-3"
+                        >
+                          <div className="min-w-[210px] rounded-2xl border border-white/10 bg-brand-black/90 backdrop-blur-xl shadow-2xl shadow-black/40 p-2">
+                            {link.children!.map((child) => (
+                              <a
+                                key={child.href}
+                                href={child.href}
+                                className="block rounded-xl px-3.5 py-2.5 text-sm font-medium text-white/85 transition-colors duration-150 hover:bg-white/5 hover:text-brand-beige"
+                              >
+                                {child.label}
+                              </a>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
             </nav>
 
             {/* RIGHT: CTA — compact on mobile, full on desktop */}
@@ -181,20 +244,75 @@ export default function Header({ onOpenForm, cta }: HeaderProps) {
               </div>
 
               {/* Drawer Links */}
-              <nav className="flex flex-col gap-1 px-4 pt-6">
-                {NAV_LINKS.map((link, index) => (
-                  <motion.a
-                    key={link.href}
-                    href={link.href}
-                    onClick={closeMobileMenu}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + index * 0.05 }}
-                    className="font-barlow font-bold text-lg text-white py-3 px-2 rounded-lg hover:bg-white/10 hover:text-brand-beige transition-colors duration-200"
-                  >
-                    {link.label}
-                  </motion.a>
-                ))}
+              <nav className="flex flex-col gap-1 px-4 pt-6 overflow-y-auto">
+                {NAV_LINKS.map((link, index) => {
+                  const hasChildren = link.children && link.children.length > 0;
+                  const isExpanded = expandedMobile === link.label;
+
+                  if (!hasChildren) {
+                    return (
+                      <motion.a
+                        key={link.label}
+                        href={link.href}
+                        onClick={closeMobileMenu}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 + index * 0.05 }}
+                        className="font-barlow font-bold text-lg text-white py-3 px-2 rounded-lg hover:bg-white/10 hover:text-brand-beige transition-colors duration-200"
+                      >
+                        {link.label}
+                      </motion.a>
+                    );
+                  }
+
+                  return (
+                    <motion.div
+                      key={link.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 + index * 0.05 }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => toggleMobileSection(link.label)}
+                        className="w-full flex items-center justify-between font-barlow font-bold text-lg text-white py-3 px-2 rounded-lg hover:bg-white/10 transition-colors duration-200"
+                        aria-expanded={isExpanded}
+                      >
+                        <span>{link.label}</span>
+                        <ChevronDownIcon
+                          className={`w-4 h-4 transition-transform duration-200 ${
+                            isExpanded ? "rotate-180 text-brand-beige" : "text-white/60"
+                          }`}
+                        />
+                      </button>
+                      <AnimatePresence initial={false}>
+                        {isExpanded && (
+                          <motion.div
+                            key="section"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2, ease: "easeOut" }}
+                            className="overflow-hidden"
+                          >
+                            <div className="flex flex-col gap-0.5 pl-4 pt-1 pb-2 border-l border-white/10 ml-3">
+                              {link.children!.map((child) => (
+                                <a
+                                  key={child.href}
+                                  href={child.href}
+                                  onClick={closeMobileMenu}
+                                  className="font-montserrat font-medium text-sm text-white/80 py-2 px-3 rounded-md hover:bg-white/5 hover:text-brand-beige transition-colors duration-200"
+                                >
+                                  {child.label}
+                                </a>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  );
+                })}
               </nav>
 
               {/* Drawer CTA */}

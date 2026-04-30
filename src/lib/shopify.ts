@@ -15,12 +15,10 @@ const STEP_NAMES: Record<number, string> = {
 };
 
 const REVENUE_CATEGORY_MAP: Record<string, string> = {
-  $0: "Comunes",
   "$1-$15K MXN": "Comunes",
   "$15K-$50K MXN": "Normales",
   "$50K-$150K MXN": "Arriba del promedio",
-  "$150K-$500K MXN": "Admins",
-  "$500K+ MXN": "Leyendas",
+  "$150K+ MXN": "Leyendas",
 };
 
 export function getRevenueCategory(monthlyRevenue: string): string {
@@ -34,6 +32,12 @@ type ShopifyMetafield = {
   type: string;
 };
 
+type ShopifyEmailMarketingConsent = {
+  state: "subscribed" | "not_subscribed" | "pending" | "unsubscribed";
+  opt_in_level: "single_opt_in" | "confirmed_opt_in" | "unknown";
+  consent_updated_at: string;
+};
+
 type ShopifyCustomerPayload = {
   first_name?: string;
   email?: string;
@@ -41,6 +45,7 @@ type ShopifyCustomerPayload = {
   tags?: string;
   note?: string;
   metafields?: ShopifyMetafield[];
+  email_marketing_consent?: ShopifyEmailMarketingConsent;
 };
 
 type ShopifyErrors = Record<string, string[] | string>;
@@ -324,6 +329,12 @@ export async function createShopifyCustomer(data: FormData): Promise<void> {
   const metafields: ShopifyMetafield[] = [
     {
       namespace: "armandoff",
+      key: "ultimo_paso",
+      value: "Formulario completado",
+      type: "single_line_text_field",
+    },
+    {
+      namespace: "armandoff",
       key: "marketing_channels",
       value: data.marketingChannels.join(", "),
       type: "single_line_text_field",
@@ -360,6 +371,12 @@ export async function createShopifyCustomer(data: FormData): Promise<void> {
     },
   ];
 
+  const emailMarketingConsent: ShopifyEmailMarketingConsent = {
+    state: "subscribed",
+    opt_in_level: "single_opt_in",
+    consent_updated_at: submittedAt,
+  };
+
   let payload: ShopifyCustomerPayload = {
     first_name: data.nombre,
     email: data.email,
@@ -367,6 +384,7 @@ export async function createShopifyCustomer(data: FormData): Promise<void> {
     tags,
     note: noteLines.join("\n"),
     metafields,
+    email_marketing_consent: emailMarketingConsent,
   };
 
   const create = await postCustomer(baseUrl, headers, payload);
@@ -436,6 +454,7 @@ export async function createShopifyCustomer(data: FormData): Promise<void> {
     tags,
     note: payload.note,
     metafields,
+    email_marketing_consent: emailMarketingConsent,
   });
   if (!update.ok) {
     console.error(

@@ -97,7 +97,12 @@ export default function EmpezarClient() {
         </div>
       </footer>
 
-      <FloatingActions />
+      <FloatingActions
+        onAction={() => {
+          const el = document.getElementById("form");
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }}
+      />
     </>
   );
 }

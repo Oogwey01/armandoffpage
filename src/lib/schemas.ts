@@ -13,7 +13,7 @@ export const formSchema = z.object({
     .min(1, "Selecciona al menos una opción"),
   adsInvestment: z.string().min(1, "Selecciona una opción"),
   monthlyRevenue: z.string().min(1, "Selecciona una opción"),
-  goal90Days: z.string().min(2, "Mínimo 2 caracteres"),
+  goal90Days: z.string().optional().default(""),
   startWhen: z.string().min(1, "Selecciona una opción"),
   mainObstacle: z.string().optional().default(""),
 });

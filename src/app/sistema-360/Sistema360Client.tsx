@@ -80,7 +80,7 @@ const FAQS = [
 ];
 
 export default function Sistema360Client() {
-  const { isOpen, open, close } = useFormModal();
+  const { isOpen, open, openWhatsapp, close, whatsappIntent } = useFormModal();
 
   return (
     <>
@@ -497,8 +497,8 @@ export default function Sistema360Client() {
           buttonLabel: "Agendar diagnóstico",
         }}
       />
-      <FloatingActions />
-      <QualificationForm isOpen={isOpen} onClose={close} />
+      <FloatingActions onAction={openWhatsapp} />
+      <QualificationForm isOpen={isOpen} onClose={close} whatsappIntent={whatsappIntent} />
     </>
   );
 }
