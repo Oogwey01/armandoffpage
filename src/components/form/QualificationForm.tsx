@@ -745,7 +745,7 @@ export default function QualificationForm({
           <div className="sticky top-0 bg-brand-gray z-10 p-6 pb-4 border-b border-white/10">
             <div className="flex items-center justify-between">
               <h2 className="heading-md text-white">
-                {whatsappIntent ? "Hablemos por WhatsApp" : "Agendar Cita"}
+                Hablemos por WhatsApp
               </h2>
               {!isInline && (
                 <button
@@ -848,7 +848,7 @@ export default function QualificationForm({
                 Aplica al programa
               </p>
               <h2 className="font-barlow font-black text-xl sm:text-2xl uppercase text-white leading-none">
-                Agenda tu cita
+                Hablemos por WhatsApp
               </h2>
             </div>
             <div className="flex items-baseline gap-1.5 font-barlow tabular-nums">
@@ -941,7 +941,7 @@ export default function QualificationForm({
           className="fixed inset-0 z-50 flex items-center justify-center"
           role="dialog"
           aria-modal="true"
-          aria-label="Formulario de calificación para agendar cita"
+          aria-label="Formulario para iniciar contacto por WhatsApp"
         >
           {/* Overlay */}
           <motion.div

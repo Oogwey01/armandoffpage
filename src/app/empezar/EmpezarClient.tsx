@@ -78,7 +78,7 @@ export default function EmpezarClient() {
           className="absolute inset-0 bg-brand-black/40 pointer-events-none"
         />
 
-        <div className="relative z-10">
+        <div className="relative">
           {/* 1. Hero: video + formulario en 2 columnas (desktop) */}
           <HeroVideo highlight={isFormSpotlight} />
 
@@ -130,7 +130,7 @@ export default function EmpezarClient() {
             transition={{ duration: 0.3, ease: "easeOut" }}
             onClick={closeSpotlight}
             aria-label="Cerrar resaltado del formulario"
-            className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm cursor-pointer"
+            className="fixed inset-0 z-[60] backdrop-blur-md cursor-pointer"
           />
         )}
       </AnimatePresence>

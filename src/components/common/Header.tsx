@@ -8,7 +8,7 @@ import { NAV_LINKS } from "@/lib/constants";
 
 interface HeaderProps {
   onOpenForm: () => void;
-  // Override opcional del CTA — si se provee, renderiza un link en lugar del botón "Agendar Cita"
+  // Override opcional del CTA — si se provee, renderiza un link en lugar del botón principal
   cta?: {
     label: string;
     href: string;
@@ -193,8 +193,8 @@ export default function Header({ onOpenForm, cta }: HeaderProps) {
                 className="flex-shrink-0 flex items-center gap-1.5 rounded-xl bg-[#C89D69] text-black font-bold uppercase transition-colors duration-200 hover:bg-[#B08A55]
                            px-3 py-2 text-xs lg:px-8 lg:py-2.5 lg:text-base"
               >
-                <span>Agendar Cita</span>
-                <span className="text-[9px] lg:text-[10px] font-bold opacity-75 tracking-widest">GRATIS</span>
+                <span>Hablemos</span>
+                <span className="text-[9px] lg:text-[10px] font-bold opacity-75 tracking-widest">WHATSAPP</span>
               </button>
             )}
           </div>
@@ -339,8 +339,8 @@ export default function Header({ onOpenForm, cta }: HeaderProps) {
                     transition={{ delay: 0.1 + NAV_LINKS.length * 0.05 }}
                     className="w-full flex flex-col items-center rounded-xl bg-brand-beige px-6 py-3 text-sm font-bold text-brand-black hover:bg-brand-beige-light transition-colors duration-200"
                   >
-                    <span>Agendar Cita</span>
-                    <span className="text-[10px] font-normal opacity-60 leading-tight tracking-widest">GRATIS</span>
+                    <span>Hablemos</span>
+                    <span className="text-[10px] font-normal opacity-60 leading-tight tracking-widest">WHATSAPP</span>
                   </motion.button>
                 )}
               </div>
