@@ -117,12 +117,12 @@ src/
 
 ## Formulario de calificación
 
-Modal multi-paso en `src/components/form/QualificationForm.tsx`.
-- Persistencia: `localStorage` key `armandoff-form-data-v2`
-- Checkpoint intermedio: `POST /api/form-checkpoint`
-- Submit final: `POST /api/submit-form`
-- Validación: Zod en `src/lib/schemas.ts`
+Modal multi-paso (7 pasos) en `src/components/form/QualificationForm.tsx`.
+- Persistencia: `localStorage` key `armandoff-form-data-v3`
+- Submit final: `POST /api/submit-form` → crea customer en Shopify (requiere phone) + Meta CAPI
+- Validación: Zod en `src/lib/schemas.ts` (también define las opciones A/B/C/D y `QUALIFIED_ADS_INVESTMENT`)
 - State: hook `useFormModal`
+- Calendly suspendido: el botón final único es WhatsApp. Calificación (inversión en ads C+D) solo agrega tag `lead-calificado` en Shopify.
 
 ---
 

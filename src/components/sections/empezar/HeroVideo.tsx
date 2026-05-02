@@ -3,56 +3,20 @@
 import { motion } from "framer-motion";
 import QualificationForm from "@/components/form/QualificationForm";
 
-// Cambiar a `true` cuando el MP4 final esté disponible en /public/videos/
-const HAS_VIDEO = false;
-
-const VIDEO_SRC = "/videos/empezar-hero.mp4";
-const VIDEO_POSTER = "/videos/empezar-hero-poster.webp";
+const VIDEO_SRC = "/videos/Emepezar/0502.mp4";
 
 function VideoPlayer() {
   return (
     <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-white/15 bg-brand-black shadow-2xl shadow-black/60">
-      {HAS_VIDEO ? (
-        <video
-          className="absolute inset-0 w-full h-full object-cover"
-          controls
-          playsInline
-          preload="metadata"
-          poster={VIDEO_POSTER}
-        >
-          <source src={VIDEO_SRC} type="video/mp4" />
-          Tu navegador no soporta video HTML5.
-        </video>
-      ) : (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-brand-gray to-brand-black">
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 opacity-[0.05]"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 1px 1px, rgba(200,157,105,0.6) 1px, transparent 0)",
-              backgroundSize: "24px 24px",
-            }}
-          />
-          <div className="relative flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-brand-beige/20 border-2 border-brand-beige/50">
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 rounded-full border-2 border-brand-beige/40 animate-ping"
-            />
-            <svg
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-7 h-7 sm:w-9 sm:h-9 text-brand-beige ml-1"
-              aria-hidden="true"
-            >
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </div>
-          <p className="relative mt-4 font-montserrat text-[10px] sm:text-xs uppercase tracking-[0.3em] text-brand-beige/80">
-            Video próximamente
-          </p>
-        </div>
-      )}
+      <video
+        className="absolute inset-0 w-full h-full object-cover"
+        controls
+        playsInline
+        preload="metadata"
+      >
+        <source src={VIDEO_SRC} type="video/mp4" />
+        Tu navegador no soporta video HTML5.
+      </video>
     </div>
   );
 }

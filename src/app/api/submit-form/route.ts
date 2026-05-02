@@ -4,15 +4,13 @@ import { sendCapiEvent, extractRequestUserData } from "@/lib/meta-capi";
 
 interface SubmitFormBody {
   nombre?: string;
-  email?: string;
+  nombreNegocio?: string;
+  productoServicio?: string;
+  canalVentaActual?: string;
+  presenciaMarca?: string;
+  inversionAds?: string;
+  urgenciaResultados?: string;
   whatsapp?: string;
-  businessUrl?: string;
-  marketingChannels?: string[];
-  adsInvestment?: string;
-  monthlyRevenue?: string;
-  goal90Days?: string;
-  startWhen?: string;
-  mainObstacle?: string;
   _meta?: { eventId?: string; fbp?: string; fbc?: string };
 }
 
@@ -21,7 +19,7 @@ export async function POST(request: Request) {
     const data = (await request.json()) as SubmitFormBody;
 
     // Validate required fields exist
-    if (!data.nombre || !data.email) {
+    if (!data.nombre || !data.whatsapp) {
       return NextResponse.json(
         { error: "Campos requeridos faltantes" },
         { status: 400 }
@@ -31,35 +29,34 @@ export async function POST(request: Request) {
     // Log for development
     console.log("Form submission received:", {
       nombre: data.nombre,
-      email: data.email,
+      nombreNegocio: data.nombreNegocio,
+      productoServicio: data.productoServicio,
+      canalVentaActual: data.canalVentaActual,
+      presenciaMarca: data.presenciaMarca,
+      inversionAds: data.inversionAds,
+      urgenciaResultados: data.urgenciaResultados,
       whatsapp: data.whatsapp,
-      businessUrl: data.businessUrl,
-      marketingChannels: data.marketingChannels,
-      adsInvestment: data.adsInvestment,
-      monthlyRevenue: data.monthlyRevenue,
-      goal90Days: data.goal90Days,
-      startWhen: data.startWhen,
-      mainObstacle: data.mainObstacle,
       timestamp: new Date().toISOString(),
     });
 
-    // Save customer to Shopify with revenue-based category tag
+    // Save customer to Shopify with ads-investment-based category tag
     try {
       await createShopifyCustomer(data as Parameters<typeof createShopifyCustomer>[0]);
     } catch (shopifyError) {
       console.error("[Shopify] Unexpected error:", shopifyError);
     }
 
-    // Meta Conversions API — mismo eventId que el browser pixel para deduplicar
+    // Meta Conversions API — mismo eventId que el browser pixel para deduplicar.
+    // CompleteRegistration marca que terminaron el form; el Lead real se dispara
+    // cuando el usuario hace clic en WhatsApp (ese es el CTA que optimiza la campaña).
     const meta = data._meta;
     if (meta?.eventId) {
       const reqData = extractRequestUserData(request);
       void sendCapiEvent({
-        eventName: "Lead",
+        eventName: "CompleteRegistration",
         eventId: meta.eventId,
         eventSourceUrl: request.headers.get("referer") ?? undefined,
         userData: {
-          email: data.email,
           phone: data.whatsapp,
           firstName: data.nombre,
           fbp: meta.fbp,
@@ -68,7 +65,7 @@ export async function POST(request: Request) {
         },
         customData: {
           content_name: "Qualification Form",
-          content_category: "Lead",
+          content_category: "Registration",
           currency: "MXN",
         },
       });
