@@ -8,34 +8,10 @@ export type NavLink = {
 };
 
 export const NAV_LINKS: ReadonlyArray<NavLink> = [
-  {
-    label: "El Sistema",
-    children: [
-      { label: "Empezar", href: "/empezar" },
-      { label: "Sistema 360", href: "/sistema-360" },
-      { label: "Método", href: "/metodo" },
-      { label: "CRMs", href: "/crms" },
-    ],
-  },
-  {
-    label: "Recursos",
-    children: [
-      { label: "Contenido", href: "/contenido" },
-      { label: "Casos de estudio", href: "/casos-de-estudio" },
-      { label: "Webinars", href: "/webinars" },
-    ],
-  },
+  { label: "Inicio", href: "/" },
+  { label: "Empezar", href: "/empezar" },
   { label: "Reseñas", href: "/#testimonios" },
   { label: "Nosotros", href: "/#quien-soy" },
-  {
-    label: "Legal",
-    children: [
-      { label: "Aviso legal", href: "/aviso-legal" },
-      { label: "Privacidad", href: "/privacidad" },
-      { label: "Términos", href: "/terminos" },
-      { label: "Cookies", href: "/cookies" },
-    ],
-  },
 ];
 
 export const SISTEMA_360_AXES: Sistema360Axis[] = [

@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ScrollProgress } from "@/components/common/ScrollProgress";
 import { FloatingActions } from "@/components/ui/FloatingActions";
 import HeroVideo from "@/components/sections/empezar/HeroVideo";
@@ -18,6 +20,27 @@ const LEGAL_LINKS = [
 ] as const;
 
 export default function EmpezarClient() {
+  const [isFormSpotlight, setIsFormSpotlight] = useState(false);
+
+  const closeSpotlight = useCallback(() => setIsFormSpotlight(false), []);
+
+  const handleSpotlightForm = useCallback(() => {
+    setIsFormSpotlight(true);
+    requestAnimationFrame(() => {
+      const el = document.getElementById("form");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!isFormSpotlight) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeSpotlight();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [isFormSpotlight, closeSpotlight]);
+
   return (
     <>
       <ScrollProgress />
@@ -57,7 +80,7 @@ export default function EmpezarClient() {
 
         <div className="relative z-10">
           {/* 1. Hero: video + formulario en 2 columnas (desktop) */}
-          <HeroVideo />
+          <HeroVideo highlight={isFormSpotlight} />
 
           {/* 2. Logos de plataformas */}
           <BrandLogos />
@@ -97,12 +120,22 @@ export default function EmpezarClient() {
         </div>
       </footer>
 
-      <FloatingActions
-        onAction={() => {
-          const el = document.getElementById("form");
-          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }}
-      />
+      <AnimatePresence>
+        {isFormSpotlight && (
+          <motion.button
+            type="button"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            onClick={closeSpotlight}
+            aria-label="Cerrar resaltado del formulario"
+            className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm cursor-pointer"
+          />
+        )}
+      </AnimatePresence>
+
+      <FloatingActions onAction={handleSpotlightForm} />
     </>
   );
 }

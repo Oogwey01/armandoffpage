@@ -5,6 +5,10 @@ import QualificationForm from "@/components/form/QualificationForm";
 
 const VIDEO_SRC = "/videos/Emepezar/0502.mp4";
 
+interface HeroVideoProps {
+  highlight?: boolean;
+}
+
 function VideoPlayer() {
   return (
     <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-white/15 bg-brand-black shadow-2xl shadow-black/60">
@@ -21,7 +25,7 @@ function VideoPlayer() {
   );
 }
 
-export default function HeroVideo() {
+export default function HeroVideo({ highlight = false }: HeroVideoProps) {
   return (
     <section className="relative pt-16 sm:pt-20 lg:pt-20 pb-10 lg:pb-16 lg:min-h-screen lg:flex lg:flex-col lg:justify-center">
       <div className="container-custom w-full">
@@ -65,7 +69,11 @@ export default function HeroVideo() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
-            className="scroll-mt-24"
+            className={`scroll-mt-24 transition-all duration-300 ${
+              highlight
+                ? "relative z-[70] rounded-2xl ring-2 ring-brand-beige shadow-[0_0_60px_-5px_rgba(200,157,105,0.6)] scale-[1.015]"
+                : ""
+            }`}
           >
             <QualificationForm variant="inline" />
           </motion.div>
