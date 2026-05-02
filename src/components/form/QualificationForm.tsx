@@ -666,11 +666,21 @@ export default function QualificationForm({
             target="_blank"
             rel="noopener noreferrer"
             onClick={() =>
-              trackEvent("Contact", {
-                content_name: "Qualification Form - WhatsApp",
-                content_category: isQualified ? "Lead Qualified" : "Lead",
-                method: "whatsapp",
-              })
+              trackEvent(
+                "Lead",
+                {
+                  content_name: "Qualification Form - WhatsApp",
+                  content_category: isQualified ? "Lead Qualified" : "Lead",
+                  currency: "MXN",
+                  method: "whatsapp",
+                },
+                {
+                  sendToCapi: true,
+                  userData: {
+                    phone: submittedData?.whatsapp,
+                  },
+                }
+              )
             }
             className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-4 rounded-xl bg-[#25D366] text-white font-barlow font-bold text-sm uppercase tracking-widest hover:bg-[#1FB855] transition-colors"
           >
