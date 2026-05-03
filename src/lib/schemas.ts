@@ -19,10 +19,10 @@ export const PRESENCIA_MARCA_OPTIONS = [
 ] as const;
 
 export const INVERSION_ADS_OPTIONS = [
-  "Menos de $5,000/mes",
-  "Entre $5,000 y $10,000/mes",
-  "Entre $10,000 y $25,000/mes",
-  "Más de $25,000/mes",
+  "Nunca he invertido en anuncios",
+  "He intentado pero no sé si funcionó",
+  "Invierto pero los resultados son inconsistentes",
+  "Tengo presupuesto listo para invertir",
 ] as const;
 
 export const URGENCIA_RESULTADOS_OPTIONS = [
@@ -32,18 +32,17 @@ export const URGENCIA_RESULTADOS_OPTIONS = [
   "No tengo prisa, estoy explorando",
 ] as const;
 
-// Qualifying threshold: C and D ($10K+/month in ads)
-export const QUALIFIED_ADS_INVESTMENT = new Set<string>([
-  INVERSION_ADS_OPTIONS[2],
-  INVERSION_ADS_OPTIONS[3],
-]);
+// Tags response-dependent desactivados temporalmente.
+// Reactivar agregando los strings que califican (p. ej. INVERSION_ADS_OPTIONS[3]).
+export const QUALIFIED_ADS_INVESTMENT = new Set<string>();
 
-// Ads investment → revenue tier label (reused legacy categories)
+// Mapeo desactivado — todos los valores vacíos para no producir tag de categoría.
+// Reactivar asignando un label a cada opción si se quiere segmentar otra vez.
 export const ADS_CATEGORY_MAP: Record<string, string> = {
-  [INVERSION_ADS_OPTIONS[0]]: "Comunes",
-  [INVERSION_ADS_OPTIONS[1]]: "Normales",
-  [INVERSION_ADS_OPTIONS[2]]: "Arriba del promedio",
-  [INVERSION_ADS_OPTIONS[3]]: "Leyendas",
+  [INVERSION_ADS_OPTIONS[0]]: "",
+  [INVERSION_ADS_OPTIONS[1]]: "",
+  [INVERSION_ADS_OPTIONS[2]]: "",
+  [INVERSION_ADS_OPTIONS[3]]: "",
 };
 
 // ---------------------------------------------------------------------------

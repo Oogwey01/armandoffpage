@@ -1,7 +1,7 @@
-import { ADS_CATEGORY_MAP, QUALIFIED_ADS_INVESTMENT, type FormData } from "./schemas";
+import { ADS_CATEGORY_MAP, type FormData } from "./schemas";
 
 export function getAdsCategory(inversionAds: string): string {
-  return ADS_CATEGORY_MAP[inversionAds] ?? "Comunes";
+  return ADS_CATEGORY_MAP[inversionAds] ?? "";
 }
 
 type ShopifyMetafield = {
@@ -135,8 +135,7 @@ export async function createShopifyCustomer(data: FormData): Promise<void> {
     return;
   }
 
-  const category = getAdsCategory(data.inversionAds);
-  const isQualified = QUALIFIED_ADS_INVESTMENT.has(data.inversionAds);
+  const category = getAdsCategory(data.inversionAds); // siempre "" mientras los tags response-dependent estén desactivados
   const submittedAt = new Date().toISOString();
   const baseUrl = `https://${storeUrl}/admin/api/${apiVersion}`;
   const headers = {
@@ -145,9 +144,7 @@ export async function createShopifyCustomer(data: FormData): Promise<void> {
   };
 
   const phone = normalizePhone(data.whatsapp);
-  const tags = `${category}, armandoff-lead, formulario-completo${
-    isQualified ? ", lead-calificado" : ""
-  }`;
+  const tags = "armandoff-lead, formulario-completo";
   const noteLines = [
     `Negocio: ${data.nombreNegocio}`,
     `Producto/servicio: ${data.productoServicio}`,
@@ -212,9 +209,7 @@ export async function createShopifyCustomer(data: FormData): Promise<void> {
   if (create.ok) {
     const created = JSON.parse(create.body) as { customer: { id: number } };
     console.log(
-      `[Shopify] Created customer ${created.customer.id} → category: ${category}${
-        isQualified ? " (calificado)" : ""
-      }`
+      `[Shopify] Created customer ${created.customer.id}`
     );
     return;
   }
@@ -243,7 +238,7 @@ export async function createShopifyCustomer(data: FormData): Promise<void> {
     if (retry.ok) {
       const created = JSON.parse(retry.body) as { customer: { id: number } };
       console.log(
-        `[Shopify] Created customer without phone ${created.customer.id} → category: ${category}`
+        `[Shopify] Created customer without phone ${created.customer.id}`
       );
       return;
     }
@@ -281,8 +276,6 @@ export async function createShopifyCustomer(data: FormData): Promise<void> {
   }
 
   console.log(
-    `[Shopify] Updated existing customer ${existing.id} → category: ${category}${
-      isQualified ? " (calificado)" : ""
-    }`
+    `[Shopify] Updated existing customer ${existing.id}`
   );
 }
