@@ -144,8 +144,57 @@ Crear una **Custom Conversion** que filtre solo el primero permite optimizar cam
 
 ---
 
+## 5. Prevenir caída por límites de Vercel (503 DEPLOYMENT_PAUSED)
+
+**Estado:** Pendiente. Acción preventiva para evitar que el sitio quede fuera de línea por superar la cuota de **Fast Data Transfer** del plan Hobby de Vercel.
+
+### Síntomas a vigilar
+- Error `503 DEPLOYMENT_PAUSED` en producción.
+- Alertas de uso elevado en el dashboard de Vercel (Usage → Fast Data Transfer).
+- Picos repentinos de bandwidth sin aumento equivalente de conversiones.
+
+### Causa probable
+El **Fast Data Transfer** alto suele ser por imágenes y videos pesados servidos desde Vercel (incluido el video del hero). También puede ser tráfico de bots / crawlers golpeando todas las páginas.
+
+### Acción 1 — Mover assets pesados a un CDN externo (free tier)
+Sacar imágenes y videos grandes del bundle de Vercel para reducir el costo de transferencia.
+
+**Opciones:**
+- **Cloudflare R2** (recomendado): 10 GB gratis, sin egress fee. Subir el video del hero y las imágenes pesadas, servir vía URL pública o Worker.
+- **GitHub Pages / Releases**: gratis, simple para assets estáticos versionados.
+- **Cloudinary** (free tier 25 GB/mes) si además se quiere transformación on-the-fly.
+
+**Pasos sugeridos (Cloudflare R2):**
+1. Crear bucket R2 en Cloudflare.
+2. Subir `/public/videos/hero.*` y las imágenes >500 KB.
+3. Configurar dominio público (`assets.armandoff.com` con CNAME) o usar URL pública R2.
+4. Reemplazar rutas en componentes (`Hero`, `BrandLogos`, `CaseStudies`, etc.).
+5. Verificar que Next/Image siga funcionando (agregar el dominio a `next.config.js` → `images.remotePatterns`).
+
+### Acción 2 — Filtrar bots agresivos con Cloudflare (free tier)
+Poner Cloudflare delante de Vercel para bloquear scrapers, bots de SEO masivo y tráfico no humano que infla el bandwidth.
+
+**Pasos sugeridos:**
+1. Crear cuenta Cloudflare gratis y agregar el dominio (`armandoff.com`).
+2. Cambiar nameservers en el registrar al de Cloudflare.
+3. Apuntar el registro A/CNAME al dominio de Vercel (ver guía oficial Cloudflare + Vercel).
+4. Activar **Bot Fight Mode** (Security → Bots).
+5. Activar reglas WAF: bloquear ASNs de scrapers conocidos, rate limit por IP.
+6. Habilitar caché de assets estáticos en Cloudflare (Page Rules / Cache Rules) — esto reduce hits a Vercel.
+
+### Acción 3 — Monitoreo
+- Revisar **Vercel Dashboard → Usage** semanalmente hasta confirmar que el consumo bajó.
+- Configurar alertas por email cuando se llegue al 75% del límite.
+- En Cloudflare, revisar Analytics → Traffic para identificar países/ASNs sospechosos.
+
+### Prioridad
+Hacer Acción 1 (mover video del hero a R2) **antes** de Acción 2 — el mayor consumo casi seguro viene del video. Acción 2 solo si después del cambio el tráfico sigue alto.
+
+---
+
 ## Notas finales
 
 - Todos estos cambios son **independientes** y pueden hacerse en cualquier orden.
 - El orden recomendado por impacto en conversión: (1) WhatsApp real → (2) Email confirmación → (3) Respaldo webhook → (4) Rellenar datos legales.
+- Para evitar downtime: priorizar **(5) mover video del hero a CDN externo** si el dashboard de Vercel muestra uso alto de Fast Data Transfer.
 - Después de estos, las siguientes prioridades son: imágenes de testimonials/services faltantes, analytics (Meta Pixel / GA4) y metadata SEO por página.
