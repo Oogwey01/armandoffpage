@@ -8,30 +8,31 @@ import {
   useReducedMotion,
   MotionValue,
 } from "framer-motion";
+import { asset } from "@/lib/assets";
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 const UGC_ITEMS = [
-  { src: "/videos/UGC/ugc-01-berserk-munequeras.mp4", badge: "UGC", label: "Berserk muñequeras" },
-  { src: "/videos/UGC/ugc-03.mp4",                    badge: "UGC", label: "Contenido UGC" },
-  { src: "/videos/UGC/ugc-05-mochila-gara.mp4",       badge: "UGC", label: "Mochila Gara" },
-  { src: "/videos/UGC/ugc-06-whatsapp.mp4",           badge: "UGC", label: "Contenido UGC" },
-  { src: "/videos/UGC/ugc-07-akatsuki-mochila.mp4",   badge: "UGC", label: "Akatsuki mochila" },
+  { src: asset("videos/UGC/ugc-01-berserk-munequeras.mp4"), badge: "UGC", label: "Berserk muñequeras" },
+  { src: asset("videos/UGC/ugc-03.mp4"),                    badge: "UGC", label: "Contenido UGC" },
+  { src: asset("videos/UGC/ugc-05-mochila-gara.mp4"),       badge: "UGC", label: "Mochila Gara" },
+  { src: asset("videos/UGC/ugc-06-whatsapp.mp4"),           badge: "UGC", label: "Contenido UGC" },
+  { src: asset("videos/UGC/ugc-07-akatsuki-mochila.mp4"),   badge: "UGC", label: "Akatsuki mochila" },
 ] as const;
 
 const STATIC_ITEMS = [
-  { src: "/videos/ESTATICOS/static-01-h1a.webp",    badge: "ESTÁTICO", label: "Diseño H1" },
-  { src: "/videos/ESTATICOS/static-04-h2.webp",     badge: "ESTÁTICO", label: "Diseño H2" },
-  { src: "/videos/ESTATICOS/static-07-h4a.webp",    badge: "ESTÁTICO", label: "Diseño H4" },
-  { src: "/videos/ESTATICOS/static-10-promo.webp",  badge: "PROMO",    label: "Promoción" },
-  { src: "/videos/ESTATICOS/static-11-review.webp", badge: "RESEÑA",   label: "Review" },
+  { src: asset("videos/ESTATICOS/static-01-h1a.webp"),    badge: "ESTÁTICO", label: "Diseño H1" },
+  { src: asset("videos/ESTATICOS/static-04-h2.webp"),     badge: "ESTÁTICO", label: "Diseño H2" },
+  { src: asset("videos/ESTATICOS/static-07-h4a.webp"),    badge: "ESTÁTICO", label: "Diseño H4" },
+  { src: asset("videos/ESTATICOS/static-10-promo.webp"),  badge: "PROMO",    label: "Promoción" },
+  { src: asset("videos/ESTATICOS/static-11-review.webp"), badge: "RESEÑA",   label: "Review" },
 ] as const;
 
 const PROD_ITEMS = [
-  { src: "/videos/PRODUCCIONES/prod-02-cinto-gamuza.mp4",      badge: "PRODUCTO",   label: "Cinto de gamuza" },
-  { src: "/videos/PRODUCCIONES/prod-04.mp4",                   badge: "PRODUCCIÓN", label: "Producción" },
-  { src: "/videos/PRODUCCIONES/prod-05-powerlifts.mp4",        badge: "FITNESS",    label: "Powerlifts" },
-  { src: "/videos/PRODUCCIONES/prod-08-santa.mp4",             badge: "EDICIÓN",    label: "Edición especial" },
-  { src: "/videos/PRODUCCIONES/prod-13-mochila-fresafit.mp4",  badge: "PRODUCTO",   label: "Mochila Fresafit" },
+  { src: asset("videos/PRODUCCIONES/prod-02-cinto-gamuza.mp4"),      badge: "PRODUCTO",   label: "Cinto de gamuza" },
+  { src: asset("videos/PRODUCCIONES/prod-04.mp4"),                   badge: "PRODUCCIÓN", label: "Producción" },
+  { src: asset("videos/PRODUCCIONES/prod-05-powerlifts.mp4"),        badge: "FITNESS",    label: "Powerlifts" },
+  { src: asset("videos/PRODUCCIONES/prod-08-santa.mp4"),             badge: "EDICIÓN",    label: "Edición especial" },
+  { src: asset("videos/PRODUCCIONES/prod-13-mochila-fresafit.mp4"),  badge: "PRODUCTO",   label: "Mochila Fresafit" },
 ] as const;
 
 type DeckItem = { src: string; badge: string; label: string };

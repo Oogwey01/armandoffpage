@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import QualificationForm from "@/components/form/QualificationForm";
 import { asset } from "@/lib/assets";
 
-const VIDEO_SRC = asset("0502.mp4");
+const VIDEO_SRC = asset("videos/Emepezar/0502.mp4");
 
 interface HeroVideoProps {
   highlight?: boolean;
